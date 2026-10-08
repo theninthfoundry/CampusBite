@@ -254,7 +254,7 @@
 
     getOrders(userId = null) {
       if (userId !== null) {
-        return this.data.orders.filter(o => o.userId === userId);
+        return this.data.orders.filter(o => String(o.userId) === String(userId));
       }
       return [...this.data.orders];
     }
@@ -263,7 +263,7 @@
     getStudentFavourite(userId) {
       const counts = {};
       this.data.orders.forEach(o => {
-        if (o.userId === userId) {
+        if (String(o.userId) === String(userId)) {
           o.items.forEach(it => {
             counts[it.foodId] = (counts[it.foodId] || 0) + it.qty;
           });
@@ -545,6 +545,8 @@
       this.renderCart();
       this.updateKitchenQueueIndicator();
       this.updateActiveOrdersBadge();
+      this.renderStudentOrders();
+      this.renderStudentProfile();
     }
 
     setCategory(cat, element) {
@@ -718,8 +720,10 @@
         const order = this.db.placeOrder(this.currentUser, this.cart, subtotal, eta);
         this.cart = [];
         this.renderCart();
-        this.showOrderModal(order);
         this.updateActiveOrdersBadge();
+        this.renderStudentOrders();
+        this.renderStudentProfile();
+        this.showOrderModal(order);
       } catch (err) {
         alert(err.message);
         this.db.load();
@@ -823,6 +827,17 @@
                     <div class="order-summary-text">
                       <strong>Items:</strong> ${o.summary}
                     </div>
+
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; padding-top: 0.75rem; border-top: 1px dashed var(--border-subtle);">
+                      <div>
+                        ${o.status === 'NEW' ? '<span style="background: #FEF3C7; color: #D97706; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 999px;">⏳ Order Received in Kitchen</span>' : ''}
+                        ${o.status === 'PREPARING' ? '<span style="background: #FEE2E2; color: #DC2626; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 999px;">🔥 Sizzling & Cooking in Kitchen</span>' : ''}
+                        ${o.status === 'READY' ? '<span style="background: #D1FAE5; color: #059669; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 999px;">🔔 Ready for Pickup at Counter 1!</span>' : ''}
+                      </div>
+                      <button class="btn btn-ghost btn-xs" style="font-size: 0.75rem;" onclick="app.advanceOrderFromStudent(${o.id})">
+                        ${o.status === 'NEW' ? '👨‍🍳 Kitchen: Start Cooking' : o.status === 'PREPARING' ? '🔔 Kitchen: Mark Ready' : '✓ Pick Up & Collect'}
+                      </button>
+                    </div>
                   </div>
                 `;
               }).join('')}
@@ -853,7 +868,7 @@
               ${pastOrders.map(o => {
                 const dateStr = new Date(o.created).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
                 return `
-                  <div class="card" style="padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; opacity: 0.85;">
+                  <div class="card" style="padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; opacity: 0.9;">
                     <div>
                       <div style="display: flex; align-items: center; gap: 0.5rem;">
                         <strong style="font-family: var(--font-display);">Token #${o.id}</strong>
@@ -874,11 +889,27 @@
       container.innerHTML = html;
     }
 
+    advanceOrderFromStudent(orderId) {
+      this.db.advanceOrderStatus(orderId);
+      this.renderStudentOrders();
+      this.renderStudentProfile();
+      this.updateActiveOrdersBadge();
+      const order = this.db.data.orders.find(o => o.id === orderId);
+      if (order) {
+        if (order.status === 'COLLECTED') {
+          this.showToast(`Token #${orderId} collected! Added to your profile statistics.`);
+        } else {
+          this.showToast(`Token #${orderId} moved to ${order.status}`);
+        }
+      }
+    }
+
     handleCancelOrder(orderId) {
       if (confirm(`Cancel Order #${orderId}? Stock will be refunded.`)) {
         if (this.db.cancelOrder(orderId)) {
           this.showToast(`Order #${orderId} cancelled.`);
           this.renderStudentOrders();
+          this.renderStudentProfile();
           this.updateActiveOrdersBadge();
         }
       }
@@ -886,7 +917,7 @@
 
     renderStudentProfile() {
       const orders = this.db.getOrders(this.currentUser.id);
-      const spent = orders.reduce((sum, o) => sum + o.total, 0);
+      const spent = orders.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
       const fav = this.db.getStudentFavourite(this.currentUser.id);
 
       document.getElementById('profile-name').innerText = this.currentUser.name.toUpperCase();
@@ -895,6 +926,46 @@
       document.getElementById('stat-fav-dish').innerText = fav ? fav.name : '—';
       document.getElementById('profile-roll').innerText = this.currentUser.studentId || 'N/A';
       document.getElementById('profile-email').innerText = this.currentUser.email;
+
+      // Populate recent orders list in profile
+      const historyContainer = document.getElementById('profile-orders-list');
+      const countLabel = document.getElementById('profile-history-count');
+      if (countLabel) countLabel.innerText = `${orders.length} Orders Placed`;
+
+      if (historyContainer) {
+        if (orders.length === 0) {
+          historyContainer.innerHTML = `
+            <div style="padding: 2rem; text-align: center; color: var(--text-muted);">
+              <p>No order history yet. Discover dishes in the menu and place your first meal!</p>
+            </div>
+          `;
+        } else {
+          historyContainer.innerHTML = orders.map(o => {
+            const timeStr = new Date(o.created).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            let badge = '';
+            if (o.status === 'NEW') badge = '<span style="background: #FEF3C7; color: #D97706; font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 999px;">ORDERED</span>';
+            else if (o.status === 'PREPARING') badge = '<span style="background: #FEE2E2; color: #DC2626; font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 999px;">PREPARING</span>';
+            else if (o.status === 'READY') badge = '<span style="background: #D1FAE5; color: #059669; font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 999px;">READY</span>';
+            else badge = '<span style="background: var(--bg-surface-subtle); color: var(--text-secondary); font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 999px;">COLLECTED ✓</span>';
+
+            return `
+              <div class="food-row-item" style="padding: 0.85rem 1rem;">
+                <div class="food-row-info">
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <strong>Token #${o.id}</strong>
+                    ${badge}
+                    <small style="color: var(--text-muted);">${timeStr}</small>
+                  </div>
+                  <small style="margin-top: 0.2rem; color: var(--text-secondary);">${o.summary}</small>
+                </div>
+                <div style="font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: var(--text-primary);">
+                  ₹${o.total}
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
     }
 
     // ==========================================
