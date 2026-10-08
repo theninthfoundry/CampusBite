@@ -334,9 +334,12 @@
           </button>
         </div>
 
-        <div class="admin-quick-actions">
-          <button class="btn btn-ghost btn-sm" onclick="app.resetDbPrompt()" title="Reset all seeded data to default">
-            🔄 Reset Demo DB
+        <div class="admin-quick-actions" style="display: flex; gap: 0.5rem;">
+          <button class="btn btn-ghost btn-sm" onclick="app.placeTestOrder()" title="Send a simulated student order to kitchen">
+            ⚡ + Test Order
+          </button>
+          <button class="btn btn-ghost btn-sm" onclick="app.resetDbPrompt()" title="Reset all data to default">
+            🔄 Reset DB
           </button>
         </div>
       </div>

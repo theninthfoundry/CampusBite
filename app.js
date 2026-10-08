@@ -9,7 +9,7 @@
   // ==========================================
   // STORAGE & DATABASE SEEDING
   // ==========================================
-  const DB_KEY = 'campusbite_db_v1';
+  const DB_KEY = 'campusbite_db_v3';
   const SESSION_KEY = 'campusbite_session_v1';
 
   const DEFAULT_DB = {
@@ -41,65 +41,8 @@
       { id: 12, name: "Gulab Jamun (2 pcs)", desc: "Warm melt-in-mouth milk dumplings in rose cardamom syrup", price: 40, category: "Desserts", prepMin: 2, ingId: null, perServing: 0, available: true },
       { id: 13, name: "Ice Cream Scoop", desc: "Creamy Madagascar vanilla bean scoop", price: 35, category: "Desserts", prepMin: 1, ingId: null, perServing: 0, available: true }
     ],
-    orders: [
-      {
-        id: 101,
-        userId: 3,
-        customerName: "Ananya",
-        items: [
-          { foodId: 1, name: "Chicken Biryani", qty: 1, price: 120 },
-          { foodId: 9, name: "Masala Coke", qty: 1, price: 40 },
-          { foodId: 12, name: "Gulab Jamun (2 pcs)", qty: 1, price: 40 }
-        ],
-        total: 200,
-        status: "COLLECTED",
-        created: new Date(Date.now() - 3600000 * 4).toISOString(),
-        etaMin: 14,
-        summary: "Chicken Biryani x1, Masala Coke x1, Gulab Jamun (2 pcs) x1"
-      },
-      {
-        id: 102,
-        userId: 3,
-        customerName: "Ananya",
-        items: [
-          { foodId: 1, name: "Chicken Biryani", qty: 1, price: 120 },
-          { foodId: 9, name: "Masala Coke", qty: 1, price: 40 }
-        ],
-        total: 160,
-        status: "COLLECTED",
-        created: new Date(Date.now() - 3600000 * 3).toISOString(),
-        etaMin: 12,
-        summary: "Chicken Biryani x1, Masala Coke x1"
-      },
-      {
-        id: 103,
-        userId: 2,
-        customerName: "Sreeshanth",
-        items: [
-          { foodId: 1, name: "Chicken Biryani", qty: 1, price: 120 }
-        ],
-        total: 120,
-        status: "PREPARING",
-        created: new Date(Date.now() - 600000).toISOString(),
-        etaMin: 14,
-        summary: "Chicken Biryani x1"
-      },
-      {
-        id: 104,
-        userId: 3,
-        customerName: "Ananya",
-        items: [
-          { foodId: 4, name: "Veg Pizza", qty: 1, price: 90 },
-          { foodId: 8, name: "French Fries", qty: 1, price: 50 }
-        ],
-        total: 140,
-        status: "NEW",
-        created: new Date(Date.now() - 120000).toISOString(),
-        etaMin: 16,
-        summary: "Veg Pizza x1, French Fries x1"
-      }
-    ],
-    nextOrderId: 105
+    orders: [],
+    nextOrderId: 101
   };
 
   class Database {
@@ -108,6 +51,10 @@
     }
 
     load() {
+      // Purge any older cached versions containing legacy mock orders
+      localStorage.removeItem('campusbite_db_v1');
+      localStorage.removeItem('campusbite_db_v2');
+
       const raw = localStorage.getItem(DB_KEY);
       if (!raw) {
         this.data = JSON.parse(JSON.stringify(DEFAULT_DB));
@@ -115,6 +62,10 @@
       } else {
         try {
           this.data = JSON.parse(raw);
+          // Safety cleanup: strip any legacy mock orders 103/104 if user already loaded
+          if (this.data.orders) {
+            this.data.orders = this.data.orders.filter(o => o.id !== 103 && o.id !== 104);
+          }
         } catch (e) {
           this.data = JSON.parse(JSON.stringify(DEFAULT_DB));
           this.save();
@@ -276,6 +227,29 @@
           this.save();
         }
       }
+    }
+
+    cancelOrder(orderId) {
+      const idx = this.data.orders.findIndex(o => o.id === orderId);
+      if (idx !== -1) {
+        const order = this.data.orders[idx];
+        if (order.status === 'NEW') {
+          // Restore ingredient stock
+          for (const item of order.items) {
+            const food = this.data.foods.find(f => f.id === item.foodId);
+            if (food && food.ingId) {
+              const ing = this.data.inventory.find(i => i.id === food.ingId);
+              if (ing) {
+                ing.qty = Math.round((ing.qty + (food.perServing * item.qty)) * 100) / 100;
+              }
+            }
+          }
+          this.data.orders.splice(idx, 1);
+          this.save();
+          return true;
+        }
+      }
+      return false;
     }
 
     getOrders(userId = null) {
@@ -769,63 +743,145 @@
       const container = document.getElementById('orders-list');
       const orders = this.db.getOrders(this.currentUser.id);
 
-      if (orders.length === 0) {
+      const activeOrders = orders.filter(o => o.status !== 'COLLECTED');
+      const pastOrders = orders.filter(o => o.status === 'COLLECTED');
+
+      if (activeOrders.length === 0 && pastOrders.length === 0) {
         container.innerHTML = `
-          <div class="card" style="padding: 3rem; text-align: center; color: var(--text-muted);">
-            <h3>No orders yet</h3>
-            <p>Your delicious next meal is waiting in the menu.</p>
+          <div class="card" style="padding: 3.5rem 2rem; text-align: center; border: 2px dashed var(--border-subtle);">
+            <div style="font-size: 3rem; margin-bottom: 0.75rem;">🍳</div>
+            <h3 style="font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.4rem;">No Orders Placed Yet</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem; max-width: 420px; margin-left: auto; margin-right: auto; font-size: 0.95rem;">
+              You have no active meals in the kitchen queue. Choose a dish from today's menu to place an order!
+            </p>
+            <button class="btn btn-primary btn-lg" onclick="app.switchStudentTab('menu')">
+              DISCOVER MENU & ORDER
+            </button>
           </div>
         `;
         return;
       }
 
-      const steps = [
-        { key: "NEW", label: "ORDERED" },
-        { key: "PREPARING", label: "PREPARING" },
-        { key: "READY", label: "READY FOR PICKUP" },
-        { key: "COLLECTED", label: "COLLECTED" }
-      ];
+      let html = '';
 
-      container.innerHTML = orders.map(o => {
-        const currentIdx = steps.findIndex(s => s.key === o.status);
-        const timeStr = new Date(o.created).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      // Active Orders
+      if (activeOrders.length > 0) {
+        const steps = [
+          { key: "NEW", label: "ORDERED" },
+          { key: "PREPARING", label: "PREPARING" },
+          { key: "READY", label: "READY FOR PICKUP" },
+          { key: "COLLECTED", label: "COLLECTED" }
+        ];
 
-        return `
-          <div class="card order-card">
-            <div class="order-card-header">
-              <div class="order-id-group">
-                <span class="order-token">Token #${o.id}</span>
-                <span class="order-time">Placed at ${timeStr} · ETA ~${o.etaMin}m</span>
-              </div>
-              <span class="order-price">₹${o.total}</span>
-            </div>
+        html += `
+          <div style="margin-bottom: 2rem;">
+            <h4 style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; color: var(--primary); text-transform: uppercase; margin-bottom: 1rem;">
+              ACTIVE KITCHEN ORDERS (${activeOrders.length})
+            </h4>
+            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+              ${activeOrders.map(o => {
+                const currentIdx = steps.findIndex(s => s.key === o.status);
+                const timeStr = new Date(o.created).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-            <div class="order-stepper">
-              ${steps.map((s, idx) => {
-                let statusClass = '';
-                let bulletContent = idx + 1;
-                if (idx < currentIdx || o.status === 'COLLECTED') {
-                  statusClass = 'completed';
-                  bulletContent = '✓';
-                } else if (idx === currentIdx) {
-                  statusClass = 'current';
-                  bulletContent = '●';
-                }
                 return `
-                  <div class="step-node ${statusClass}">
-                    <div class="step-bullet">${bulletContent}</div>
-                    <span class="step-label">${s.label}</span>
+                  <div class="card order-card">
+                    <div class="order-card-header">
+                      <div class="order-id-group">
+                        <span class="order-token">Token #${o.id}</span>
+                        <span class="order-time">Placed at ${timeStr} · ETA ~${o.etaMin}m</span>
+                      </div>
+                      <div style="display: flex; align-items: center; gap: 1rem;">
+                        <span class="order-price">₹${o.total}</span>
+                        ${o.status === 'NEW' ? `
+                          <button class="btn btn-ghost btn-xs" style="color: #DC2626; border-color: #FCA5A5;" onclick="app.handleCancelOrder(${o.id})">
+                            ✕ Cancel
+                          </button>
+                        ` : ''}
+                      </div>
+                    </div>
+
+                    <div class="order-stepper">
+                      ${steps.map((s, idx) => {
+                        let statusClass = '';
+                        let bulletContent = idx + 1;
+                        if (idx < currentIdx || o.status === 'COLLECTED') {
+                          statusClass = 'completed';
+                          bulletContent = '✓';
+                        } else if (idx === currentIdx) {
+                          statusClass = 'current';
+                          bulletContent = '●';
+                        }
+                        return `
+                          <div class="step-node ${statusClass}">
+                            <div class="step-bullet">${bulletContent}</div>
+                            <span class="step-label">${s.label}</span>
+                          </div>
+                        `;
+                      }).join('')}
+                    </div>
+
+                    <div class="order-summary-text">
+                      <strong>Items:</strong> ${o.summary}
+                    </div>
                   </div>
                 `;
               }).join('')}
             </div>
+          </div>
+        `;
+      } else {
+        html += `
+          <div class="card" style="padding: 1.75rem; text-align: center; margin-bottom: 2rem; background: var(--bg-surface-subtle);">
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+              No active orders currently in the kitchen.
+            </p>
+            <button class="btn btn-ghost btn-sm" style="margin-top: 0.75rem;" onclick="app.switchStudentTab('menu')">
+              + Order Something New
+            </button>
+          </div>
+        `;
+      }
 
-            <div class="order-summary-text">
-              <strong>Items:</strong> ${o.summary}
+      // Past Orders Section
+      if (pastOrders.length > 0) {
+        html += `
+          <div>
+            <h4 style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 1rem;">
+              PAST COMPLETED ORDERS (${pastOrders.length})
+            </h4>
+            <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+              ${pastOrders.map(o => {
+                const dateStr = new Date(o.created).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+                return `
+                  <div class="card" style="padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; opacity: 0.85;">
+                    <div>
+                      <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <strong style="font-family: var(--font-display);">Token #${o.id}</strong>
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">${dateStr}</span>
+                        <span style="font-size: 0.7rem; font-weight: 700; color: var(--success); background: var(--success-subtle); padding: 0.1rem 0.4rem; border-radius: 999px;">COLLECTED ✓</span>
+                      </div>
+                      <small style="color: var(--text-secondary); display: block; margin-top: 0.2rem;">${o.summary}</small>
+                    </div>
+                    <span style="font-family: var(--font-display); font-weight: 800; font-size: 1.1rem;">₹${o.total}</span>
+                  </div>
+                `;
+              }).join('')}
             </div>
           </div>
         `;
-      }).join('');
+      }
+
+      container.innerHTML = html;
+    }
+
+    handleCancelOrder(orderId) {
+      if (confirm(`Cancel Order #${orderId}? Stock will be refunded.`)) {
+        if (this.db.cancelOrder(orderId)) {
+          this.showToast(`Order #${orderId} cancelled.`);
+          this.renderStudentOrders();
+          this.updateActiveOrdersBadge();
+        }
+      }
     }
 
     renderStudentProfile() {
@@ -1024,6 +1080,23 @@
           </div>
         </div>
       `).join('') || '<p style="color:var(--text-muted);font-size:0.8rem;">No orders registered today</p>';
+    }
+
+    placeTestOrder() {
+      const foods = this.db.getFoods();
+      const randomFood = foods[Math.floor(Math.random() * foods.length)];
+      const student = this.db.data.users.find(u => u.role === 'STUDENT') || this.currentUser;
+      const testCart = [{ food: randomFood, qty: 1 }];
+      const subtotal = randomFood.price;
+      const eta = this.db.calculateCartEta(testCart);
+
+      try {
+        const order = this.db.placeOrder(student, testCart, subtotal, eta);
+        this.renderKanbanBoard();
+        this.showToast(`Placed test order #${order.id} for ${student.name}`);
+      } catch (err) {
+        this.showToast(err.message);
+      }
     }
 
     resetDbPrompt() {
