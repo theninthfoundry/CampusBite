@@ -951,8 +951,6 @@
         return;
       }
 
-      let html = '';
-
       // Active Orders
       if (activeOrders.length > 0) {
         const steps = [
