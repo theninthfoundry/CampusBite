@@ -1,6 +1,7 @@
 /**
- * CampusBite — Smart Canteen Ordering & Kitchen Management System
- * Full Client Database, Recommendation Engine, ETA Calculator & State Manager
+ * CampusBite — Smart Canteen & Digital Kitchen Operations
+ * Japanese Editorial × Bold Minimalism × Premium Food Commerce
+ * State Management, Co-occurrence Recommendations, Dynamic ETA & Inventory Logic
  */
 
 (function () {
@@ -9,8 +10,25 @@
   // ==========================================
   // STORAGE & DATABASE SEEDING
   // ==========================================
-  const DB_KEY = 'campusbite_db_v3';
-  const SESSION_KEY = 'campusbite_session_v1';
+  const DB_KEY = 'campusbite_db_v4';
+  const SESSION_KEY = 'campusbite_session_v2';
+
+  // Editorial Curated Photographic Catalog
+  const FOOD_IMAGES = {
+    1: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80", // Chicken Biryani
+    2: "https://images.unsplash.com/photo-1642821373181-696a54913e9a?auto=format&fit=crop&w=800&q=80", // Veg Biryani
+    3: "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?auto=format&fit=crop&w=800&q=80", // Paneer Rice
+    4: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80", // Veg Pizza
+    5: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80", // Chicken Burger
+    6: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=800&q=80", // Masala Dosa
+    7: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80", // Samosa (2 pcs)
+    8: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80", // French Fries
+    9: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80", // Masala Coke
+    10: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=800&q=80", // Cold Coffee
+    11: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80", // Lemon Tea
+    12: "https://images.unsplash.com/photo-1601050690187-2481977e23b2?auto=format&fit=crop&w=800&q=80", // Gulab Jamun (2 pcs)
+    13: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=800&q=80"  // Ice Cream Scoop
+  };
 
   const DEFAULT_DB = {
     users: [
@@ -27,19 +45,19 @@
       { id: 6, ingredient: "Milk", qty: 10.0, unit: "L", minQty: 2.0 }
     ],
     foods: [
-      { id: 1, name: "Chicken Biryani", desc: "Spiced basmati rice, tender chicken & house aroma masala", price: 120, category: "Meals", prepMin: 12, ingId: 2, perServing: 0.25, available: true },
-      { id: 2, name: "Veg Biryani", desc: "Long-grain basmati, seasonal vegetables & whole spices", price: 90, category: "Meals", prepMin: 10, ingId: 1, perServing: 0.2, available: true },
-      { id: 3, name: "Paneer Rice", desc: "Wok-tossed rice with fresh cottage cheese cubes", price: 100, category: "Meals", prepMin: 10, ingId: 3, perServing: 0.25, available: true },
-      { id: 4, name: "Veg Pizza", desc: "Crisp crust, mozzarella & fire-roasted vegetables", price: 90, category: "Snacks", prepMin: 14, ingId: 4, perServing: 1.0, available: true },
-      { id: 5, name: "Chicken Burger", desc: "Crisp chicken patty, house sauce & fresh lettuce", price: 80, category: "Snacks", prepMin: 8, ingId: 2, perServing: 0.15, available: true },
-      { id: 6, name: "Masala Dosa", desc: "Crispy crepe, spiced potato masala & two chutneys", price: 60, category: "Meals", prepMin: 8, ingId: 1, perServing: 0.15, available: true },
-      { id: 7, name: "Samosa (2 pcs)", desc: "Golden crust, potato & green pea filling, mint chutney", price: 25, category: "Snacks", prepMin: 3, ingId: 5, perServing: 0.1, available: true },
-      { id: 8, name: "French Fries", desc: "Salted, golden crisp potato batons", price: 50, category: "Snacks", prepMin: 6, ingId: 5, perServing: 0.1, available: true },
-      { id: 9, name: "Masala Coke", desc: "Chilled fizzy soda with fresh lime & rock salt chaat masala", price: 40, category: "Drinks", prepMin: 2, ingId: null, perServing: 0, available: true },
-      { id: 10, name: "Cold Coffee", desc: "Slow brewed espresso, rich milk, lightly sweet", price: 60, category: "Drinks", prepMin: 4, ingId: 6, perServing: 0.2, available: true },
-      { id: 11, name: "Lemon Tea", desc: "Piping hot black tea, freshly squeezed lemon", price: 20, category: "Drinks", prepMin: 3, ingId: null, perServing: 0, available: true },
-      { id: 12, name: "Gulab Jamun (2 pcs)", desc: "Warm melt-in-mouth milk dumplings in rose cardamom syrup", price: 40, category: "Desserts", prepMin: 2, ingId: null, perServing: 0, available: true },
-      { id: 13, name: "Ice Cream Scoop", desc: "Creamy Madagascar vanilla bean scoop", price: 35, category: "Desserts", prepMin: 1, ingId: null, perServing: 0, available: true }
+      { id: 1, name: "Chicken Biryani", desc: "Spiced basmati rice, tender chicken, caramelized onions & fresh mint aroma", price: 120, category: "Meals", prepMin: 12, ingId: 2, perServing: 0.25, available: true, image: FOOD_IMAGES[1] },
+      { id: 2, name: "Veg Biryani", desc: "Long-grain basmati, saffron, garden vegetables & whole roasted spices", price: 90, category: "Meals", prepMin: 10, ingId: 1, perServing: 0.2, available: true, image: FOOD_IMAGES[2] },
+      { id: 3, name: "Paneer Rice", desc: "Wok-tossed rice with fresh cottage cheese cubes & mild pepper seasoning", price: 100, category: "Meals", prepMin: 10, ingId: 3, perServing: 0.25, available: true, image: FOOD_IMAGES[3] },
+      { id: 4, name: "Veg Pizza", desc: "Crisp stone crust, molten mozzarella, bell peppers & oregano dusting", price: 90, category: "Snacks", prepMin: 14, ingId: 4, perServing: 1.0, available: true, image: FOOD_IMAGES[4] },
+      { id: 5, name: "Chicken Burger", desc: "Crisp chicken patty, house sesame sauce & crisp iceberg lettuce", price: 80, category: "Snacks", prepMin: 8, ingId: 2, perServing: 0.15, available: true, image: FOOD_IMAGES[5] },
+      { id: 6, name: "Masala Dosa", desc: "Golden paper-thin crepe, tempered potato mash & two stone-ground chutneys", price: 60, category: "Meals", prepMin: 8, ingId: 1, perServing: 0.15, available: true, image: FOOD_IMAGES[6] },
+      { id: 7, name: "Samosa (2 pcs)", desc: "Hand-rolled golden flaky crust, spiced potato & green pea filling, mint relish", price: 25, category: "Snacks", prepMin: 3, ingId: 5, perServing: 0.1, available: true, image: FOOD_IMAGES[7] },
+      { id: 8, name: "French Fries", desc: "Crisp golden potato batons, tossed in fine sea salt", price: 50, category: "Snacks", prepMin: 6, ingId: 5, perServing: 0.1, available: true, image: FOOD_IMAGES[8] },
+      { id: 9, name: "Masala Coke", desc: "Chilled effervescent cola, roasted cumin, rock salt & fresh lime wedge", price: 40, category: "Drinks", prepMin: 2, ingId: null, perServing: 0, available: true, image: FOOD_IMAGES[9] },
+      { id: 10, name: "Cold Coffee", desc: "Slow-brewed dark roast espresso, chilled creamy milk, lightly sweet", price: 60, category: "Drinks", prepMin: 4, ingId: 6, perServing: 0.2, available: true, image: FOOD_IMAGES[10] },
+      { id: 11, name: "Lemon Tea", desc: "Piping hot Assam black tea infusion, freshly squeezed lemon & honey note", price: 20, category: "Drinks", prepMin: 3, ingId: null, perServing: 0, available: true, image: FOOD_IMAGES[11] },
+      { id: 12, name: "Gulab Jamun (2 pcs)", desc: "Warm melt-in-mouth milk dumplings soaked in cardamom rose syrup", price: 40, category: "Desserts", prepMin: 2, ingId: null, perServing: 0, available: true, image: FOOD_IMAGES[12] },
+      { id: 13, name: "Ice Cream Scoop", desc: "Velvety Madagascar vanilla bean ice cream scoop in chilled bowl", price: 35, category: "Desserts", prepMin: 1, ingId: null, perServing: 0, available: true, image: FOOD_IMAGES[13] }
     ],
     orders: [],
     nextOrderId: 101
@@ -51,9 +69,10 @@
     }
 
     load() {
-      // Purge older legacy cache keys
+      // Purge obsolete cache
       localStorage.removeItem('campusbite_db_v1');
       localStorage.removeItem('campusbite_db_v2');
+      localStorage.removeItem('campusbite_db_v3');
 
       const raw = localStorage.getItem(DB_KEY);
       if (!raw) {
@@ -71,14 +90,26 @@
         }
       }
 
-      // Integrity checks and auto-repair
+      // Integrity validation & image injection
       if (!Array.isArray(this.data.orders)) this.data.orders = [];
-      if (!Array.isArray(this.data.foods) || this.data.foods.length === 0) this.data.foods = DEFAULT_DB.foods;
-      if (!Array.isArray(this.data.inventory) || this.data.inventory.length === 0) this.data.inventory = DEFAULT_DB.inventory;
+      if (!Array.isArray(this.data.foods) || this.data.foods.length === 0) {
+        this.data.foods = DEFAULT_DB.foods;
+      } else {
+        // Ensure all food items have photographic images
+        this.data.foods.forEach(f => {
+          if (!f.image && FOOD_IMAGES[f.id]) {
+            f.image = FOOD_IMAGES[f.id];
+          }
+        });
+      }
+
+      if (!Array.isArray(this.data.inventory) || this.data.inventory.length === 0) {
+        this.data.inventory = DEFAULT_DB.inventory;
+      }
+
       if (!Array.isArray(this.data.users)) {
         this.data.users = DEFAULT_DB.users;
       } else {
-        // Auto-migrate any existing cached profile for Chandrashekar to FACULTY
         this.data.users.forEach(u => {
           if (u.id === 3 || u.name === "Ananya" || u.name === "Chandrashekar" || u.email === "ananya@campus.edu" || u.email === "chandrashekar@campus.edu") {
             u.name = "Chandrashekar";
@@ -90,27 +121,19 @@
         });
       }
 
-      // Ensure nextOrderId is valid and higher than any existing order
-      if (!this.data.nextOrderId || isNaN(this.data.nextOrderId) || this.data.nextOrderId < 101) {
-        const maxId = this.data.orders.reduce((max, o) => Math.max(max, Number(o.id) || 100), 100);
-        this.data.nextOrderId = maxId + 1;
+      if (!this.data.nextOrderId || isNaN(this.data.nextOrderId)) {
+        this.data.nextOrderId = 101;
       }
 
-      // Guarantee demo stock is replenished so ordering never fails
-      this.data.inventory.forEach(ing => {
-        if (typeof ing.qty !== 'number' || isNaN(ing.qty) || ing.qty < (ing.minQty || 2) + 2) {
-          ing.qty = Math.max(Number(ing.qty) || 0, 15.0);
-        }
-      });
-
-      // Ensure foods are available for ordering
-      this.data.foods.forEach(f => {
-        if (typeof f.available !== 'boolean') f.available = true;
-      });
+      this.evaluateInventoryDepletion();
     }
 
     save() {
-      localStorage.setItem(DB_KEY, JSON.stringify(this.data));
+      try {
+        localStorage.setItem(DB_KEY, JSON.stringify(this.data));
+      } catch (e) {
+        console.error("Storage error:", e);
+      }
     }
 
     reset() {
@@ -118,96 +141,88 @@
       this.save();
     }
 
-    // Auth
-    login(identifier, password) {
-      const cleanId = (identifier || '').trim().toLowerCase();
-      const user = this.data.users.find(u => 
-        (u.email.toLowerCase() === cleanId || 
-         (cleanId === 'ananya@campus.edu' && u.email.toLowerCase() === 'chandrashekar@campus.edu') ||
-         (u.studentId && u.studentId.toLowerCase() === cleanId) ||
-         (u.facultyId && u.facultyId.toLowerCase() === cleanId)) &&
-        u.pw === password
-      );
-      return user || null;
+    // Authentication
+    login(idOrEmail, pw) {
+      const term = (idOrEmail || '').trim().toLowerCase();
+      return this.data.users.find(u => {
+        const matchId = (u.studentId && u.studentId.toLowerCase() === term) ||
+                        (u.facultyId && u.facultyId.toLowerCase() === term);
+        const matchEmail = u.email && u.email.toLowerCase() === term;
+        return (matchId || matchEmail) && u.pw === pw;
+      }) || null;
     }
 
     // Foods
     getFoods() {
-      return [...this.data.foods];
+      return this.data.foods;
     }
 
-    setFoodAvailability(foodId, isAvailable) {
+    addFood(food) {
+      food.id = (this.data.foods.reduce((max, f) => Math.max(max, f.id), 0)) + 1;
+      food.available = true;
+      if (!food.image) {
+        food.image = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80";
+      }
+      this.data.foods.push(food);
+      this.save();
+      return food;
+    }
+
+    setFoodAvailability(foodId, available) {
       const food = this.data.foods.find(f => f.id === foodId);
       if (food) {
-        food.available = isAvailable;
+        food.available = available;
         this.save();
       }
     }
 
-    addFood(name, price, category, prepMin, desc) {
-      const newId = this.data.foods.reduce((max, f) => Math.max(max, f.id), 0) + 1;
-      const item = {
-        id: newId,
-        name: name.trim(),
-        desc: desc ? desc.trim() : "Made fresh today",
-        price: parseFloat(price),
-        category: category || "Meals",
-        prepMin: parseInt(prepMin, 10),
-        ingId: null,
-        perServing: 0,
-        available: true
-      };
-      this.data.foods.push(item);
-      this.save();
-      return item;
-    }
-
-    // Inventory & Stock
+    // Inventory
     getInventory() {
-      return [...this.data.inventory];
+      return this.data.inventory;
     }
 
-    restock(invId, amount) {
-      const inv = this.data.inventory.find(i => i.id === invId);
-      if (inv) {
-        inv.qty = Math.round((inv.qty + amount) * 100) / 100;
-        // Auto re-enable dishes whose ingredients are now safe
-        this.data.foods.forEach(f => {
-          if (f.ingId) {
-            const ing = this.data.inventory.find(i => i.id === f.ingId);
-            if (ing && ing.qty > ing.minQty) {
-              f.available = true;
-            }
+    evaluateInventoryDepletion() {
+      this.data.foods.forEach(f => {
+        if (f.ingId) {
+          const ing = this.data.inventory.find(i => i.id === f.ingId);
+          if (ing && ing.qty < (f.perServing || 0.1)) {
+            f.available = false;
           }
-        });
-        this.save();
-      }
+        }
+      });
     }
 
-    // Queue & ETA
+    // ETA Calculation: Max prep in tray + (2 * Active Queued Orders)
+    calculateCartEta(cartItems) {
+      if (!cartItems || cartItems.length === 0) return 0;
+      const maxPrep = Math.max(...cartItems.map(i => i.food.prepMin || 5));
+      const activeQueueCount = this.getActiveQueueCount();
+      return maxPrep + (2 * activeQueueCount);
+    }
+
     getActiveQueueCount() {
       return this.data.orders.filter(o => o.status === 'NEW' || o.status === 'PREPARING').length;
     }
 
-    calculateCartEta(cartItems) {
-      if (!cartItems || cartItems.length === 0) return 0;
-      const maxPrep = Math.max(...cartItems.map(i => i.food.prepMin));
-      const queuePenalty = 2 * this.getActiveQueueCount();
-      return maxPrep + queuePenalty;
+    // Orders
+    getOrders(userId = null) {
+      if (userId !== null) {
+        const uid = Number(userId);
+        return this.data.orders.filter(o => Number(o.userId) === uid);
+      }
+      return this.data.orders;
     }
 
-    // Order Placement (Atomic Transaction simulation)
     placeOrder(user, cartItems, total, etaMin) {
       if (!cartItems || cartItems.length === 0) {
         throw new Error("Cannot place an empty order.");
       }
 
-      // Safe user resolution
-      const safeUser = user || (this.data.users && this.data.users.find(u => u.role === 'STUDENT')) || { id: 2, name: "Sreeshanth" };
+      const safeUser = user || { id: 2, name: "Sreeshanth" };
       const userId = Number(safeUser.id) || 2;
       const userName = safeUser.name || "Sreeshanth";
 
-      // 1. Validate availability and ensure stock
+      // 1. Ensure stock availability
       for (const item of cartItems) {
         let food = this.data.foods.find(f => f.id === item.food.id);
         if (!food) {
@@ -231,18 +246,19 @@
       // 2. Decrement stock
       for (const item of cartItems) {
         const food = this.data.foods.find(f => f.id === item.food.id);
-        if (food.ingId) {
+        if (food && food.ingId) {
           const ing = this.data.inventory.find(i => i.id === food.ingId);
-          ing.qty = Math.max(0, Math.round((ing.qty - (food.perServing * item.qty)) * 100) / 100);
+          if (ing) {
+            ing.qty = Math.max(0, Math.round((ing.qty - (food.perServing * item.qty)) * 100) / 100);
+          }
         }
       }
 
-      // 3. Create Order with safe orderId
-      if (!this.data.nextOrderId || isNaN(this.data.nextOrderId)) {
-        const maxId = (this.data.orders || []).reduce((max, o) => Math.max(max, Number(o.id) || 100), 100);
-        this.data.nextOrderId = maxId + 1;
-      }
-      const orderId = this.data.nextOrderId++;
+      // 3. Create Order
+      const maxId = (this.data.orders || []).reduce((max, o) => Math.max(max, Number(o.id) || 100), 100);
+      const orderId = Math.max(this.data.nextOrderId || 101, maxId + 1);
+      this.data.nextOrderId = orderId + 1;
+
       const summary = cartItems.map(i => `${i.food.name} x${i.qty}`).join(", ");
       const newOrder = {
         id: orderId,
@@ -256,13 +272,11 @@
         summary: summary
       };
 
-      if (!Array.isArray(this.data.orders)) this.data.orders = [];
       this.data.orders.unshift(newOrder);
       this.save();
       return newOrder;
     }
 
-    // Order Advance
     advanceOrderStatus(orderId) {
       const order = this.data.orders.find(o => o.id === orderId);
       if (order) {
@@ -283,16 +297,16 @@
       if (idx !== -1) {
         const order = this.data.orders[idx];
         if (order.status === 'NEW') {
-          // Restore ingredient stock
-          for (const item of order.items) {
-            const food = this.data.foods.find(f => f.id === item.foodId);
+          // Refund raw inventory
+          order.items.forEach(it => {
+            const food = this.data.foods.find(f => f.id === it.foodId);
             if (food && food.ingId) {
               const ing = this.data.inventory.find(i => i.id === food.ingId);
               if (ing) {
-                ing.qty = Math.round((ing.qty + (food.perServing * item.qty)) * 100) / 100;
+                ing.qty = Math.round((ing.qty + (food.perServing * it.qty)) * 100) / 100;
               }
             }
-          }
+          });
           this.data.orders.splice(idx, 1);
           this.save();
           return true;
@@ -301,59 +315,55 @@
       return false;
     }
 
-    getOrders(userId = null) {
-      if (!Array.isArray(this.data.orders)) this.data.orders = [];
-      if (userId !== null && userId !== undefined) {
-        return this.data.orders.filter(o => String(o.userId) === String(userId));
-      }
-      return [...this.data.orders];
-    }
-
-    // Recommendations (Market Basket / Co-occurrence)
+    // Recommendation Engine: Frequent Co-occurrence Analysis
     getStudentFavourite(userId) {
-      const counts = {};
       const orders = this.getOrders(userId);
+      if (orders.length === 0) return null;
+
+      const counts = {};
       orders.forEach(o => {
-        (o.items || []).forEach(it => {
-          const key = it.foodId || it.name;
-          counts[key] = (counts[key] || 0) + (Number(it.qty) || 1);
+        o.items.forEach(it => {
+          counts[it.foodId] = (counts[it.foodId] || 0) + it.qty;
         });
       });
-      let favKey = null;
-      let maxQty = 0;
-      for (const id in counts) {
-        if (counts[id] > maxQty) {
-          maxQty = counts[id];
-          favKey = id;
+
+      let favId = null;
+      let maxCount = -1;
+      for (const [fId, cnt] of Object.entries(counts)) {
+        if (cnt > maxCount) {
+          maxCount = cnt;
+          favId = parseInt(fId, 10);
         }
       }
-      if (!favKey) return null;
-      const found = this.data.foods.find(f => f.id === Number(favKey) || f.name === favKey);
-      return found || { name: String(favKey) };
+
+      return this.data.foods.find(f => f.id === favId) || null;
     }
 
     getRecommendations(userId) {
       const fav = this.getStudentFavourite(userId);
       if (!fav) return [];
 
-      // Find orders that contain fav dish
       const pairCounts = {};
       this.data.orders.forEach(o => {
-        const containsFav = o.items.some(i => i.foodId === fav.id);
-        if (containsFav) {
-          o.items.forEach(it => {
-            if (it.foodId !== fav.id) {
-              pairCounts[it.foodId] = (pairCounts[it.foodId] || 0) + 1;
+        const itemIds = o.items.map(it => it.foodId);
+        if (itemIds.includes(fav.id)) {
+          itemIds.forEach(id => {
+            if (id !== fav.id) {
+              pairCounts[id] = (pairCounts[id] || 0) + 1;
             }
           });
         }
       });
 
-      // Sort pairs by occurrence
       const sortedIds = Object.keys(pairCounts)
         .sort((a, b) => pairCounts[b] - pairCounts[a])
         .slice(0, 3)
         .map(id => parseInt(id, 10));
+
+      // Fallback to complementary drinks/desserts if order history is sparse
+      if (sortedIds.length === 0) {
+        return this.data.foods.filter(f => (f.category === 'Drinks' || f.category === 'Snacks') && f.id !== fav.id).slice(0, 3);
+      }
 
       return sortedIds
         .map(id => this.data.foods.find(f => f.id === id))
@@ -366,18 +376,17 @@
       const totalRev = completed.reduce((sum, o) => sum + o.total, 0);
       const avgTicket = completed.length > 0 ? Math.round(totalRev / completed.length) : 0;
 
-      // Popular items
       const itemCounts = {};
       completed.forEach(o => {
         o.items.forEach(it => {
           itemCounts[it.name] = (itemCounts[it.name] || 0) + it.qty;
         });
       });
+
       const topDishes = Object.entries(itemCounts)
         .sort((a, b) => b[1] - a[1])
         .slice(0, 5);
 
-      // Peak Hours
       const hourCounts = {};
       this.data.orders.forEach(o => {
         const hr = new Date(o.created).getHours();
@@ -406,13 +415,14 @@
       this.currentCategory = 'All';
       this.activeStudentTab = 'menu';
       this.activeAdminTab = 'live';
+      this.selectedDetailFood = null;
+      this.detailQty = 1;
       this.pollTimer = null;
 
       this.init();
     }
 
     init() {
-      // Check saved session
       const savedUser = sessionStorage.getItem(SESSION_KEY);
       if (savedUser) {
         try {
@@ -444,21 +454,23 @@
       }, 3000);
     }
 
-    // Notifications
     showToast(msg) {
       const container = document.getElementById('toast-container');
+      if (!container) return;
       const toast = document.createElement('div');
       toast.className = 'toast';
-      toast.innerText = msg;
+      toast.innerHTML = `<span>${msg}</span>`;
       container.appendChild(toast);
+
       setTimeout(() => {
         toast.style.opacity = '0';
         toast.style.transform = 'translateY(10px)';
-        setTimeout(() => toast.remove(), 300);
-      }, 3000);
+        toast.style.transition = 'all 0.2s ease';
+        setTimeout(() => toast.remove(), 200);
+      }, 3200);
     }
 
-    // Auth & Direct Role Switchers
+    // One-Click Demo Logins
     loginAsStudent() {
       let student = (this.db.data.users || []).find(u => u.role === 'STUDENT') || {
         id: 2, name: "Sreeshanth", email: "demo@campus.edu", pw: "student123", role: "STUDENT", studentId: "25R11A0501"
@@ -467,7 +479,7 @@
       sessionStorage.setItem(SESSION_KEY, JSON.stringify(student));
       this.activeStudentTab = 'menu';
       this.render();
-      this.showToast(`Logged in as ${student.name} (Student)`);
+      this.showToast(`Signed in as ${student.name} (Student)`);
     }
 
     loginAsFaculty() {
@@ -478,18 +490,18 @@
       sessionStorage.setItem(SESSION_KEY, JSON.stringify(faculty));
       this.activeStudentTab = 'menu';
       this.render();
-      this.showToast(`Logged in as Prof. ${faculty.name} (Faculty)`);
+      this.showToast(`Signed in as Prof. ${faculty.name} (Faculty)`);
     }
 
     loginAsAdmin() {
       let admin = (this.db.data.users || []).find(u => u.role === 'ADMIN') || {
-        id: 1, name: "Canteen Admin", email: "admin@campus.edu", pw: "admin123", role: "ADMIN"
+        id: 1, name: "Canteen Staff", email: "admin@campus.edu", pw: "admin123", role: "ADMIN"
       };
       this.currentUser = admin;
       sessionStorage.setItem(SESSION_KEY, JSON.stringify(admin));
       this.activeAdminTab = 'live';
       this.render();
-      this.showToast('Welcome to Canteen Kitchen Dashboard!');
+      this.showToast('Kitchen Dashboard operational');
     }
 
     switchToAdminDashboard() {
@@ -508,12 +520,6 @@
       }
     }
 
-    fillDemo(id, pw) {
-      document.getElementById('login-id').value = id;
-      document.getElementById('login-pw').value = pw;
-      this.handleLogin(new Event('submit'));
-    }
-
     handleLogin(e) {
       if (e && e.preventDefault) e.preventDefault();
       const id = document.getElementById('login-id').value;
@@ -522,7 +528,7 @@
 
       const user = this.db.login(id, pw);
       if (!user) {
-        errBox.innerText = 'Invalid credentials. Please check your student ID or email.';
+        errBox.innerText = 'Invalid credentials. Please verify your Student/Faculty ID or password.';
         errBox.classList.remove('hidden');
         return;
       }
@@ -531,7 +537,7 @@
       this.currentUser = user;
       sessionStorage.setItem(SESSION_KEY, JSON.stringify(user));
       this.render();
-      this.showToast(`Welcome back, ${user.name}!`);
+      this.showToast(`Welcome back, ${user.name}`);
     }
 
     logout() {
@@ -550,50 +556,52 @@
       }
     }
 
-    // Rendering core views
+    // Core Rendering Orchestrator
     render() {
       const viewLogin = document.getElementById('view-login');
       const viewStudent = document.getElementById('view-student');
       const viewAdmin = document.getElementById('view-admin');
       const userControls = document.getElementById('user-controls');
+      const navActions = document.getElementById('nav-actions');
 
       if (!this.currentUser) {
         viewLogin.classList.remove('hidden');
         viewStudent.classList.add('hidden');
         viewAdmin.classList.add('hidden');
         userControls.classList.add('hidden');
+        navActions.classList.add('hidden');
         return;
       }
 
       viewLogin.classList.add('hidden');
       userControls.classList.remove('hidden');
+      navActions.classList.remove('hidden');
 
-      // Update header profile pill
+      // Update Header User Identity
       document.getElementById('user-display-name').innerText = this.currentUser.name;
       const badge = document.getElementById('user-display-role');
       badge.innerText = this.currentUser.role;
-      badge.className = `user-badge ${this.currentUser.role.toLowerCase()}`;
+      badge.className = `user-role-badge ${this.currentUser.role.toLowerCase()}`;
       document.getElementById('user-avatar').innerText = this.currentUser.name.charAt(0);
 
-      // Update portal switcher button in top navbar
+      // Portal Mode Switcher
       const switchBtn = document.getElementById('btn-toggle-portal');
-      if (switchBtn) {
-        if (this.currentUser.role === 'ADMIN') {
-          switchBtn.innerHTML = `<span>🍽️ Customer Menu View</span>`;
-          switchBtn.title = "Switch to Customer Ordering View";
-        } else {
-          switchBtn.innerHTML = `<span>👨‍🍳 Kitchen Dashboard</span>`;
-          switchBtn.title = "Switch to Kitchen Staff Dashboard & Kanban";
-        }
-      }
+      const trayBtn = document.getElementById('btn-tray-toggle');
 
       if (this.currentUser.role === 'ADMIN') {
+        switchBtn.innerHTML = `<span>&larr; CUSTOMER MENU</span>`;
+        if (trayBtn) trayBtn.classList.add('hidden');
+        this.renderAdminNavigation();
         viewStudent.classList.add('hidden');
         viewAdmin.classList.remove('hidden');
         this.renderAdminPortal();
       } else {
+        switchBtn.innerHTML = `<span>STAFF KITCHEN &rarr;</span>`;
+        if (trayBtn) trayBtn.classList.remove('hidden');
+        this.renderStudentNavigation();
         viewStudent.classList.remove('hidden');
         viewAdmin.classList.add('hidden');
+
         const titleEl = document.getElementById('student-home-title');
         if (titleEl) {
           titleEl.innerText = this.currentUser.role === 'FACULTY' ? "FACULTY LOUNGE DINING" : "WHAT'S FOR LUNCH?";
@@ -602,20 +610,46 @@
       }
     }
 
+    renderStudentNavigation() {
+      const nav = document.getElementById('nav-actions');
+      const activeOrdersCount = this.db.getOrders(this.currentUser.id).filter(o => o.status !== 'COLLECTED').length;
+
+      nav.innerHTML = `
+        <button class="nav-link ${this.activeStudentTab === 'menu' ? 'active' : ''}" onclick="app.switchStudentTab('menu')">
+          <span>DISCOVER / 01</span>
+        </button>
+        <button class="nav-link ${this.activeStudentTab === 'orders' ? 'active' : ''}" onclick="app.switchStudentTab('orders')">
+          <span>ORDERS / 02</span>
+          ${activeOrdersCount > 0 ? `<span class="nav-count-pill">${activeOrdersCount}</span>` : ''}
+        </button>
+        <button class="nav-link ${this.activeStudentTab === 'profile' ? 'active' : ''}" onclick="app.switchStudentTab('profile')">
+          <span>PROFILE / 03</span>
+        </button>
+      `;
+    }
+
+    renderAdminNavigation() {
+      const nav = document.getElementById('nav-actions');
+      nav.innerHTML = `
+        <button class="nav-link ${this.activeAdminTab === 'live' ? 'active' : ''}" onclick="app.switchAdminTab('live')">
+          <span>KANBAN / 01</span>
+        </button>
+        <button class="nav-link ${this.activeAdminTab === 'menu' ? 'active' : ''}" onclick="app.switchAdminTab('menu')">
+          <span>MENU / 02</span>
+        </button>
+        <button class="nav-link ${this.activeAdminTab === 'inv' ? 'active' : ''}" onclick="app.switchAdminTab('inv')">
+          <span>INVENTORY / 03</span>
+        </button>
+        <button class="nav-link ${this.activeAdminTab === 'analytics' ? 'active' : ''}" onclick="app.switchAdminTab('analytics')">
+          <span>PERFORMANCE / 04</span>
+        </button>
+      `;
+    }
+
     refreshCurrentView() {
       if (!this.currentUser) return;
-      if (this.currentUser.role !== 'ADMIN') {
-        if (this.activeStudentTab === 'menu') {
-          this.renderMenuGrid();
-          this.renderRecommendations();
-          this.updateKitchenQueueIndicator();
-        } else if (this.activeStudentTab === 'orders') {
-          this.renderStudentOrders();
-        } else if (this.activeStudentTab === 'profile') {
-          this.renderStudentProfile();
-        }
-        this.updateActiveOrdersBadge();
-      } else {
+      if (this.currentUser.role === 'ADMIN') {
+        this.renderAdminNavigation();
         if (this.activeAdminTab === 'live') {
           this.renderKanbanBoard();
         } else if (this.activeAdminTab === 'menu') {
@@ -624,6 +658,18 @@
           this.renderInventory();
         } else if (this.activeAdminTab === 'analytics') {
           this.renderAnalytics();
+        }
+      } else {
+        this.renderStudentNavigation();
+        this.renderMenuGrid();
+        this.renderRecommendations();
+        this.renderCart();
+        this.updateKitchenQueueIndicator();
+        this.updateActiveOrdersBadge();
+        if (this.activeStudentTab === 'orders') {
+          this.renderStudentOrders();
+        } else if (this.activeStudentTab === 'profile') {
+          this.renderStudentProfile();
         }
       }
     }
@@ -634,27 +680,35 @@
     switchStudentTab(tab) {
       this.activeStudentTab = tab;
       ['menu', 'orders', 'profile'].forEach(t => {
-        document.getElementById(`tab-btn-${t}`).classList.toggle('active', t === tab);
-        document.getElementById(`section-${t}`).classList.toggle('hidden', t !== tab);
+        const btn = document.getElementById(`tab-btn-${t}`);
+        const sec = document.getElementById(`section-${t}`);
+        if (btn) btn.classList.toggle('active', t === tab);
+        if (sec) sec.classList.toggle('hidden', t !== tab);
       });
+      this.renderStudentNavigation();
       this.refreshCurrentView();
     }
 
     updateActiveOrdersBadge() {
+      if (!this.currentUser) return;
       const active = this.db.getOrders(this.currentUser.id).filter(o => o.status !== 'COLLECTED');
       const badge = document.getElementById('badge-active-orders');
-      if (active.length > 0) {
-        badge.innerText = active.length;
-        badge.classList.remove('hidden');
-      } else {
-        badge.classList.add('hidden');
+      if (badge) {
+        if (active.length > 0) {
+          badge.innerText = active.length;
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
+        }
       }
     }
 
     updateKitchenQueueIndicator() {
       const count = this.db.getActiveQueueCount();
       const text = document.getElementById('kitchen-status-text');
-      text.innerText = count > 0 ? `Kitchen live · ${count} orders queued` : `Kitchen ready · Fast turnaround`;
+      if (text) {
+        text.innerText = count > 0 ? `Kitchen active · ${count} orders queued` : `Kitchen ready · Immediate pickup`;
+      }
     }
 
     renderStudentPortal() {
@@ -669,7 +723,7 @@
 
     setCategory(cat, element) {
       this.currentCategory = cat;
-      const chips = document.querySelectorAll('#category-chips .chip');
+      const chips = document.querySelectorAll('#category-chips .category-text-btn');
       chips.forEach(c => c.classList.remove('active'));
       if (element) element.classList.add('active');
       this.renderMenuGrid();
@@ -681,6 +735,7 @@
 
     renderMenuGrid() {
       const grid = document.getElementById('food-grid');
+      if (!grid) return;
       const search = (document.getElementById('food-search').value || '').toLowerCase().trim();
       const foods = this.db.getFoods();
 
@@ -692,40 +747,52 @@
 
       if (filtered.length === 0) {
         grid.innerHTML = `
-          <div style="grid-column: 1 / -1; padding: 3rem; text-align: center; color: var(--text-muted);">
-            <h3>No dishes found</h3>
-            <p>Try searching for something else or pick another category.</p>
+          <div style="grid-column: 1 / -1; padding: 4rem 1rem; text-align: center; color: var(--muted);">
+            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--ink); margin-bottom: 0.35rem;">No dishes found</h3>
+            <p style="font-size: 0.88rem;">Try searching for another dish or reset the category filter.</p>
           </div>
         `;
         return;
       }
 
-      grid.innerHTML = filtered.map(f => `
-        <div class="card food-card ${f.available ? '' : 'unavailable'}">
-          <div class="food-card-top">
-            <div class="card-tags">
-              <span class="food-category-tag">${f.category.toUpperCase()}</span>
-              <span class="food-prep-pill">⏱️ ${f.prepMin} min</span>
+      grid.innerHTML = filtered.map((f, idx) => {
+        const imgUrl = f.image || FOOD_IMAGES[f.id] || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80";
+        const indexStr = String(idx + 1).padStart(2, '0');
+
+        return `
+          <div class="menu-item-editorial ${f.available ? '' : 'unavailable'}" onclick="app.openFoodDetail(${f.id})">
+            <div class="menu-item-media">
+              <span class="menu-item-index">${indexStr}</span>
+              <img src="${imgUrl}" alt="${f.name}" loading="lazy">
+              <span class="menu-item-prep-tag">${f.prepMin} MIN</span>
             </div>
-            <h4 class="food-name">${f.name}</h4>
-            <p class="food-desc">${f.desc}</p>
+
+            <div class="menu-item-content">
+              <div class="menu-item-header">
+                <h4 class="menu-item-name">${f.name}</h4>
+                <span class="menu-item-price">₹${f.price}</span>
+              </div>
+              <p class="menu-item-desc">${f.desc}</p>
+              
+              <div class="menu-item-actions">
+                <span class="category-micro-tag">${f.category.toUpperCase()}</span>
+                <button class="btn btn-arrow" 
+                        ${f.available ? '' : 'disabled'}
+                        onclick="event.stopPropagation(); app.addToCart(${f.id})">
+                  <span>${f.available ? 'ADD +' : 'SOLD OUT'}</span>
+                </button>
+              </div>
+            </div>
           </div>
-          <div class="food-card-bottom">
-            <span class="food-price">₹${f.price}</span>
-            <button class="btn btn-primary btn-sm" 
-                    ${f.available ? '' : 'disabled'}
-                    onclick="app.addToCart(${f.id})">
-              ${f.available ? '+ ADD TO TRAY' : 'SOLD OUT'}
-            </button>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     renderRecommendations() {
       const recBox = document.getElementById('recommendation-box');
       const recTitle = document.getElementById('rec-title');
       const recGrid = document.getElementById('rec-cards');
+      if (!recBox || !recTitle || !recGrid) return;
 
       const fav = this.db.getStudentFavourite(this.currentUser.id);
       if (!fav) {
@@ -740,23 +807,72 @@
       }
 
       recBox.classList.remove('hidden');
-      recTitle.innerText = `BECAUSE YOU LOVE ${fav.name.toUpperCase()}...`;
-      recGrid.innerHTML = recs.map(f => `
-        <div class="card food-card" style="padding: 1rem;">
-          <div class="card-tags" style="margin-bottom: 0.25rem;">
-            <span class="food-category-tag">${f.category.toUpperCase()}</span>
-            <span class="food-prep-pill">⏱️ ${f.prepMin}m</span>
+      recTitle.innerText = `BECAUSE YOU ORDERED ${fav.name.toUpperCase()}...`;
+      recGrid.innerHTML = recs.map(f => {
+        const imgUrl = f.image || FOOD_IMAGES[f.id] || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80";
+        return `
+          <div class="rec-item-card" onclick="app.addToCart(${f.id})">
+            <img class="rec-item-img" src="${imgUrl}" alt="${f.name}">
+            <div class="rec-item-info">
+              <strong class="rec-item-name">${f.name}</strong>
+              <div class="rec-item-meta">₹${f.price} · ${f.prepMin}m prep</div>
+            </div>
+            <button class="btn btn-secondary btn-xs" onclick="event.stopPropagation(); app.addToCart(${f.id})">+ ADD</button>
           </div>
-          <strong style="font-size: 0.95rem; margin-bottom: 0.5rem; display: block;">${f.name}</strong>
-          <div class="food-card-bottom" style="padding-top: 0.5rem;">
-            <span class="food-price" style="font-size: 1.1rem;">₹${f.price}</span>
-            <button class="btn btn-primary btn-xs" onclick="app.addToCart(${f.id})">+ ADD</button>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
-    // Cart Management
+    // Food Detail Modal
+    openFoodDetail(foodId) {
+      const food = this.db.getFoods().find(f => f.id === foodId);
+      if (!food) return;
+
+      this.selectedDetailFood = food;
+      this.detailQty = 1;
+
+      document.getElementById('detail-food-img').src = food.image || FOOD_IMAGES[food.id] || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80";
+      document.getElementById('detail-food-category').innerText = food.category.toUpperCase();
+      document.getElementById('detail-food-name').innerText = food.name;
+      document.getElementById('detail-food-price').innerText = `₹${food.price}`;
+      document.getElementById('detail-food-prep').innerText = `${food.prepMin} MIN PREP`;
+      document.getElementById('detail-food-desc').innerText = food.desc;
+      document.getElementById('detail-food-qty').innerText = '1';
+
+      const addBtn = document.getElementById('btn-detail-add');
+      addBtn.disabled = !food.available;
+      addBtn.innerHTML = `<span>${food.available ? `ADD TO TRAY — ₹${food.price}` : 'CURRENTLY SOLD OUT'} &rarr;</span>`;
+
+      document.getElementById('food-detail-modal').classList.remove('hidden');
+    }
+
+    closeFoodDetail() {
+      document.getElementById('food-detail-modal').classList.add('hidden');
+      this.selectedDetailFood = null;
+    }
+
+    changeDetailQty(delta) {
+      if (!this.selectedDetailFood) return;
+      this.detailQty = Math.max(1, Math.min(10, this.detailQty + delta));
+      document.getElementById('detail-food-qty').innerText = this.detailQty;
+      const total = this.selectedDetailFood.price * this.detailQty;
+      document.getElementById('btn-detail-add').innerHTML = `<span>ADD TO TRAY — ₹${total} &rarr;</span>`;
+    }
+
+    addDetailToCart() {
+      if (!this.selectedDetailFood || !this.selectedDetailFood.available) return;
+      const existing = this.cart.find(i => i.food.id === this.selectedDetailFood.id);
+      if (existing) {
+        existing.qty = Math.min(10, existing.qty + this.detailQty);
+      } else {
+        this.cart.push({ food: this.selectedDetailFood, qty: this.detailQty });
+      }
+      this.renderCart();
+      this.closeFoodDetail();
+      this.showToast(`Added ${this.selectedDetailFood.name} to tray`);
+    }
+
+    // Tray Slip Management
     addToCart(foodId) {
       const food = this.db.getFoods().find(f => f.id === foodId);
       if (!food || !food.available) return;
@@ -769,9 +885,6 @@
       }
 
       this.renderCart();
-      if (this.activeStudentTab === 'orders') {
-        this.renderStudentOrders();
-      }
       this.showToast(`Added ${food.name} to tray`);
     }
 
@@ -784,30 +897,35 @@
         this.cart.splice(index, 1);
       }
       this.renderCart();
-      if (this.activeStudentTab === 'orders') {
-        this.renderStudentOrders();
-      }
     }
 
     clearCart() {
       this.cart = [];
       this.renderCart();
-      if (this.activeStudentTab === 'orders') {
-        this.renderStudentOrders();
-      }
       this.showToast('Tray cleared');
+    }
+
+    scrollToTray() {
+      const tray = document.getElementById('student-tray-sidebar');
+      if (tray) {
+        tray.scrollIntoView({ behavior: 'smooth' });
+      }
     }
 
     renderCart() {
       const container = document.getElementById('cart-items');
       const footer = document.getElementById('cart-footer');
+      const countPill = document.getElementById('nav-tray-count');
+      if (!container || !footer) return;
+
+      const cartQty = this.cart.reduce((s, i) => s + i.qty, 0);
+      if (countPill) countPill.innerText = cartQty;
 
       if (this.cart.length === 0) {
         container.innerHTML = `
-          <div class="cart-empty-state">
-            <span class="empty-icon">🍽️</span>
-            <p>Your tray is hungry.</p>
-            <small>Select dishes from the menu to start ordering.</small>
+          <div class="tray-empty-editorial">
+            <p>Your tray is empty.</p>
+            <small>Select dishes from today's menu to start ordering.</small>
           </div>
         `;
         footer.classList.add('hidden');
@@ -816,20 +934,19 @@
 
       footer.classList.remove('hidden');
       container.innerHTML = this.cart.map(item => `
-        <div class="cart-item-row">
-          <div>
-            <div class="cart-item-name">${item.food.name}</div>
-            <div class="cart-item-price">₹${item.food.price * item.qty} (₹${item.food.price} ea)</div>
+        <div class="tray-item-row">
+          <div class="tray-item-info">
+            <strong>${item.food.name}</strong>
+            <small>₹${item.food.price * item.qty} (₹${item.food.price} ea)</small>
           </div>
-          <div class="cart-stepper">
-            <button class="btn-step" onclick="app.changeCartQty(${item.food.id}, -1)">−</button>
-            <span style="font-size: 0.85rem; font-weight: 700; min-width: 16px; text-align: center;">${item.qty}</span>
+          <div class="tray-stepper">
+            <button class="btn-step" onclick="app.changeCartQty(${item.food.id}, -1)">&minus;</button>
+            <span class="tray-stepper-val">${item.qty}</span>
             <button class="btn-step" onclick="app.changeCartQty(${item.food.id}, 1)">+</button>
           </div>
         </div>
       `).join('');
 
-      // Calculations
       const subtotal = this.cart.reduce((sum, i) => sum + (i.food.price * i.qty), 0);
       const eta = this.db.calculateCartEta(this.cart);
 
@@ -857,7 +974,7 @@
         this.renderStudentOrders();
         this.renderStudentProfile();
         this.scheduleOrderAutoProgress(order.id);
-        this.showToast(`🎉 Order #${order.id} sent to kitchen queue!`);
+        this.showToast(`Order #${order.id} sent to kitchen queue`);
         this.showOrderModal(order);
       } catch (err) {
         console.error("Order placement error:", err);
@@ -868,12 +985,11 @@
     }
 
     scheduleOrderAutoProgress(orderId) {
-      // Simulate live kitchen prep & ready progression automatically
       setTimeout(() => {
         const order = this.db.data.orders.find(o => o.id === orderId);
         if (order && order.status === 'NEW') {
           this.db.advanceOrderStatus(orderId);
-          this.showToast(`👨‍🍳 Kitchen started cooking Token #${orderId}!`);
+          this.showToast(`Kitchen started cooking Token #${orderId}`);
           this.refreshCurrentView();
         }
       }, 7000);
@@ -882,10 +998,10 @@
         const order = this.db.data.orders.find(o => o.id === orderId);
         if (order && order.status === 'PREPARING') {
           this.db.advanceOrderStatus(orderId);
-          this.showToast(`🔔 Token #${orderId} is READY for pickup at Counter 1!`);
+          this.showToast(`Token #${orderId} is READY for pickup at Counter 01`);
           this.refreshCurrentView();
         }
-      }, 15000);
+      }, 16000);
     }
 
     showOrderModal(order) {
@@ -900,8 +1016,10 @@
       this.switchStudentTab('orders');
     }
 
+    // Live Orders & Stepper
     renderStudentOrders() {
       const container = document.getElementById('orders-list');
+      if (!container) return;
       const safeUser = this.currentUser || { id: 2, name: "Sreeshanth" };
       const orders = this.db.getOrders(safeUser.id);
 
@@ -910,8 +1028,7 @@
 
       let html = '';
 
-      // TRAY PENDING NOTICE:
-      // If user has items in their tray, show a prominent banner here so they can place order directly
+      // Tray Pending Notice
       if (this.cart && this.cart.length > 0) {
         const cartQty = this.cart.reduce((sum, i) => sum + i.qty, 0);
         const cartTotal = this.cart.reduce((sum, i) => sum + (i.food.price * i.qty), 0);
@@ -920,13 +1037,12 @@
         html += `
           <div class="pending-tray-banner">
             <div class="pending-tray-info">
-              <span class="pending-tray-badge">⚡ READY IN TRAY</span>
-              <h4>You have ${cartQty} dish${cartQty > 1 ? 'es' : ''} in your tray waiting to order!</h4>
-              <p>${itemNames} · <strong>Total Payable: ₹${cartTotal}</strong></p>
+              <span class="pending-tray-badge">TRAY READY</span>
+              <h4>You have ${cartQty} dish${cartQty > 1 ? 'es' : ''} in your tray waiting to order</h4>
+              <p style="font-size: 0.88rem; color: var(--muted);">${itemNames} · <strong>Total: ₹${cartTotal}</strong></p>
             </div>
-            <button class="btn btn-primary btn-md pulse" onclick="app.placeOrder()">
-              <span>CONFIRM & PLACE ORDER (₹${cartTotal})</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <button class="btn btn-primary btn-md" onclick="app.placeOrder()">
+              <span>CONFIRM ORDER (₹${cartTotal}) &rarr;</span>
             </button>
           </div>
         `;
@@ -935,14 +1051,13 @@
       if (activeOrders.length === 0 && pastOrders.length === 0) {
         if (!this.cart || this.cart.length === 0) {
           html += `
-            <div class="card" style="padding: 3.5rem 2rem; text-align: center; border: 2px dashed var(--border-subtle);">
-              <div style="font-size: 3rem; margin-bottom: 0.75rem;">🍳</div>
-              <h3 style="font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.4rem;">No Orders Placed Yet</h3>
-              <p style="color: var(--text-secondary); margin-bottom: 1.5rem; max-width: 420px; margin-left: auto; margin-right: auto; font-size: 0.95rem;">
-                You have no active meals in the kitchen queue. Choose a dish from today's menu to place an order!
+            <div style="background: var(--bg-surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 4rem 2rem; text-align: center;">
+              <h3 style="font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 0.35rem;">No Orders Placed Yet</h3>
+              <p style="color: var(--muted); margin-bottom: 1.75rem; max-width: 440px; margin-left: auto; margin-right: auto; font-size: 0.92rem;">
+                You have no active meals in the kitchen queue. Choose a fresh dish from today's menu to place your first token.
               </p>
-              <button class="btn btn-primary btn-lg" onclick="app.switchStudentTab('menu')">
-                DISCOVER MENU & ORDER
+              <button class="btn btn-primary btn-md" onclick="app.switchStudentTab('menu')">
+                <span>DISCOVER MENU &rarr;</span>
               </button>
             </div>
           `;
@@ -951,74 +1066,70 @@
         return;
       }
 
-      // Active Orders
+      // Active Orders Section
       if (activeOrders.length > 0) {
         const steps = [
           { key: "NEW", label: "ORDERED" },
           { key: "PREPARING", label: "PREPARING" },
-          { key: "READY", label: "READY FOR PICKUP" },
+          { key: "READY", label: "READY" },
           { key: "COLLECTED", label: "COLLECTED" }
         ];
 
         html += `
-          <div style="margin-bottom: 2rem;">
-            <h4 style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; color: var(--primary); text-transform: uppercase; margin-bottom: 1rem;">
-              ACTIVE KITCHEN ORDERS (${activeOrders.length})
-            </h4>
-            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <div style="margin-bottom: 2.5rem;">
+            <span class="editorial-eyebrow" style="margin-bottom: 1rem;">ACTIVE KITCHEN TOKENS (${activeOrders.length})</span>
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
               ${activeOrders.map(o => {
                 const currentIdx = steps.findIndex(s => s.key === o.status);
                 const timeStr = new Date(o.created).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
                 return `
-                  <div class="card order-card">
-                    <div class="order-card-header">
-                      <div class="order-id-group">
-                        <span class="order-token">Token #${o.id}</span>
-                        <span class="order-time">Placed at ${timeStr} · ETA ~${o.etaMin}m</span>
+                  <div class="order-ticket-card">
+                    <div class="order-ticket-header">
+                      <div>
+                        <span class="order-token-badge">TOKEN #${o.id}</span>
+                        <span class="order-meta-info">Placed at ${timeStr} · ETA ~${o.etaMin}m</span>
                       </div>
-                      <div style="display: flex; align-items: center; gap: 1rem;">
-                        <span class="order-price">₹${o.total}</span>
+                      <div style="display: flex; align-items: baseline; gap: 1.25rem;">
+                        <span class="order-total-figure">₹${o.total}</span>
                         ${o.status === 'NEW' ? `
-                          <button class="btn btn-ghost btn-xs" style="color: #DC2626; border-color: #FCA5A5;" onclick="app.handleCancelOrder(${o.id})">
-                            ✕ Cancel
+                          <button class="btn btn-secondary btn-xs" style="color: var(--accent); border-color: var(--accent);" onclick="app.handleCancelOrder(${o.id})">
+                            Cancel
                           </button>
                         ` : ''}
                       </div>
                     </div>
 
-                    <div class="order-stepper">
+                    <div class="order-timeline-stepper">
                       ${steps.map((s, idx) => {
-                        let statusClass = '';
-                        let bulletContent = idx + 1;
+                        let nodeClass = '';
+                        let bulletChar = idx + 1;
                         if (idx < currentIdx || o.status === 'COLLECTED') {
-                          statusClass = 'completed';
-                          bulletContent = '✓';
+                          nodeClass = 'completed';
+                          bulletChar = '✓';
                         } else if (idx === currentIdx) {
-                          statusClass = 'current';
-                          bulletContent = '●';
+                          nodeClass = 'current';
+                          bulletChar = '●';
                         }
                         return `
-                          <div class="step-node ${statusClass}">
-                            <div class="step-bullet">${bulletContent}</div>
-                            <span class="step-label">${s.label}</span>
+                          <div class="timeline-node ${nodeClass}">
+                            <div class="timeline-bullet">${bulletChar}</div>
+                            <span class="timeline-label">${s.label}</span>
                           </div>
                         `;
                       }).join('')}
                     </div>
 
-                    <div class="order-summary-text">
+                    <div class="order-summary-box">
                       <strong>Items:</strong> ${o.summary}
                     </div>
 
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; padding-top: 0.75rem; border-top: 1px dashed var(--border-subtle);">
-                      <div>
-                        ${o.status === 'NEW' ? '<span style="background: #FEF3C7; color: #D97706; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 999px;">⏳ Order Received in Kitchen</span>' : ''}
-                        ${o.status === 'PREPARING' ? '<span style="background: #FEE2E2; color: #DC2626; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 999px;">🔥 Sizzling & Cooking in Kitchen</span>' : ''}
-                        ${o.status === 'READY' ? '<span style="background: #D1FAE5; color: #059669; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 999px;">🔔 Ready for Pickup at Counter 1!</span>' : ''}
-                      </div>
-                      <button class="btn btn-ghost btn-xs" style="font-size: 0.75rem;" onclick="app.advanceOrderFromStudent(${o.id})">
-                        ${o.status === 'NEW' ? '👨‍🍳 Kitchen: Start Cooking' : o.status === 'PREPARING' ? '🔔 Kitchen: Mark Ready' : '✓ Pick Up & Collect'}
+                    <div class="order-actions-bar">
+                      <span style="font-family: var(--font-mono); font-size: 0.74rem; font-weight: 600; color: ${o.status === 'READY' ? 'var(--success)' : 'var(--ink)'};">
+                        ${o.status === 'NEW' ? 'Order accepted in kitchen queue' : o.status === 'PREPARING' ? 'Cooking on the stove' : 'Ready for pickup at Counter 01'}
+                      </span>
+                      <button class="btn btn-secondary btn-xs" onclick="app.advanceOrderFromStudent(${o.id})">
+                        ${o.status === 'NEW' ? 'Start Cooking' : o.status === 'PREPARING' ? 'Mark Ready' : 'Collect Dish'} &rarr;
                       </button>
                     </div>
                   </div>
@@ -1027,40 +1138,30 @@
             </div>
           </div>
         `;
-      } else {
-        html += `
-          <div class="card" style="padding: 1.75rem; text-align: center; margin-bottom: 2rem; background: var(--bg-surface-subtle);">
-            <p style="color: var(--text-secondary); font-size: 0.9rem;">
-              No active orders currently in the kitchen.
-            </p>
-            <button class="btn btn-ghost btn-sm" style="margin-top: 0.75rem;" onclick="app.switchStudentTab('menu')">
-              + Order Something New
-            </button>
-          </div>
-        `;
       }
 
       // Past Orders Section
       if (pastOrders.length > 0) {
         html += `
           <div>
-            <h4 style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 1rem;">
-              PAST COMPLETED ORDERS (${pastOrders.length})
-            </h4>
+            <span class="editorial-eyebrow" style="margin-bottom: 1rem;">PAST FULFILLED ORDERS (${pastOrders.length})</span>
             <div style="display: flex; flex-direction: column; gap: 0.85rem;">
               ${pastOrders.map(o => {
                 const dateStr = new Date(o.created).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
                 return `
-                  <div class="card" style="padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; opacity: 0.9;">
+                  <div class="history-item-row">
                     <div>
-                      <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <strong style="font-family: var(--font-display);">Token #${o.id}</strong>
-                        <span style="font-size: 0.75rem; color: var(--text-muted);">${dateStr}</span>
-                        <span style="font-size: 0.7rem; font-weight: 700; color: var(--success); background: var(--success-subtle); padding: 0.1rem 0.4rem; border-radius: 999px;">COLLECTED ✓</span>
+                      <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <strong style="font-family: var(--font-mono); font-size: 0.95rem;">#${o.id}</strong>
+                        <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);">${dateStr}</span>
+                        <span style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: var(--success); background: var(--success-subtle); padding: 0.1rem 0.4rem; border-radius: var(--radius-xs);">COLLECTED ✓</span>
                       </div>
-                      <small style="color: var(--text-secondary); display: block; margin-top: 0.2rem;">${o.summary}</small>
+                      <small style="color: var(--muted); display: block; margin-top: 0.25rem;">${o.summary}</small>
                     </div>
-                    <span style="font-family: var(--font-display); font-weight: 800; font-size: 1.1rem;">₹${o.total}</span>
+                    <div style="display: flex; align-items: center; gap: 1.25rem;">
+                      <span style="font-family: var(--font-mono); font-weight: 700; font-size: 1.05rem;">₹${o.total}</span>
+                      <button class="btn btn-arrow" onclick="app.reorderItem(${o.id})">REORDER &rarr;</button>
+                    </div>
                   </div>
                 `;
               }).join('')}
@@ -1080,7 +1181,7 @@
       const order = this.db.data.orders.find(o => o.id === orderId);
       if (order) {
         if (order.status === 'COLLECTED') {
-          this.showToast(`Token #${orderId} collected! Added to your profile statistics.`);
+          this.showToast(`Token #${orderId} collected. Added to your dining history.`);
         } else {
           this.showToast(`Token #${orderId} moved to ${order.status}`);
         }
@@ -1090,12 +1191,34 @@
     handleCancelOrder(orderId) {
       if (confirm(`Cancel Order #${orderId}? Stock will be refunded.`)) {
         if (this.db.cancelOrder(orderId)) {
-          this.showToast(`Order #${orderId} cancelled.`);
+          this.showToast(`Order #${orderId} cancelled`);
           this.renderStudentOrders();
           this.renderStudentProfile();
           this.updateActiveOrdersBadge();
         }
       }
+    }
+
+    reorderItem(orderId) {
+      const order = this.db.data.orders.find(o => o.id === orderId);
+      if (!order || !order.items) return;
+
+      order.items.forEach(it => {
+        const food = this.db.getFoods().find(f => f.id === it.foodId);
+        if (food && food.available) {
+          const existing = this.cart.find(c => c.food.id === food.id);
+          if (existing) {
+            existing.qty += it.qty;
+          } else {
+            this.cart.push({ food, qty: it.qty });
+          }
+        }
+      });
+
+      this.renderCart();
+      this.switchStudentTab('menu');
+      this.scrollToTray();
+      this.showToast(`Added dishes from Token #${orderId} to tray`);
     }
 
     renderStudentProfile() {
@@ -1122,16 +1245,14 @@
           favEl.innerText = '—';
         }
       }
-      const headingEl = document.getElementById('profile-detail-heading');
-      if (headingEl) headingEl.innerText = safeUser.role === 'FACULTY' ? 'Faculty Identification' : 'Student Identification';
-      const idLabelEl = document.getElementById('profile-id-label');
-      if (idLabelEl) idLabelEl.innerText = safeUser.role === 'FACULTY' ? 'Faculty / Employee ID' : 'Roll / Student ID';
+
       const rollEl = document.getElementById('profile-roll');
       if (rollEl) rollEl.innerText = safeUser.facultyId || safeUser.studentId || 'N/A';
+      const idLabel = document.getElementById('profile-id-label');
+      if (idLabel) idLabel.innerText = safeUser.role === 'FACULTY' ? 'Faculty / Employee ID' : 'Roll / Student ID';
       const emailEl = document.getElementById('profile-email');
       if (emailEl) emailEl.innerText = safeUser.email || 'demo@campus.edu';
 
-      // Populate recent orders list in profile
       const historyContainer = document.getElementById('profile-orders-list');
       const countLabel = document.getElementById('profile-history-count');
       if (countLabel) countLabel.innerText = `${orders.length} Orders Placed`;
@@ -1139,31 +1260,28 @@
       if (historyContainer) {
         if (orders.length === 0) {
           historyContainer.innerHTML = `
-            <div style="padding: 2rem; text-align: center; color: var(--text-muted);">
-              <p>No order history yet. Discover dishes in the menu and place your first meal!</p>
+            <div style="padding: 2.5rem 1rem; text-align: center; color: var(--muted);">
+              <p style="font-size: 0.92rem;">No order history yet. Discover dishes in the menu to place your first token.</p>
             </div>
           `;
         } else {
           historyContainer.innerHTML = orders.map(o => {
             const timeStr = new Date(o.created).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-            let badge = '';
-            if (o.status === 'NEW') badge = '<span style="background: #FEF3C7; color: #D97706; font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 999px;">ORDERED</span>';
-            else if (o.status === 'PREPARING') badge = '<span style="background: #FEE2E2; color: #DC2626; font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 999px;">PREPARING</span>';
-            else if (o.status === 'READY') badge = '<span style="background: #D1FAE5; color: #059669; font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 999px;">READY</span>';
-            else badge = '<span style="background: var(--bg-surface-subtle); color: var(--text-secondary); font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 999px;">COLLECTED ✓</span>';
-
             return `
-              <div class="food-row-item" style="padding: 0.85rem 1rem;">
-                <div class="food-row-info">
-                  <div style="display: flex; align-items: center; gap: 0.5rem;">
-                    <strong>Token #${o.id}</strong>
-                    ${badge}
-                    <small style="color: var(--text-muted);">${timeStr}</small>
+              <div class="history-item-row">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <strong style="font-family: var(--font-mono);">#${o.id}</strong>
+                    <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);">${timeStr}</span>
+                    <span style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: ${o.status === 'COLLECTED' ? 'var(--success)' : 'var(--accent)'};">
+                      ${o.status}
+                    </span>
                   </div>
-                  <small style="margin-top: 0.2rem; color: var(--text-secondary);">${o.summary}</small>
+                  <small style="color: var(--muted); display: block; margin-top: 0.25rem;">${o.summary}</small>
                 </div>
-                <div style="font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: var(--text-primary);">
-                  ₹${o.total}
+                <div style="display: flex; align-items: center; gap: 1.25rem;">
+                  <strong style="font-family: var(--font-mono); font-size: 1.05rem;">₹${o.total}</strong>
+                  <button class="btn btn-arrow" onclick="app.reorderItem(${o.id})">REORDER &rarr;</button>
                 </div>
               </div>
             `;
@@ -1173,7 +1291,7 @@
     }
 
     // ==========================================
-    // ADMIN PORTAL
+    // CANTEEN STAFF / KITCHEN OPERATIONS
     // ==========================================
     switchAdminTab(tab) {
       this.activeAdminTab = tab;
@@ -1183,6 +1301,7 @@
         if (btn) btn.classList.toggle('active', t === tab);
         if (sec) sec.classList.toggle('hidden', t !== tab);
       });
+      this.renderAdminNavigation();
       this.refreshCurrentView();
     }
 
@@ -1198,6 +1317,7 @@
       const colNew = document.getElementById('col-orders-new');
       const colPrep = document.getElementById('col-orders-prep');
       const colReady = document.getElementById('col-orders-ready');
+      if (!colNew || !colPrep || !colReady) return;
 
       const newOrders = orders.filter(o => o.status === 'NEW');
       const prepOrders = orders.filter(o => o.status === 'PREPARING');
@@ -1208,24 +1328,24 @@
       document.getElementById('count-ready').innerText = readyOrders.length;
 
       const renderCard = (o, btnText) => `
-        <div class="card kanban-card">
-          <div class="kanban-card-top">
-            <span class="k-token">#${o.id}</span>
-            <span class="k-cust">${o.customerName}</span>
+        <div class="kanban-ticket">
+          <div class="ticket-top">
+            <span class="ticket-token">#${o.id}</span>
+            <span class="ticket-cust">${o.customerName}</span>
           </div>
-          <div class="k-summary">${o.summary}</div>
-          <div class="k-footer">
-            <span class="k-price">₹${o.total}</span>
-            <button class="btn btn-primary btn-sm" onclick="app.advanceOrder(${o.id})">
-              ${btnText}
+          <div class="ticket-summary">${o.summary}</div>
+          <div class="ticket-footer">
+            <span class="ticket-price">₹${o.total}</span>
+            <button class="btn btn-primary btn-xs" onclick="app.advanceOrder(${o.id})">
+              <span>${btnText} &rarr;</span>
             </button>
           </div>
         </div>
       `;
 
-      colNew.innerHTML = newOrders.map(o => renderCard(o, 'ACCEPT & START')).join('') || '<div style="color:var(--text-muted);font-size:0.8rem;text-align:center;padding:2rem;">No new orders</div>';
-      colPrep.innerHTML = prepOrders.map(o => renderCard(o, 'MARK READY')).join('') || '<div style="color:var(--text-muted);font-size:0.8rem;text-align:center;padding:2rem;">Stove is clear</div>';
-      colReady.innerHTML = readyOrders.map(o => renderCard(o, 'COLLECTED ✓')).join('') || '<div style="color:var(--text-muted);font-size:0.8rem;text-align:center;padding:2rem;">Counter cleared</div>';
+      colNew.innerHTML = newOrders.map(o => renderCard(o, 'START COOKING')).join('') || '<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">NO PENDING ORDERS</div>';
+      colPrep.innerHTML = prepOrders.map(o => renderCard(o, 'MARK READY')).join('') || '<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">STOVE IS CLEAR</div>';
+      colReady.innerHTML = readyOrders.map(o => renderCard(o, 'COLLECTED ✓')).join('') || '<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">COUNTER CLEARED</div>';
     }
 
     advanceOrder(orderId) {
@@ -1236,17 +1356,20 @@
 
     renderAdminMenu() {
       const container = document.getElementById('admin-food-table');
+      if (!container) return;
       const foods = this.db.getFoods();
 
       container.innerHTML = foods.map(f => `
-        <div class="food-row-item">
-          <div class="food-row-info">
-            <strong>${f.name} (₹${f.price})</strong>
-            <small>${f.category} · Prep: ${f.prepMin} mins</small>
+        <div class="food-editor-row">
+          <div>
+            <strong style="font-size: 0.92rem;">${f.name}</strong>
+            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem;">
+              ₹${f.price} · ${f.category} · Prep: ${f.prepMin}m
+            </div>
           </div>
-          <button class="toggle-btn ${f.available ? 'active' : 'inactive'}" 
+          <button class="toggle-availability-btn ${f.available ? 'active' : 'inactive'}" 
                   onclick="app.toggleFoodAvailability(${f.id})">
-            ${f.available ? '● IN STOCK' : '✕ OUT OF STOCK'}
+            ${f.available ? '● AVAILABLE' : '✕ SOLD OUT'}
           </button>
         </div>
       `).join('');
@@ -1257,106 +1380,100 @@
       if (food) {
         this.db.setFoodAvailability(foodId, !food.available);
         this.renderAdminMenu();
-        this.showToast(`${food.name} is now ${!food.available ? 'In Stock' : 'Out of Stock'}`);
+        this.showToast(`${food.name} is now ${!food.available ? 'Available' : 'Sold Out'}`);
       }
     }
 
     handleAddNewFood(e) {
       e.preventDefault();
       const name = document.getElementById('new-food-name').value;
-      const price = document.getElementById('new-food-price').value;
-      const prep = document.getElementById('new-food-prep').value;
+      const price = parseFloat(document.getElementById('new-food-price').value);
+      const prep = parseInt(document.getElementById('new-food-prep').value, 10);
       const cat = document.getElementById('new-food-cat').value;
       const desc = document.getElementById('new-food-desc').value;
 
-      this.db.addFood(name, price, cat, prep, desc);
+      this.db.addFood({
+        name,
+        price,
+        prepMin: prep,
+        category: cat,
+        desc,
+        ingId: null,
+        perServing: 0,
+        available: true,
+        image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80"
+      });
+
       e.target.reset();
       this.renderAdminMenu();
-      this.showToast(`Published ${name} to canteen menu!`);
+      this.showToast(`Added ${name} to canteen menu`);
     }
 
     renderInventory() {
       const container = document.getElementById('inv-table-body');
-      const invs = this.db.getInventory();
+      if (!container) return;
+      const items = this.db.getInventory();
 
-      container.innerHTML = invs.map(i => {
-        let status = 'good';
-        let statusLabel = 'HEALTHY';
-        if (i.qty <= 0) {
-          status = 'out';
-          statusLabel = 'EMPTY';
-        } else if (i.qty <= i.minQty) {
-          status = 'low';
-          statusLabel = 'LOW STOCK';
-        }
-
-        const maxRef = Math.max(i.qty, i.minQty * 3);
-        const pct = Math.min(100, Math.round((i.qty / maxRef) * 100));
-
+      container.innerHTML = items.map(i => {
+        const isLow = i.qty <= i.minQty;
         return `
-          <div class="inv-card">
-            <div>
-              <div class="inv-card-header">
-                <span class="inv-name">${i.ingredient}</span>
-                <span class="inv-status-pill ${status}">${statusLabel}</span>
-              </div>
-              <div class="inv-qty">${i.qty} <small style="font-size:0.9rem;font-weight:600;color:var(--text-secondary);">${i.unit}</small></div>
-              <small style="color:var(--text-muted);font-size:0.75rem;">Safety Threshold: ${i.minQty} ${i.unit}</small>
-              <div class="stock-meter">
-                <div class="stock-meter-fill ${status}" style="width: ${pct}%;"></div>
-              </div>
+          <div class="inv-stat-box ${isLow ? 'low-stock' : ''}">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <span class="inv-name">${i.ingredient}</span>
+              <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; color: ${isLow ? 'var(--warning)' : 'var(--success)'};">
+                ${isLow ? 'LOW STOCK' : 'GOOD'}
+              </span>
             </div>
-            <button class="btn btn-ghost btn-sm" onclick="app.restockIngredient(${i.id})">
-              + Restock (10 ${i.unit})
-            </button>
+            <div class="inv-qty">${i.qty} <small style="font-size: 0.85rem; font-weight: 500;">${i.unit}</small></div>
+            <div class="inv-meta">Threshold: min ${i.minQty} ${i.unit}</div>
           </div>
         `;
       }).join('');
     }
 
-    restockIngredient(invId) {
-      this.db.restock(invId, 10);
-      this.renderInventory();
-      this.renderAdminMenu();
-      this.showToast('Restocked +10 units. Associated dishes re-enabled.');
-    }
-
     renderAnalytics() {
       const an = this.db.getAnalytics();
-      document.getElementById('an-total-orders').innerText = an.totalOrders;
-      document.getElementById('an-total-rev').innerText = `₹${an.totalRev}`;
-      document.getElementById('an-avg-ticket').innerText = `₹${an.avgTicket}`;
+      const totalEl = document.getElementById('an-total-orders');
+      const revEl = document.getElementById('an-total-rev');
+      const ticketEl = document.getElementById('an-avg-ticket');
+      if (totalEl) totalEl.innerText = an.totalOrders;
+      if (revEl) revEl.innerText = `₹${an.totalRev}`;
+      if (ticketEl) ticketEl.innerText = `₹${an.avgTicket}`;
 
-      // Popular chart
+      // Popular items chart
       const popChart = document.getElementById('chart-popular');
-      const maxPop = an.topDishes.length > 0 ? Math.max(...an.topDishes.map(d => d[1])) : 1;
-      popChart.innerHTML = an.topDishes.map(d => `
-        <div class="chart-bar-row">
-          <div class="chart-bar-info">
-            <span>${d[0]}</span>
-            <span>${d[1]} orders</span>
+      if (popChart) {
+        const maxPop = an.topDishes.length > 0 ? Math.max(...an.topDishes.map(d => d[1])) : 1;
+        popChart.innerHTML = an.topDishes.map(d => `
+          <div class="chart-bar-row">
+            <div class="chart-bar-info">
+              <span>${d[0]}</span>
+              <span>${d[1]} orders</span>
+            </div>
+            <div class="chart-track">
+              <div class="chart-fill" style="width: ${(d[1] / maxPop) * 100}%;"></div>
+            </div>
           </div>
-          <div class="chart-track">
-            <div class="chart-fill" style="width: ${(d[1] / maxPop) * 100}%;"></div>
-          </div>
-        </div>
-      `).join('') || '<p style="color:var(--text-muted);font-size:0.8rem;">No completed order data yet</p>';
+        `).join('') || '<p style="color:var(--muted);font-size:0.82rem;">No orders fulfilled yet</p>';
+      }
 
       // Peak Hours chart
       const peakChart = document.getElementById('chart-peak');
-      const hours = Object.entries(an.hourCounts);
-      const maxHr = hours.length > 0 ? Math.max(...hours.map(h => h[1])) : 1;
-      peakChart.innerHTML = hours.map(h => `
-        <div class="chart-bar-row">
-          <div class="chart-bar-info">
-            <span>${h[0]}</span>
-            <span>${h[1]} orders</span>
+      if (peakChart) {
+        const hours = Object.entries(an.hourCounts);
+        const maxHr = hours.length > 0 ? Math.max(...hours.map(h => h[1])) : 1;
+        peakChart.innerHTML = hours.map(h => `
+          <div class="chart-bar-row">
+            <div class="chart-bar-info">
+              <span>${h[0]}</span>
+              <span>${h[1]} orders</span>
+            </div>
+            <div class="chart-track">
+              <div class="chart-fill" style="width: ${(h[1] / maxHr) * 100}%;"></div>
+            </div>
           </div>
-          <div class="chart-track">
-            <div class="chart-fill" style="width: ${(h[1] / maxHr) * 100}%;"></div>
-          </div>
-        </div>
-      `).join('') || '<p style="color:var(--text-muted);font-size:0.8rem;">No orders registered today</p>';
+        `).join('') || '<p style="color:var(--muted);font-size:0.82rem;">No orders registered today</p>';
+      }
     }
 
     placeTestOrder() {
@@ -1370,7 +1487,7 @@
       try {
         const order = this.db.placeOrder(student, testCart, subtotal, eta);
         this.renderKanbanBoard();
-        this.showToast(`Placed test order #${order.id} for ${student.name}`);
+        this.showToast(`Simulated test order #${order.id} sent`);
       } catch (err) {
         this.showToast(err.message);
       }
@@ -1381,7 +1498,7 @@
         this.db.reset();
         this.cart = [];
         this.render();
-        this.showToast('Database reset to defaults.');
+        this.showToast('Database reset to defaults');
       }
     }
   }
