@@ -256,12 +256,12 @@
           </div>
 
           <!-- PROFILE ORDER SUMMARY & RECENT ACTIVITY -->
-          <div class="card" style="padding: 1.5rem; margin-top: 1.5rem;">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
-              <h3 style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 700;">My Order History & Activity</h3>
-              <span id="profile-history-count" style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);">0 Orders</span>
+          <div class="card profile-history-card">
+            <div class="profile-history-header">
+              <h3 class="profile-history-title">My Order History & Activity</h3>
+              <span id="profile-history-count" class="profile-history-count">0 Orders</span>
             </div>
-            <div id="profile-orders-list" style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <div id="profile-orders-list" class="profile-orders-list">
               <!-- Dynamic orders history injected here -->
             </div>
           </div>
@@ -345,7 +345,7 @@
           </button>
         </div>
 
-        <div class="admin-quick-actions" style="display: flex; gap: 0.5rem;">
+        <div class="admin-quick-actions">
           <button class="btn btn-ghost btn-sm" onclick="app.placeTestOrder()" title="Send a simulated student order to kitchen">
             ⚡ + Test Order
           </button>
@@ -424,8 +424,8 @@
                 </div>
               </div>
               <div class="form-group">
-                <label>Category</label>
-                <select id="new-food-cat" required>
+                <label for="new-food-cat">Category</label>
+                <select id="new-food-cat" name="category" title="Food Category" required>
                   <option value="Meals">Meals</option>
                   <option value="Snacks">Snacks</option>
                   <option value="Drinks">Drinks</option>

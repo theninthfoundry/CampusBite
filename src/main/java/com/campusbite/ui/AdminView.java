@@ -20,7 +20,7 @@ class AdminView {
         tabs.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabs.getSelectionModel().selectedItemProperty().addListener((o, a, b) -> { if (b != null) b.setContent(rebuild(b.getText())); });
         Button out = Ui.button("LOGOUT", "ghost", () -> { if (poll != null) poll.stop(); Main.show(new LoginView().build()); });
-        HBox top = new HBox(24, Ui.label("CAMPUSBITE / ADMIN", "brand"), out); top.setPadding(new Insets(20, 40, 12, 40)); top.setAlignment(Pos.CENTER_LEFT);
+        HBox top = new HBox(24, Ui.label("CAMPUSBITE / " + me.getName().toUpperCase(), "brand"), out); top.setPadding(new Insets(20, 40, 12, 40)); top.setAlignment(Pos.CENTER_LEFT);
         BorderPane root = new BorderPane(tabs); root.setTop(top); root.getStyleClass().add("root-paper"); return root;
     }
     private Tab tab(String t, Node n) { Tab x = new Tab(t, n); return x; }

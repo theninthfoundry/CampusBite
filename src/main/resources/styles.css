@@ -13,12 +13,12 @@
 .status { -fx-font-size: 13px; -fx-text-fill: #B33A2B; -fx-font-weight: 700; }
 .mono { -fx-font-family: "Menlo","Consolas",monospace; -fx-font-size: 13px; -fx-text-fill: #111111; }
 .error { -fx-text-fill: #B33A2B; -fx-font-size: 13px; }
-.primary { -fx-background-color: #C8402D; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: 700; -fx-background-radius: 6; -fx-padding: 9 16; -fx-cursor: hand; }
+.primary { -fx-background-color: #C8402D; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: 700; -fx-background-radius: 6; -fx-padding: 9 16; -fx-cursor: hand; cursor: pointer; }
 .primary:hover { -fx-background-color: #A93322; }
 .primary:disabled { -fx-background-color: #E3E0D8; -fx-text-fill: #8A8882; }
-.ghost { -fx-background-color: transparent; -fx-border-color: #E3E0D8; -fx-border-radius: 6; -fx-text-fill: #111111; -fx-font-size: 12px; -fx-cursor: hand; }
-.chip { -fx-background-color: #FFFFFF; -fx-border-color: #E3E0D8; -fx-border-radius: 6; -fx-background-radius: 6; -fx-font-size: 12px; -fx-cursor: hand; }
+.ghost { -fx-background-color: transparent; -fx-border-color: #E3E0D8; -fx-border-radius: 6; -fx-text-fill: #111111; -fx-font-size: 12px; -fx-cursor: hand; cursor: pointer; }
+.chip { -fx-background-color: #FFFFFF; -fx-border-color: #E3E0D8; -fx-border-radius: 6; -fx-background-radius: 6; -fx-font-size: 12px; -fx-cursor: hand; cursor: pointer; }
 .chip:hover { -fx-border-color: #111111; }
-.nav { -fx-background-color: transparent; -fx-text-fill: #111111; -fx-font-size: 11px; -fx-font-weight: 700; -fx-cursor: hand; }
+.nav { -fx-background-color: transparent; -fx-text-fill: #111111; -fx-font-size: 11px; -fx-font-weight: 700; -fx-cursor: hand; cursor: pointer; }
 .text-field, .password-field { -fx-background-color: #FFFFFF; -fx-border-color: #E3E0D8; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 10; }
 .text-field:focused, .password-field:focused { -fx-border-color: #111111; }

@@ -72,6 +72,7 @@ body {
   top: 0;
   z-index: 100;
   background: rgba(247, 245, 239, 0.92);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-subtle);
   padding: 0.75rem 1.5rem;
@@ -90,6 +91,7 @@ body {
   align-items: center;
   gap: 0.75rem;
   cursor: pointer;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -227,6 +229,7 @@ body {
   cursor: pointer;
   transition: var(--transition);
   text-decoration: none;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -1427,6 +1430,7 @@ input:focus, select:focus {
   position: fixed;
   inset: 0;
   background: rgba(18, 18, 18, 0.6);
+  -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
@@ -1568,6 +1572,42 @@ input:focus, select:focus {
 .detail-v {
   font-weight: 700;
   color: var(--text-primary);
+}
+
+.profile-history-card {
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.profile-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.profile-history-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.profile-history-count {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.profile-orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.admin-quick-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* Responsive adjustments */
