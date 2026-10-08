@@ -25,7 +25,7 @@ public final class Db {
     private static void seed(Connection c) throws SQLException {
         String[][] users = {{"Canteen Admin", null, "admin@campus.edu", "admin123", "ADMIN"},
             {"Sreeshanth", "25R11A0501", "demo@campus.edu", "student123", "STUDENT"},
-            {"Ananya", "25R11A0522", "ananya@campus.edu", "student123", "STUDENT"}};
+            {"Chandrashekar", "25R11A0522", "chandrashekar@campus.edu", "student123", "STUDENT"}};
         try (PreparedStatement p = c.prepareStatement("INSERT INTO users(name,student_id,email,password_hash,role) VALUES(?,?,?,?,?)")) {
             for (String[] u : users) { p.setString(1, u[0]); p.setString(2, u[1]); p.setString(3, u[2]); p.setString(4, hash(u[3])); p.setString(5, u[4]); p.executeUpdate(); }
         }
