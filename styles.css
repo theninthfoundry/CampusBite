@@ -181,6 +181,11 @@ body {
   color: var(--info);
 }
 
+.user-badge.faculty {
+  background: #EDE9FE;
+  color: #6D28D9;
+}
+
 .user-badge.admin {
   background: var(--primary-subtle);
   color: var(--primary);
@@ -484,6 +489,13 @@ input:focus, select:focus {
   width: 10px;
   height: 10px;
   background: var(--info);
+  border-radius: 50%;
+}
+
+.faculty-dot {
+  width: 10px;
+  height: 10px;
+  background: #8B5CF6;
   border-radius: 50%;
 }
 

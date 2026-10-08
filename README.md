@@ -42,7 +42,7 @@ npx serve .
 | Role | Email / Student ID | Password | Portal Features |
 | :--- | :--- | :--- | :--- |
 | **Student** | `demo@campus.edu` *(or `25R11A0501`)* | `student123` | Menu search, tray, dynamic ETA, live order tracking |
-| **Student** | `chandrashekar@campus.edu` *(or `25R11A0522`)* | `student123` | Menu search, tray, dynamic ETA, live order tracking |
+| **Faculty** | `chandrashekar@campus.edu` *(or `FAC-CS-108`)* | `student123` | Menu search, tray, dynamic ETA, live order tracking |
 | **Canteen Admin** | `admin@campus.edu` | `admin123` | Live Kitchen Kanban, menu editor, inventory & restock, analytics |
 
 ---

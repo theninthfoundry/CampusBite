@@ -14,9 +14,9 @@
 
   const DEFAULT_DB = {
     users: [
-      { id: 1, name: "Canteen Admin", email: "admin@campus.edu", pw: "admin123", role: "ADMIN", studentId: null },
-      { id: 2, name: "Sreeshanth", email: "demo@campus.edu", pw: "student123", role: "STUDENT", studentId: "25R11A0501" },
-      { id: 3, name: "Chandrashekar", email: "chandrashekar@campus.edu", pw: "student123", role: "STUDENT", studentId: "25R11A0522" }
+      { id: 1, name: "Canteen Admin", email: "admin@campus.edu", pw: "admin123", role: "ADMIN", studentId: null, facultyId: null },
+      { id: 2, name: "Sreeshanth", email: "demo@campus.edu", pw: "student123", role: "STUDENT", studentId: "25R11A0501", facultyId: null },
+      { id: 3, name: "Chandrashekar", email: "chandrashekar@campus.edu", pw: "student123", role: "FACULTY", studentId: null, facultyId: "FAC-CS-108" }
     ],
     inventory: [
       { id: 1, ingredient: "Rice", qty: 18.0, unit: "kg", minQty: 3.0 },
@@ -78,11 +78,14 @@
       if (!Array.isArray(this.data.users)) {
         this.data.users = DEFAULT_DB.users;
       } else {
-        // Auto-migrate any existing cached profile from Ananya to Chandrashekar
+        // Auto-migrate any existing cached profile for Chandrashekar to FACULTY
         this.data.users.forEach(u => {
-          if (u.id === 3 || u.name === "Ananya" || u.email === "ananya@campus.edu") {
+          if (u.id === 3 || u.name === "Ananya" || u.name === "Chandrashekar" || u.email === "ananya@campus.edu" || u.email === "chandrashekar@campus.edu") {
             u.name = "Chandrashekar";
             u.email = "chandrashekar@campus.edu";
+            u.role = "FACULTY";
+            u.facultyId = "FAC-CS-108";
+            u.studentId = null;
           }
         });
       }
@@ -121,7 +124,8 @@
       const user = this.data.users.find(u => 
         (u.email.toLowerCase() === cleanId || 
          (cleanId === 'ananya@campus.edu' && u.email.toLowerCase() === 'chandrashekar@campus.edu') ||
-         (u.studentId && u.studentId.toLowerCase() === cleanId)) &&
+         (u.studentId && u.studentId.toLowerCase() === cleanId) ||
+         (u.facultyId && u.facultyId.toLowerCase() === cleanId)) &&
         u.pw === password
       );
       return user || null;
@@ -522,21 +526,24 @@
       badge.className = `user-badge ${this.currentUser.role.toLowerCase()}`;
       document.getElementById('user-avatar').innerText = this.currentUser.name.charAt(0);
 
-      if (this.currentUser.role === 'STUDENT') {
-        viewStudent.classList.remove('hidden');
-        viewAdmin.classList.add('hidden');
-        document.getElementById('student-home-title').innerText = "WHAT'S FOR LUNCH?";
-        this.renderStudentPortal();
-      } else {
+      if (this.currentUser.role === 'ADMIN') {
         viewStudent.classList.add('hidden');
         viewAdmin.classList.remove('hidden');
         this.renderAdminPortal();
+      } else {
+        viewStudent.classList.remove('hidden');
+        viewAdmin.classList.add('hidden');
+        const titleEl = document.getElementById('student-home-title');
+        if (titleEl) {
+          titleEl.innerText = this.currentUser.role === 'FACULTY' ? "FACULTY LOUNGE DINING" : "WHAT'S FOR LUNCH?";
+        }
+        this.renderStudentPortal();
       }
     }
 
     refreshCurrentView() {
       if (!this.currentUser) return;
-      if (this.currentUser.role === 'STUDENT') {
+      if (this.currentUser.role !== 'ADMIN') {
         if (this.activeStudentTab === 'menu') {
           this.renderMenuGrid();
           this.renderRecommendations();
@@ -1031,11 +1038,13 @@
     }
 
     renderStudentProfile() {
-      const safeUser = this.currentUser || { id: 2, name: "Sreeshanth", email: "demo@campus.edu", studentId: "25R11A0501" };
+      const safeUser = this.currentUser || { id: 2, name: "Sreeshanth", email: "demo@campus.edu", studentId: "25R11A0501", role: "STUDENT" };
       const orders = this.db.getOrders(safeUser.id);
       const spent = orders.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
       const fav = this.db.getStudentFavourite(safeUser.id);
 
+      const microEl = document.getElementById('profile-micro-label');
+      if (microEl) microEl.innerText = safeUser.role === 'FACULTY' ? 'FACULTY OVERVIEW' : 'STUDENT OVERVIEW';
       const nameEl = document.getElementById('profile-name');
       if (nameEl) nameEl.innerText = (safeUser.name || "SREESHANTH").toUpperCase();
       const countEl = document.getElementById('stat-total-orders');
@@ -1052,8 +1061,12 @@
           favEl.innerText = '—';
         }
       }
+      const headingEl = document.getElementById('profile-detail-heading');
+      if (headingEl) headingEl.innerText = safeUser.role === 'FACULTY' ? 'Faculty Identification' : 'Student Identification';
+      const idLabelEl = document.getElementById('profile-id-label');
+      if (idLabelEl) idLabelEl.innerText = safeUser.role === 'FACULTY' ? 'Faculty / Employee ID' : 'Roll / Student ID';
       const rollEl = document.getElementById('profile-roll');
-      if (rollEl) rollEl.innerText = safeUser.studentId || '25R11A0501';
+      if (rollEl) rollEl.innerText = safeUser.facultyId || safeUser.studentId || 'N/A';
       const emailEl = document.getElementById('profile-email');
       if (emailEl) emailEl.innerText = safeUser.email || 'demo@campus.edu';
 
