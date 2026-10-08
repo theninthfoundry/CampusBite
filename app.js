@@ -458,7 +458,56 @@
       }, 3000);
     }
 
-    // Auth
+    // Auth & Direct Role Switchers
+    loginAsStudent() {
+      let student = (this.db.data.users || []).find(u => u.role === 'STUDENT') || {
+        id: 2, name: "Sreeshanth", email: "demo@campus.edu", pw: "student123", role: "STUDENT", studentId: "25R11A0501"
+      };
+      this.currentUser = student;
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(student));
+      this.activeStudentTab = 'menu';
+      this.render();
+      this.showToast(`Logged in as ${student.name} (Student)`);
+    }
+
+    loginAsFaculty() {
+      let faculty = (this.db.data.users || []).find(u => u.role === 'FACULTY') || {
+        id: 3, name: "Chandrashekar", email: "chandrashekar@campus.edu", pw: "student123", role: "FACULTY", facultyId: "FAC-CS-108"
+      };
+      this.currentUser = faculty;
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(faculty));
+      this.activeStudentTab = 'menu';
+      this.render();
+      this.showToast(`Logged in as Prof. ${faculty.name} (Faculty)`);
+    }
+
+    loginAsAdmin() {
+      let admin = (this.db.data.users || []).find(u => u.role === 'ADMIN') || {
+        id: 1, name: "Canteen Admin", email: "admin@campus.edu", pw: "admin123", role: "ADMIN"
+      };
+      this.currentUser = admin;
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(admin));
+      this.activeAdminTab = 'live';
+      this.render();
+      this.showToast('Welcome to Canteen Kitchen Dashboard!');
+    }
+
+    switchToAdminDashboard() {
+      this.loginAsAdmin();
+    }
+
+    switchToStudentPortal() {
+      this.loginAsStudent();
+    }
+
+    togglePortalRole() {
+      if (!this.currentUser || this.currentUser.role === 'ADMIN') {
+        this.switchToStudentPortal();
+      } else {
+        this.switchToAdminDashboard();
+      }
+    }
+
     fillDemo(id, pw) {
       document.getElementById('login-id').value = id;
       document.getElementById('login-pw').value = pw;
@@ -494,10 +543,10 @@
 
     navigateHome() {
       if (!this.currentUser) return;
-      if (this.currentUser.role === 'STUDENT') {
-        this.switchStudentTab('menu');
-      } else {
+      if (this.currentUser.role === 'ADMIN') {
         this.switchAdminTab('live');
+      } else {
+        this.switchStudentTab('menu');
       }
     }
 
@@ -525,6 +574,18 @@
       badge.innerText = this.currentUser.role;
       badge.className = `user-badge ${this.currentUser.role.toLowerCase()}`;
       document.getElementById('user-avatar').innerText = this.currentUser.name.charAt(0);
+
+      // Update portal switcher button in top navbar
+      const switchBtn = document.getElementById('btn-toggle-portal');
+      if (switchBtn) {
+        if (this.currentUser.role === 'ADMIN') {
+          switchBtn.innerHTML = `<span>🍽️ Customer Menu View</span>`;
+          switchBtn.title = "Switch to Customer Ordering View";
+        } else {
+          switchBtn.innerHTML = `<span>👨‍🍳 Kitchen Dashboard</span>`;
+          switchBtn.title = "Switch to Kitchen Staff Dashboard & Kanban";
+        }
+      }
 
       if (this.currentUser.role === 'ADMIN') {
         viewStudent.classList.add('hidden');
@@ -557,6 +618,8 @@
       } else {
         if (this.activeAdminTab === 'live') {
           this.renderKanbanBoard();
+        } else if (this.activeAdminTab === 'menu') {
+          this.renderAdminMenu();
         } else if (this.activeAdminTab === 'inv') {
           this.renderInventory();
         } else if (this.activeAdminTab === 'analytics') {
@@ -1117,8 +1180,10 @@
     switchAdminTab(tab) {
       this.activeAdminTab = tab;
       ['live', 'menu', 'inv', 'analytics'].forEach(t => {
-        document.getElementById(`admin-tab-${t}`).classList.toggle('active', t === tab);
-        document.getElementById(`admin-sec-${t}`).classList.toggle('hidden', t !== tab);
+        const btn = document.getElementById(`admin-tab-${t}`);
+        const sec = document.getElementById(`admin-sec-${t}`);
+        if (btn) btn.classList.toggle('active', t === tab);
+        if (sec) sec.classList.toggle('hidden', t !== tab);
       });
       this.refreshCurrentView();
     }

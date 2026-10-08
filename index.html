@@ -30,6 +30,9 @@
       </nav>
 
       <div id="user-controls" class="user-controls hidden">
+        <button id="btn-toggle-portal" class="btn portal-switch-btn" onclick="app.togglePortalRole()">
+          <span>👨‍🍳 Kitchen Dashboard</span>
+        </button>
         <div class="user-pill">
           <span id="user-avatar" class="user-avatar">S</span>
           <div class="user-info">
@@ -105,25 +108,25 @@
             <span>DEMO ONE-CLICK SIGN IN</span>
           </div>
           <div class="demo-buttons">
-            <button class="btn btn-demo" onclick="app.fillDemo('demo@campus.edu', 'student123')">
+            <button class="btn btn-demo" onclick="app.loginAsStudent()">
               <span class="demo-role student-dot"></span>
               <div class="demo-info">
                 <strong>Sreeshanth (Student)</strong>
                 <small>demo@campus.edu</small>
               </div>
             </button>
-            <button class="btn btn-demo" onclick="app.fillDemo('chandrashekar@campus.edu', 'student123')">
+            <button class="btn btn-demo" onclick="app.loginAsFaculty()">
               <span class="demo-role faculty-dot"></span>
               <div class="demo-info">
                 <strong>Chandrashekar (Faculty)</strong>
                 <small>chandrashekar@campus.edu</small>
               </div>
             </button>
-            <button class="btn btn-demo admin" onclick="app.fillDemo('admin@campus.edu', 'admin123')">
+            <button class="btn btn-demo admin" onclick="app.loginAsAdmin()">
               <span class="demo-role admin-dot"></span>
               <div class="demo-info">
-                <strong>Canteen Staff (Admin)</strong>
-                <small>admin@campus.edu</small>
+                <strong>Canteen Staff (Kitchen Dashboard)</strong>
+                <small>admin@campus.edu · Live Kanban & Analytics</small>
               </div>
             </button>
           </div>
@@ -151,6 +154,10 @@
           <button id="tab-btn-profile" class="tab-btn" onclick="app.switchStudentTab('profile')">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
             <span>MY PROFILE & STATS / 03</span>
+          </button>
+          <button id="tab-btn-dashboard" class="tab-btn tab-btn-highlight" onclick="app.switchToAdminDashboard()" title="Open live Kitchen Kanban, Inventory & Analytics dashboard">
+            <span class="live-dot pulse"></span>
+            <span>KITCHEN DASHBOARD / 04</span>
           </button>
         </div>
 
@@ -346,6 +353,9 @@
         </div>
 
         <div class="admin-quick-actions">
+          <button class="btn btn-primary btn-sm" onclick="app.switchToStudentPortal()" title="Switch back to student / faculty menu view">
+            🍽️ Customer View
+          </button>
           <button class="btn btn-ghost btn-sm" onclick="app.placeTestOrder()" title="Send a simulated student order to kitchen">
             ⚡ + Test Order
           </button>

@@ -573,6 +573,47 @@ input:focus, select:focus {
   box-shadow: var(--shadow-sm);
 }
 
+.tab-btn-highlight {
+  background: var(--dark) !important;
+  color: #FFF !important;
+  border-radius: var(--radius-sm);
+}
+
+.tab-btn-highlight:hover {
+  background: var(--primary) !important;
+  color: #FFF !important;
+}
+
+.tab-btn-highlight .live-dot {
+  width: 8px;
+  height: 8px;
+  background: #10B981;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.portal-switch-btn {
+  background: var(--dark);
+  color: #FFF;
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1px solid var(--border-subtle);
+}
+
+.portal-switch-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #FFF;
+  transform: translateY(-1px);
+}
+
 .pill-count {
   background: var(--primary);
   color: #FFF;
