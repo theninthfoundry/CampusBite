@@ -1,0 +1,13 @@
+{
+  "name": "campusbite",
+  "version": "1.0.0",
+  "description": "Smart Canteen Management & Digital Ordering System",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "keywords": ["canteen", "smart-ordering", "javafx", "web", "pwa"],
+  "author": "CampusBite Team",
+  "license": "MIT"
+}

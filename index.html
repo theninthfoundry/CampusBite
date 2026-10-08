@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusBite — Smart Canteen Ordering & Kitchen Management</title>
+  <meta name="description" content="CampusBite is a digital canteen management platform with smart ETA calculations, automated inventory management, and co-occurrence recommendations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍔</text></svg>">
+</head>
+<body>
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- MAIN NAVIGATION -->
+  <header id="app-header" class="app-header">
+    <div class="header-container">
+      <div class="brand" onclick="app.navigateHome()">
+        <span class="brand-icon">⚡</span>
+        <div class="brand-text">
+          <span class="brand-title">CAMPUSBITE</span>
+          <span class="brand-tag">SMART CANTEEN</span>
+        </div>
+      </div>
+
+      <nav id="nav-actions" class="nav-actions hidden">
+        <!-- Injected dynamically per role -->
+      </nav>
+
+      <div id="user-controls" class="user-controls hidden">
+        <div class="user-pill">
+          <span id="user-avatar" class="user-avatar">S</span>
+          <div class="user-info">
+            <span id="user-display-name" class="user-name">Sreeshanth</span>
+            <span id="user-display-role" class="user-badge student">STUDENT</span>
+          </div>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="app.logout()" title="Logout">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span>Exit</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- VIEW: LOGIN -->
+  <main id="view-login" class="view-screen">
+    <div class="login-wrapper">
+      <div class="login-hero">
+        <div class="hero-badge">CAMPUS DINING REIMAGINED</div>
+        <h1 class="hero-title">Good Food.<br><span class="gradient-text">Zero Waiting.</span></h1>
+        <p class="hero-desc">Skip the counter rush. Order from your phone, get real-time kitchen tracking, and pick up your meal piping hot.</p>
+        
+        <div class="hero-metrics">
+          <div class="metric-card">
+            <span class="metric-num">~8 min</span>
+            <span class="metric-label">Avg Pickup Wait</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-num">100%</span>
+            <span class="metric-label">Live Stock Sync</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-num">Dynamic</span>
+            <span class="metric-label">Smart Kitchen ETA</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="login-panel card">
+        <div class="panel-header">
+          <h2>Welcome back</h2>
+          <p class="panel-sub">Sign in with your campus credentials</p>
+        </div>
+
+        <form id="login-form" onsubmit="app.handleLogin(event)">
+          <div class="form-group">
+            <label for="login-id">Student ID or Email</label>
+            <div class="input-with-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <input type="text" id="login-id" placeholder="demo@campus.edu or 25R11A0501" required autocomplete="username">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="login-pw">Password</label>
+            <div class="input-with-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <input type="password" id="login-pw" placeholder="••••••••" required autocomplete="current-password">
+            </div>
+          </div>
+
+          <div id="login-error" class="login-error hidden"></div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            <span>SIGN IN TO CANTEEN</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </form>
+
+        <div class="demo-accounts-box">
+          <div class="demo-header">
+            <span>DEMO ONE-CLICK SIGN IN</span>
+          </div>
+          <div class="demo-buttons">
+            <button class="btn btn-demo" onclick="app.fillDemo('demo@campus.edu', 'student123')">
+              <span class="demo-role student-dot"></span>
+              <div class="demo-info">
+                <strong>Sreeshanth (Student)</strong>
+                <small>demo@campus.edu</small>
+              </div>
+            </button>
+            <button class="btn btn-demo" onclick="app.fillDemo('ananya@campus.edu', 'student123')">
+              <span class="demo-role student-dot"></span>
+              <div class="demo-info">
+                <strong>Ananya (Student)</strong>
+                <small>ananya@campus.edu</small>
+              </div>
+            </button>
+            <button class="btn btn-demo admin" onclick="app.fillDemo('admin@campus.edu', 'admin123')">
+              <span class="demo-role admin-dot"></span>
+              <div class="demo-info">
+                <strong>Canteen Staff (Admin)</strong>
+                <small>admin@campus.edu</small>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- VIEW: STUDENT PORTAL -->
+  <main id="view-student" class="view-screen hidden">
+    <div class="student-layout">
+      <!-- MAIN CONTENT COLUMN -->
+      <div class="student-main">
+        <!-- Sub-navigation tabs -->
+        <div class="tab-strip">
+          <button id="tab-btn-menu" class="tab-btn active" onclick="app.switchStudentTab('menu')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path><path d="M7 2v20"></path><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path></svg>
+            <span>DISCOVER MENU / 01</span>
+          </button>
+          <button id="tab-btn-orders" class="tab-btn" onclick="app.switchStudentTab('orders')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            <span>LIVE ORDERS / 02</span>
+            <span id="badge-active-orders" class="pill-count hidden">0</span>
+          </button>
+          <button id="tab-btn-profile" class="tab-btn" onclick="app.switchStudentTab('profile')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
+            <span>MY PROFILE & STATS / 03</span>
+          </button>
+        </div>
+
+        <!-- TAB: MENU -->
+        <section id="section-menu" class="student-section">
+          <div class="greeting-bar">
+            <div>
+              <span class="micro-label">CAMPUS MAIN CANTEEN • SERVING NOW</span>
+              <h2 id="student-home-title" class="section-heading">WHAT'S FOR LUNCH?</h2>
+            </div>
+            <div class="kitchen-status-pill">
+              <span class="status-indicator-dot pulse"></span>
+              <span id="kitchen-status-text">Kitchen active · 2 orders queued</span>
+            </div>
+          </div>
+
+          <!-- Search & Filter Controls -->
+          <div class="filter-bar">
+            <div class="search-input-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="food-search" placeholder="Search dishes, snacks, drinks..." oninput="app.filterMenu()">
+            </div>
+            <div id="category-chips" class="category-chips">
+              <button class="chip active" onclick="app.setCategory('All', this)">ALL</button>
+              <button class="chip" onclick="app.setCategory('Meals', this)">MEALS</button>
+              <button class="chip" onclick="app.setCategory('Snacks', this)">SNACKS</button>
+              <button class="chip" onclick="app.setCategory('Drinks', this)">DRINKS</button>
+              <button class="chip" onclick="app.setCategory('Desserts', this)">DESSERTS</button>
+            </div>
+          </div>
+
+          <!-- SMART RECOMMENDATION BANNER -->
+          <div id="recommendation-box" class="recommendation-box hidden">
+            <div class="rec-header">
+              <span class="rec-icon">✨</span>
+              <span id="rec-title" class="rec-title">BECAUSE YOU LOVE CHICKEN BIRYANI...</span>
+              <span class="rec-sub">Frequently paired together by students</span>
+            </div>
+            <div id="rec-cards" class="rec-cards-grid">
+              <!-- Injected dynamically -->
+            </div>
+          </div>
+
+          <!-- FOOD MENU GRID -->
+          <div id="food-grid" class="food-grid">
+            <!-- Dynamic food cards -->
+          </div>
+        </section>
+
+        <!-- TAB: ORDERS -->
+        <section id="section-orders" class="student-section hidden">
+          <div class="section-header">
+            <div>
+              <span class="micro-label">LIVE TRACKING</span>
+              <h2 class="section-heading">YOUR ORDERS</h2>
+            </div>
+            <div class="poll-notice">
+              <span class="pulse-indicator"></span> Auto-syncing with kitchen live
+            </div>
+          </div>
+          <div id="orders-list" class="orders-list">
+            <!-- Dynamic order cards with stepper -->
+          </div>
+        </section>
+
+        <!-- TAB: PROFILE -->
+        <section id="section-profile" class="student-section hidden">
+          <div class="section-header">
+            <div>
+              <span class="micro-label">STUDENT OVERVIEW</span>
+              <h2 id="profile-name" class="section-heading">SREESHANTH</h2>
+            </div>
+          </div>
+          <div class="profile-stats-grid">
+            <div class="stat-card">
+              <span class="stat-num" id="stat-total-orders">0</span>
+              <span class="stat-desc">Total Orders Placed</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-num" id="stat-total-spent">₹0</span>
+              <span class="stat-desc">Total Canteen Spending</span>
+            </div>
+            <div class="stat-card highlight">
+              <span class="stat-num text-truncate" id="stat-fav-dish">—</span>
+              <span class="stat-desc">All-Time Favorite Dish</span>
+            </div>
+          </div>
+
+          <div class="card profile-detail-card">
+            <h3>Student Identification</h3>
+            <div class="detail-row">
+              <span class="detail-k">Roll / Student ID</span>
+              <span class="detail-v" id="profile-roll">25R11A0501</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-k">Registered Email</span>
+              <span class="detail-v" id="profile-email">demo@campus.edu</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-k">Campus Node</span>
+              <span class="detail-v">Main Academic Block Canteen (Floor 1)</span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- SIDEBAR CART -->
+      <aside class="cart-sidebar card">
+        <div class="cart-header">
+          <div class="cart-title-row">
+            <span class="cart-icon">🛍️</span>
+            <h3>YOUR TRAY</h3>
+          </div>
+          <button class="btn btn-ghost btn-xs" onclick="app.clearCart()" title="Empty tray">Clear</button>
+        </div>
+
+        <div id="cart-items" class="cart-items-container">
+          <div class="cart-empty-state">
+            <span class="empty-icon">🍽️</span>
+            <p>Your tray is hungry.</p>
+            <small>Select dishes from the menu to start ordering.</small>
+          </div>
+        </div>
+
+        <div id="cart-footer" class="cart-footer hidden">
+          <div class="eta-box">
+            <div class="eta-icon">⏱️</div>
+            <div class="eta-details">
+              <span class="eta-label">ESTIMATED PREPARATION TIME</span>
+              <strong id="cart-eta-val">~12 mins</strong>
+              <small id="cart-eta-calc">Longest prep + queued orders</small>
+            </div>
+          </div>
+
+          <div class="bill-summary">
+            <div class="bill-row">
+              <span>Subtotal</span>
+              <span id="bill-subtotal">₹0</span>
+            </div>
+            <div class="bill-row">
+              <span>Canteen Tech Fee</span>
+              <span>₹0 <small class="text-success">(Free)</small></span>
+            </div>
+            <div class="bill-divider"></div>
+            <div class="bill-row total">
+              <strong>Total Payable</strong>
+              <strong id="bill-total" class="bill-total-price">₹0</strong>
+            </div>
+          </div>
+
+          <button id="btn-place-order" class="btn btn-primary btn-block btn-lg" onclick="app.placeOrder()">
+            <span>CONFIRM & PLACE ORDER</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+          <div class="pickup-reminder">
+            <span>📍 Pickup: Counter 1 & 2 · Cash/UPI on collection</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- VIEW: ADMIN / CANTEEN STAFF PORTAL -->
+  <main id="view-admin" class="view-screen hidden">
+    <div class="admin-layout">
+      <!-- Admin Sub-navigation tabs -->
+      <div class="admin-topbar">
+        <div class="tab-strip">
+          <button id="admin-tab-live" class="tab-btn active" onclick="app.switchAdminTab('live')">
+            <span class="live-dot pulse"></span>
+            <span>KITCHEN KANBAN</span>
+          </button>
+          <button id="admin-tab-menu" class="tab-btn" onclick="app.switchAdminTab('menu')">
+            <span>MENU EDITOR</span>
+          </button>
+          <button id="admin-tab-inv" class="tab-btn" onclick="app.switchAdminTab('inv')">
+            <span>INVENTORY & INGREDIENTS</span>
+          </button>
+          <button id="admin-tab-analytics" class="tab-btn" onclick="app.switchAdminTab('analytics')">
+            <span>SALES & ANALYTICS</span>
+          </button>
+        </div>
+
+        <div class="admin-quick-actions">
+          <button class="btn btn-ghost btn-sm" onclick="app.resetDbPrompt()" title="Reset all seeded data to default">
+            🔄 Reset Demo DB
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB 1: KITCHEN KANBAN LIVE -->
+      <section id="admin-sec-live" class="admin-section">
+        <div class="kanban-board">
+          <!-- COLUMN 1: NEW / ORDERED -->
+          <div class="kanban-col">
+            <div class="col-header new-col">
+              <div class="col-title-group">
+                <span class="status-bullet new">●</span>
+                <h3>NEW ORDERS</h3>
+              </div>
+              <span id="count-new" class="col-badge">0</span>
+            </div>
+            <div id="col-orders-new" class="col-cards-dropzone">
+              <!-- Cards -->
+            </div>
+          </div>
+
+          <!-- COLUMN 2: PREPARING -->
+          <div class="kanban-col">
+            <div class="col-header prep-col">
+              <div class="col-title-group">
+                <span class="status-bullet prep">●</span>
+                <h3>ON THE STOVE / PREPARING</h3>
+              </div>
+              <span id="count-prep" class="col-badge">0</span>
+            </div>
+            <div id="col-orders-prep" class="col-cards-dropzone">
+              <!-- Cards -->
+            </div>
+          </div>
+
+          <!-- COLUMN 3: READY FOR PICKUP -->
+          <div class="kanban-col">
+            <div class="col-header ready-col">
+              <div class="col-title-group">
+                <span class="status-bullet ready">●</span>
+                <h3>READY AT COUNTER</h3>
+              </div>
+              <span id="count-ready" class="col-badge">0</span>
+            </div>
+            <div id="col-orders-ready" class="col-cards-dropzone">
+              <!-- Cards -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: MENU EDITOR -->
+      <section id="admin-sec-menu" class="admin-section hidden">
+        <div class="admin-split-view">
+          <div class="card admin-form-card">
+            <h3>Add New Food Item</h3>
+            <p class="panel-sub">Add a freshly prepared dish to the campus menu</p>
+            <form onsubmit="app.handleAddNewFood(event)">
+              <div class="form-group">
+                <label>Dish Name</label>
+                <input type="text" id="new-food-name" placeholder="e.g. Schezwan Fried Rice" required>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Price (₹)</label>
+                  <input type="number" id="new-food-price" min="1" step="0.5" placeholder="110" required>
+                </div>
+                <div class="form-group">
+                  <label>Prep Time (min)</label>
+                  <input type="number" id="new-food-prep" min="1" placeholder="12" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Category</label>
+                <select id="new-food-cat" required>
+                  <option value="Meals">Meals</option>
+                  <option value="Snacks">Snacks</option>
+                  <option value="Drinks">Drinks</option>
+                  <option value="Desserts">Desserts</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Description</label>
+                <input type="text" id="new-food-desc" placeholder="Freshly tossed with spring onions" required>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">+ PUBLISH TO MENU</button>
+            </form>
+          </div>
+
+          <div class="card admin-list-card">
+            <div class="list-card-header">
+              <h3>Live Dish Availability</h3>
+              <small>Toggle instant availability if an item runs out</small>
+            </div>
+            <div id="admin-food-table" class="admin-table-container">
+              <!-- Dynamic food toggle table -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: INVENTORY & STOCK -->
+      <section id="admin-sec-inv" class="admin-section hidden">
+        <div class="card inv-container-card">
+          <div class="inv-header-row">
+            <div>
+              <h3>Raw Ingredient Inventory</h3>
+              <p class="panel-sub">Dishes automatically disable when ingredients drop below safety threshold</p>
+            </div>
+          </div>
+
+          <div id="inv-table-body" class="inv-grid">
+            <!-- Dynamic ingredient status cards -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: ANALYTICS -->
+      <section id="admin-sec-analytics" class="admin-section hidden">
+        <div class="analytics-metrics-row">
+          <div class="stat-card">
+            <span class="stat-num" id="an-total-orders">0</span>
+            <span class="stat-desc">Total Completed Orders</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num" id="an-total-rev">₹0</span>
+            <span class="stat-desc">Gross Canteen Revenue</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num" id="an-avg-ticket">₹0</span>
+            <span class="stat-desc">Average Order Value</span>
+          </div>
+        </div>
+
+        <div class="analytics-charts-split">
+          <div class="card chart-card">
+            <h3>🔥 Top 5 Best-Selling Items</h3>
+            <p class="panel-sub">Calculated from completed student orders</p>
+            <div id="chart-popular" class="bar-chart-container">
+              <!-- Visual bars -->
+            </div>
+          </div>
+
+          <div class="card chart-card">
+            <h3>⏰ Peak Rush Hours</h3>
+            <p class="panel-sub">Order volume distribution across the day</p>
+            <div id="chart-peak" class="bar-chart-container">
+              <!-- Visual bars -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- CONFIRMATION MODAL -->
+  <div id="order-modal" class="modal-overlay hidden">
+    <div class="modal-card card">
+      <div class="modal-badge-icon">🎉</div>
+      <h2>Order Confirmed!</h2>
+      <p class="modal-sub">Your token has been transmitted to the canteen kitchen.</p>
+      
+      <div class="modal-token-box">
+        <span class="token-label">TOKEN NUMBER</span>
+        <span id="modal-token-num" class="token-val">#101</span>
+      </div>
+
+      <div class="modal-details">
+        <div class="modal-row">
+          <span>Ready in approximately</span>
+          <strong id="modal-eta-val">12 minutes</strong>
+        </div>
+        <div class="modal-row">
+          <span>Pickup Location</span>
+          <span>Main Canteen Counter 1</span>
+        </div>
+        <div class="modal-row">
+          <span>Amount to Pay</span>
+          <strong id="modal-total-val">₹120</strong>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-block" onclick="app.dismissOrderModal()">TRACK MY ORDER</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

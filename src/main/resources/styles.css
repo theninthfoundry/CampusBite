@@ -1,0 +1,24 @@
+.root-paper { -fx-background-color: #F7F5EF; -fx-font-family: "Inter","Manrope","Helvetica"; }
+.scroll-pane, .scroll-pane > .viewport, .tab-pane > .tab-content-area { -fx-background-color: transparent; }
+.tab-pane > .tab-header-area > .tab-header-background { -fx-background-color: transparent; }
+.panel { -fx-background-color: #FFFFFF; -fx-border-color: #E3E0D8; -fx-border-width: 0 0 0 1; }
+.card { -fx-background-color: #FFFFFF; -fx-border-color: #E3E0D8; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 16; }
+.display { -fx-font-size: 52px; -fx-font-weight: 800; -fx-text-fill: #111111; }
+.h2 { -fx-font-size: 24px; -fx-font-weight: 700; -fx-text-fill: #111111; }
+.h3 { -fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #111111; }
+.micro { -fx-font-size: 11px; -fx-letter-spacing: 2; -fx-text-fill: #8A8882; -fx-font-weight: 700; }
+.brand { -fx-font-size: 14px; -fx-font-weight: 800; -fx-text-fill: #111111; }
+.muted { -fx-font-size: 13px; -fx-text-fill: #8A8882; }
+.price { -fx-font-size: 14px; -fx-font-weight: 700; -fx-text-fill: #111111; }
+.status { -fx-font-size: 13px; -fx-text-fill: #B33A2B; -fx-font-weight: 700; }
+.mono { -fx-font-family: "Menlo","Consolas",monospace; -fx-font-size: 13px; -fx-text-fill: #111111; }
+.error { -fx-text-fill: #B33A2B; -fx-font-size: 13px; }
+.primary { -fx-background-color: #C8402D; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: 700; -fx-background-radius: 6; -fx-padding: 9 16; -fx-cursor: hand; }
+.primary:hover { -fx-background-color: #A93322; }
+.primary:disabled { -fx-background-color: #E3E0D8; -fx-text-fill: #8A8882; }
+.ghost { -fx-background-color: transparent; -fx-border-color: #E3E0D8; -fx-border-radius: 6; -fx-text-fill: #111111; -fx-font-size: 12px; -fx-cursor: hand; }
+.chip { -fx-background-color: #FFFFFF; -fx-border-color: #E3E0D8; -fx-border-radius: 6; -fx-background-radius: 6; -fx-font-size: 12px; -fx-cursor: hand; }
+.chip:hover { -fx-border-color: #111111; }
+.nav { -fx-background-color: transparent; -fx-text-fill: #111111; -fx-font-size: 11px; -fx-font-weight: 700; -fx-cursor: hand; }
+.text-field, .password-field { -fx-background-color: #FFFFFF; -fx-border-color: #E3E0D8; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 10; }
+.text-field:focused, .password-field:focused { -fx-border-color: #111111; }
