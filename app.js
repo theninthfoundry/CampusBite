@@ -269,32 +269,20 @@
     // Analytics
     getAnalytics() {
       const completed = this.data.orders.filter(o => o.status === 'COLLECTED');
-      const totalRev = completed.reduce((sum, o) => sum + o.total, 0);
-      const avgTicket = completed.length > 0 ? Math.round(totalRev / completed.length) : 0;
-
-      const itemCounts = {};
-      completed.forEach(o => {
-        o.items.forEach(it => {
-          itemCounts[it.name] = (itemCounts[it.name] || 0) + it.qty;
-        });
-      });
-
-      const topDishes = Object.entries(itemCounts)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 5);
-
-      const hourCounts = {};
+      const totalRev = completed.reduce((s, o) => s + o.total, 0);
+      const avgTicket = completed.length ? Math.round(totalRev / completed.length) : 0;
+      const itemCounts = {}, hourCounts = {};
+      completed.forEach(o => o.items.forEach(it => itemCounts[it.name] = (itemCounts[it.name] || 0) + it.qty));
       this.data.orders.forEach(o => {
         const hr = new Date(o.created).getHours();
-        const label = `${hr % 12 || 12} ${hr >= 12 ? 'PM' : 'AM'}`;
-        hourCounts[label] = (hourCounts[label] || 0) + 1;
+        const lbl = `${hr % 12 || 12} ${hr >= 12 ? 'PM' : 'AM'}`;
+        hourCounts[lbl] = (hourCounts[lbl] || 0) + 1;
       });
-
       return {
         totalOrders: completed.length,
         totalRev,
         avgTicket,
-        topDishes,
+        topDishes: Object.entries(itemCounts).sort((a, b) => b[1] - a[1]).slice(0, 5),
         hourCounts
       };
     }
@@ -1402,6 +1390,7 @@
   // Expose global controller
   window.app = new CampusBiteApp();
 })();
+
 
 
 
