@@ -1,33 +1,28 @@
-﻿/**
- * CampusBite â€” Smart Canteen & Digital Kitchen Operations
- * Japanese Editorial Ã— Bold Minimalism Ã— Premium Food Commerce
- * State Management, Co-occurrence Recommendations, Dynamic ETA & Inventory Logic
+/**
+ * CampusBite — Smart Canteen & Digital Kitchen Operations
+ * Japanese Editorial × Bold Minimalism × Premium Food Commerce
  */
-
 (function () {
   'use strict';
 
-  // ==========================================
-  // STORAGE & DATABASE SEEDING
-  // ==========================================
-  const DB_KEY = 'campusbite_db_v4';
-  const SESSION_KEY = 'campusbite_session_v2';
+  const DB_KEY = 'campusbite_db_v4', SESSION_KEY = 'campusbite_session_v2';
+  const $ = id => document.getElementById(id);
+  const show = (el, v) => el && el.classList.toggle('hidden', !v);
 
-  // Editorial Curated Photographic Catalog
   const FOOD_IMAGES = {
-    1: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80", // Chicken Biryani
-    2: "https://images.unsplash.com/photo-1642821373181-696a54913e9a?auto=format&fit=crop&w=800&q=80", // Veg Biryani
-    3: "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?auto=format&fit=crop&w=800&q=80", // Paneer Rice
-    4: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80", // Veg Pizza
-    5: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80", // Chicken Burger
-    6: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=800&q=80", // Masala Dosa
-    7: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80", // Samosa (2 pcs)
-    8: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80", // French Fries
-    9: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80", // Masala Coke
-    10: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=800&q=80", // Cold Coffee
-    11: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80", // Lemon Tea
-    12: "https://images.unsplash.com/photo-1601050690187-2481977e23b2?auto=format&fit=crop&w=800&q=80", // Gulab Jamun (2 pcs)
-    13: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=800&q=80"  // Ice Cream Scoop
+    1: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80",
+    2: "https://images.unsplash.com/photo-1642821373181-696a54913e9a?auto=format&fit=crop&w=800&q=80",
+    3: "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?auto=format&fit=crop&w=800&q=80",
+    4: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80",
+    5: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80",
+    6: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=800&q=80",
+    7: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80",
+    8: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80",
+    9: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80",
+    10: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=800&q=80",
+    11: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80",
+    12: "https://images.unsplash.com/photo-1601050690187-2481977e23b2?auto=format&fit=crop&w=800&q=80",
+    13: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=800&q=80"
   };
 
   const DEFAULT_DB = {
@@ -64,10 +59,7 @@
   };
 
   class Database {
-    constructor() {
-      this.load();
-    }
-
+    constructor() { this.load(); }
     load() {
       ['campusbite_db_v1', 'campusbite_db_v2', 'campusbite_db_v3'].forEach(k => localStorage.removeItem(k));
       try {
@@ -78,11 +70,9 @@
         this.data = JSON.parse(JSON.stringify(DEFAULT_DB));
         this.save();
       }
-
       if (!Array.isArray(this.data.orders)) this.data.orders = [];
       if (!Array.isArray(this.data.foods) || !this.data.foods.length) this.data.foods = DEFAULT_DB.foods;
       else this.data.foods.forEach(f => { if (!f.image && FOOD_IMAGES[f.id]) f.image = FOOD_IMAGES[f.id]; });
-
       if (!Array.isArray(this.data.inventory) || !this.data.inventory.length) this.data.inventory = DEFAULT_DB.inventory;
       if (!Array.isArray(this.data.users)) this.data.users = DEFAULT_DB.users;
       else {
@@ -92,21 +82,11 @@
           }
         });
       }
-
       if (!this.data.nextOrderId || isNaN(this.data.nextOrderId)) this.data.nextOrderId = 101;
       this.evaluateInventoryDepletion();
     }
-
-    save() {
-      try { localStorage.setItem(DB_KEY, JSON.stringify(this.data)); } catch (e) { console.error("Storage error:", e); }
-    }
-
-    reset() {
-      this.data = JSON.parse(JSON.stringify(DEFAULT_DB));
-      this.save();
-    }
-
-    // Authentication
+    save() { try { localStorage.setItem(DB_KEY, JSON.stringify(this.data)); } catch (e) { console.error("Storage error:", e); } }
+    reset() { this.data = JSON.parse(JSON.stringify(DEFAULT_DB)); this.save(); }
     login(idOrEmail, pw) {
       const term = (idOrEmail || '').trim().toLowerCase();
       return this.data.users.find(u => {
@@ -115,10 +95,7 @@
         return (idMatch || emailMatch) && u.pw === pw;
       }) || null;
     }
-
-    // Foods
     getFoods() { return this.data.foods; }
-
     addFood(food) {
       food.id = (this.data.foods.reduce((m, f) => Math.max(m, f.id), 0)) + 1;
       food.available = true;
@@ -127,15 +104,11 @@
       this.save();
       return food;
     }
-
     setFoodAvailability(foodId, available) {
       const food = this.data.foods.find(f => f.id === foodId);
       if (food) { food.available = available; this.save(); }
     }
-
-    // Inventory
     getInventory() { return this.data.inventory; }
-
     evaluateInventoryDepletion() {
       this.data.foods.forEach(f => {
         if (f.ingId) {
@@ -144,19 +117,14 @@
         }
       });
     }
-
-    // ETA Calculation: Max prep in tray + (2 * Active Queued Orders)
     calculateCartEta(cartItems) {
       if (!cartItems?.length) return 0;
       const maxPrep = Math.max(...cartItems.map(i => i.food.prepMin || 5));
       return maxPrep + (2 * this.getActiveQueueCount());
     }
-
     getActiveQueueCount() {
       return this.data.orders.filter(o => o.status === 'NEW' || o.status === 'PREPARING').length;
     }
-
-    // Orders
     getOrders(userId = null) {
       if (userId !== null) {
         const uid = Number(userId);
@@ -164,7 +132,6 @@
       }
       return this.data.orders;
     }
-
     placeOrder(user, cartItems, total, etaMin) {
       if (!cartItems?.length) throw new Error("Cannot place an empty order.");
       const safeUser = user || { id: 2, name: "Sreeshanth" };
@@ -193,34 +160,22 @@
       const maxId = (this.data.orders || []).reduce((m, o) => Math.max(m, Number(o.id) || 100), 100);
       const orderId = Math.max(this.data.nextOrderId || 101, maxId + 1);
       this.data.nextOrderId = orderId + 1;
-
       const summary = cartItems.map(i => `${i.food.name} x${i.qty}`).join(", ");
       const newOrder = {
-        id: orderId,
-        userId,
-        customerName: userName,
+        id: orderId, userId, customerName: userName,
         items: cartItems.map(i => ({ foodId: i.food.id, name: i.food.name, qty: i.qty, price: i.food.price })),
         total: Number(total) || cartItems.reduce((s, i) => s + (i.food.price * i.qty), 0),
-        status: "NEW",
-        created: new Date().toISOString(),
-        etaMin: Number(etaMin) || 10,
-        summary
+        status: "NEW", created: new Date().toISOString(), etaMin: Number(etaMin) || 10, summary
       };
-
       this.data.orders.unshift(newOrder);
       this.save();
       return newOrder;
     }
-
     advanceOrderStatus(orderId) {
       const order = this.data.orders.find(o => o.id === orderId);
       const next = { "NEW": "PREPARING", "PREPARING": "READY", "READY": "COLLECTED" };
-      if (order && next[order.status]) {
-        order.status = next[order.status];
-        this.save();
-      }
+      if (order && next[order.status]) { order.status = next[order.status]; this.save(); }
     }
-
     cancelOrder(orderId) {
       const idx = this.data.orders.findIndex(o => o.id === orderId);
       if (idx !== -1 && this.data.orders[idx].status === 'NEW') {
@@ -238,8 +193,6 @@
       }
       return false;
     }
-
-    // Recommendation Engine: Frequent Co-occurrence Analysis
     getStudentFavourite(userId) {
       const orders = this.getOrders(userId);
       if (!orders.length) return null;
@@ -248,7 +201,6 @@
       const favId = Number(Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b, 0));
       return this.data.foods.find(f => f.id === favId) || null;
     }
-
     getRecommendations(userId) {
       const fav = this.getStudentFavourite(userId);
       if (!fav) return [];
@@ -265,8 +217,6 @@
       }
       return sortedIds.map(id => this.data.foods.find(f => f.id === id)).filter(f => f && f.available);
     }
-
-    // Analytics
     getAnalytics() {
       const completed = this.data.orders.filter(o => o.status === 'COLLECTED');
       const totalRev = completed.reduce((s, o) => s + o.total, 0);
@@ -278,1098 +228,489 @@
         const lbl = `${hr % 12 || 12} ${hr >= 12 ? 'PM' : 'AM'}`;
         hourCounts[lbl] = (hourCounts[lbl] || 0) + 1;
       });
-      return {
-        totalOrders: completed.length,
-        totalRev,
-        avgTicket,
-        topDishes: Object.entries(itemCounts).sort((a, b) => b[1] - a[1]).slice(0, 5),
-        hourCounts
-      };
+      return { totalOrders: completed.length, totalRev, avgTicket, topDishes: Object.entries(itemCounts).sort((a, b) => b[1] - a[1]).slice(0, 5), hourCounts };
     }
   }
 
-  // ==========================================
-  // APPLICATION CONTROLLER
-  // ==========================================
   class CampusBiteApp {
     constructor() {
       this.db = new Database();
       this.currentUser = null;
-      this.cart = []; // { food, qty }
+      this.cart = [];
       this.currentCategory = 'All';
       this.activeStudentTab = 'menu';
       this.activeAdminTab = 'live';
       this.selectedDetailFood = null;
       this.detailQty = 1;
       this.pollTimer = null;
-
       this.init();
     }
-
     init() {
-      const savedUser = sessionStorage.getItem(SESSION_KEY);
-      if (savedUser) { try { this.currentUser = JSON.parse(savedUser); } catch { this.currentUser = null; } }
+      const saved = sessionStorage.getItem(SESSION_KEY);
+      if (saved) { try { this.currentUser = JSON.parse(saved); } catch { this.currentUser = null; } }
       this.setupSyncListener();
       this.render();
       this.startPolling();
     }
-
     setupSyncListener() {
-      window.addEventListener('storage', (e) => {
-        if (e.key === DB_KEY) { this.db.load(); this.refreshCurrentView(); }
-      });
+      window.addEventListener('storage', e => { if (e.key === DB_KEY) { this.db.load(); this.refreshCurrentView(); } });
     }
-
     startPolling() {
       if (this.pollTimer) clearInterval(this.pollTimer);
       this.pollTimer = setInterval(() => { this.db.load(); this.refreshCurrentView(); }, 3000);
     }
-
     showToast(msg) {
-      const container = $('toast-container');
-      if (!container) return;
-      const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.innerHTML = `<span>${msg}</span>`;
-      container.appendChild(toast);
+      const c = $('toast-container');
+      if (!c) return;
+      const t = document.createElement('div');
+      t.className = 'toast';
+      t.innerHTML = `<span>${msg}</span>`;
+      c.appendChild(t);
       setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateY(10px)';
-        toast.style.transition = 'all 0.2s ease';
-        setTimeout(() => toast.remove(), 200);
+        t.style.opacity = '0'; t.style.transform = 'translateY(10px)'; t.style.transition = 'all 0.2s ease';
+        setTimeout(() => t.remove(), 200);
       }, 3200);
     }
-
-    // One-Click Demo Logins
     loginAsStudent() {
-      let student = (this.db.data.users || []).find(u => u.role === 'STUDENT') || {
-        id: 2, name: "Sreeshanth", email: "demo@campus.edu", pw: "student123", role: "STUDENT", studentId: "25R11A0501"
-      };
-      this.currentUser = student;
-      sessionStorage.setItem(SESSION_KEY, JSON.stringify(student));
+      const s = (this.db.data.users || []).find(u => u.role === 'STUDENT') || { id: 2, name: "Sreeshanth", email: "demo@campus.edu", pw: "student123", role: "STUDENT", studentId: "25R11A0501" };
+      this.currentUser = s;
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(s));
       this.activeStudentTab = 'menu';
       this.render();
-      this.showToast(`Signed in as ${student.name} (Student)`);
+      this.showToast(`Signed in as ${s.name} (Student)`);
     }
-
     loginAsFaculty() {
-      let faculty = (this.db.data.users || []).find(u => u.role === 'FACULTY') || {
-        id: 3, name: "Chandrashekar", email: "chandrashekar@campus.edu", pw: "student123", role: "FACULTY", facultyId: "FAC-CS-108"
-      };
-      this.currentUser = faculty;
-      sessionStorage.setItem(SESSION_KEY, JSON.stringify(faculty));
+      const f = (this.db.data.users || []).find(u => u.role === 'FACULTY') || { id: 3, name: "Chandrashekar", email: "chandrashekar@campus.edu", pw: "student123", role: "FACULTY", facultyId: "FAC-CS-108" };
+      this.currentUser = f;
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(f));
       this.activeStudentTab = 'menu';
       this.render();
-      this.showToast(`Signed in as Prof. ${faculty.name} (Faculty)`);
+      this.showToast(`Signed in as Prof. ${f.name} (Faculty)`);
     }
-
     loginAsAdmin() {
-      let admin = (this.db.data.users || []).find(u => u.role === 'ADMIN') || {
-        id: 1, name: "Canteen Staff", email: "admin@campus.edu", pw: "admin123", role: "ADMIN"
-      };
-      this.currentUser = admin;
-      sessionStorage.setItem(SESSION_KEY, JSON.stringify(admin));
+      const a = (this.db.data.users || []).find(u => u.role === 'ADMIN') || { id: 1, name: "Canteen Staff", email: "admin@campus.edu", pw: "admin123", role: "ADMIN" };
+      this.currentUser = a;
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(a));
       this.activeAdminTab = 'live';
       this.render();
       this.showToast('Kitchen Dashboard operational');
     }
-
-    switchToAdminDashboard() {
-      this.loginAsAdmin();
-    }
-
-    switchToStudentPortal() {
-      this.loginAsStudent();
-    }
-
+    switchToAdminDashboard() { this.loginAsAdmin(); }
+    switchToStudentPortal() { this.loginAsStudent(); }
     togglePortalRole() {
-      if (!this.currentUser || this.currentUser.role === 'ADMIN') {
-        this.switchToStudentPortal();
-      } else {
-        this.switchToAdminDashboard();
-      }
+      if (!this.currentUser || this.currentUser.role === 'ADMIN') this.switchToStudentPortal();
+      else this.switchToAdminDashboard();
     }
-
     handleLogin(e) {
-      if (e && e.preventDefault) e.preventDefault();
-      const id = document.getElementById('login-id').value;
-      const pw = document.getElementById('login-pw').value;
-      const errBox = document.getElementById('login-error');
-
-      const user = this.db.login(id, pw);
-      if (!user) {
-        errBox.innerText = 'Invalid credentials. Please verify your Student/Faculty ID or password.';
-        errBox.classList.remove('hidden');
+      if (e?.preventDefault) e.preventDefault();
+      const id = $('login-id').value, pw = $('login-pw').value, err = $('login-error');
+      const u = this.db.login(id, pw);
+      if (!u) {
+        err.innerText = 'Invalid credentials. Please verify your Student/Faculty ID or password.';
+        err.classList.remove('hidden');
         return;
       }
-
-      errBox.classList.add('hidden');
-      this.currentUser = user;
-      sessionStorage.setItem(SESSION_KEY, JSON.stringify(user));
+      err.classList.add('hidden');
+      this.currentUser = u;
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(u));
       this.render();
-      this.showToast(`Welcome back, ${user.name}`);
+      this.showToast(`Welcome back, ${u.name}`);
     }
-
-    logout() {
-      this.currentUser = null;
-      sessionStorage.removeItem(SESSION_KEY);
-      this.cart = [];
-      this.render();
-    }
-
+    logout() { this.currentUser = null; sessionStorage.removeItem(SESSION_KEY); this.cart = []; this.render(); }
     navigateHome() {
       if (!this.currentUser) return;
-      if (this.currentUser.role === 'ADMIN') {
-        this.switchAdminTab('live');
-      } else {
-        this.switchStudentTab('menu');
-      }
+      if (this.currentUser.role === 'ADMIN') this.switchAdminTab('live');
+      else this.switchStudentTab('menu');
     }
-
-    // Core Rendering Orchestrator
     render() {
-      const viewLogin = document.getElementById('view-login');
-      const viewStudent = document.getElementById('view-student');
-      const viewAdmin = document.getElementById('view-admin');
-      const userControls = document.getElementById('user-controls');
-      const navActions = document.getElementById('nav-actions');
-
+      const [vl, vs, va, uc, na] = [$('view-login'), $('view-student'), $('view-admin'), $('user-controls'), $('nav-actions')];
       if (!this.currentUser) {
-        viewLogin.classList.remove('hidden');
-        viewStudent.classList.add('hidden');
-        viewAdmin.classList.add('hidden');
-        userControls.classList.add('hidden');
-        navActions.classList.add('hidden');
+        show(vl, true); show(vs, false); show(va, false); show(uc, false); show(na, false);
         return;
       }
+      show(vl, false); show(uc, true); show(na, true);
+      $('user-display-name').innerText = this.currentUser.name;
+      const b = $('user-display-role');
+      b.innerText = this.currentUser.role;
+      b.className = `user-role-badge ${this.currentUser.role.toLowerCase()}`;
+      $('user-avatar').innerText = this.currentUser.name.charAt(0);
 
-      viewLogin.classList.add('hidden');
-      userControls.classList.remove('hidden');
-      navActions.classList.remove('hidden');
+      const sw = $('btn-toggle-portal'), tr = $('btn-tray-toggle');
+      const isAdmin = this.currentUser.role === 'ADMIN';
+      sw.innerHTML = isAdmin ? `<span>&larr; CUSTOMER MENU</span>` : `<span>STAFF KITCHEN &rarr;</span>`;
+      if (tr) show(tr, !isAdmin);
 
-      // Update Header User Identity
-      document.getElementById('user-display-name').innerText = this.currentUser.name;
-      const badge = document.getElementById('user-display-role');
-      badge.innerText = this.currentUser.role;
-      badge.className = `user-role-badge ${this.currentUser.role.toLowerCase()}`;
-      document.getElementById('user-avatar').innerText = this.currentUser.name.charAt(0);
-
-      // Portal Mode Switcher
-      const switchBtn = document.getElementById('btn-toggle-portal');
-      const trayBtn = document.getElementById('btn-tray-toggle');
-
-      if (this.currentUser.role === 'ADMIN') {
-        switchBtn.innerHTML = `<span>&larr; CUSTOMER MENU</span>`;
-        if (trayBtn) trayBtn.classList.add('hidden');
-        this.renderAdminNavigation();
-        viewStudent.classList.add('hidden');
-        viewAdmin.classList.remove('hidden');
-        this.renderAdminPortal();
+      if (isAdmin) {
+        this.renderAdminNavigation(); show(vs, false); show(va, true); this.renderAdminPortal();
       } else {
-        switchBtn.innerHTML = `<span>STAFF KITCHEN &rarr;</span>`;
-        if (trayBtn) trayBtn.classList.remove('hidden');
-        this.renderStudentNavigation();
-        viewStudent.classList.remove('hidden');
-        viewAdmin.classList.add('hidden');
-
-        const titleEl = document.getElementById('student-home-title');
-        if (titleEl) {
-          titleEl.innerText = this.currentUser.role === 'FACULTY' ? "FACULTY LOUNGE DINING" : "WHAT'S FOR LUNCH?";
-        }
+        this.renderStudentNavigation(); show(vs, true); show(va, false);
+        const titleEl = $('student-home-title');
+        if (titleEl) titleEl.innerText = this.currentUser.role === 'FACULTY' ? "FACULTY LOUNGE DINING" : "WHAT'S FOR LUNCH?";
         this.renderStudentPortal();
       }
     }
-
     renderStudentNavigation() {
-      const nav = document.getElementById('nav-actions');
-      const activeOrdersCount = this.db.getOrders(this.currentUser.id).filter(o => o.status !== 'COLLECTED').length;
-
+      const nav = $('nav-actions');
+      const cnt = this.db.getOrders(this.currentUser.id).filter(o => o.status !== 'COLLECTED').length;
       nav.innerHTML = `
-        <button class="nav-link ${this.activeStudentTab === 'menu' ? 'active' : ''}" onclick="app.switchStudentTab('menu')">
-          <span>DISCOVER / 01</span>
-        </button>
-        <button class="nav-link ${this.activeStudentTab === 'orders' ? 'active' : ''}" onclick="app.switchStudentTab('orders')">
-          <span>ORDERS / 02</span>
-          ${activeOrdersCount > 0 ? `<span class="nav-count-pill">${activeOrdersCount}</span>` : ''}
-        </button>
-        <button class="nav-link ${this.activeStudentTab === 'profile' ? 'active' : ''}" onclick="app.switchStudentTab('profile')">
-          <span>PROFILE / 03</span>
-        </button>
+        <button class="nav-link ${this.activeStudentTab === 'menu' ? 'active' : ''}" onclick="app.switchStudentTab('menu')"><span>DISCOVER / 01</span></button>
+        <button class="nav-link ${this.activeStudentTab === 'orders' ? 'active' : ''}" onclick="app.switchStudentTab('orders')"><span>ORDERS / 02</span>${cnt ? `<span class="nav-count-pill">${cnt}</span>` : ''}</button>
+        <button class="nav-link ${this.activeStudentTab === 'profile' ? 'active' : ''}" onclick="app.switchStudentTab('profile')"><span>PROFILE / 03</span></button>
       `;
     }
-
     renderAdminNavigation() {
-      const nav = document.getElementById('nav-actions');
-      nav.innerHTML = `
-        <button class="nav-link ${this.activeAdminTab === 'live' ? 'active' : ''}" onclick="app.switchAdminTab('live')">
-          <span>KANBAN / 01</span>
-        </button>
-        <button class="nav-link ${this.activeAdminTab === 'menu' ? 'active' : ''}" onclick="app.switchAdminTab('menu')">
-          <span>MENU / 02</span>
-        </button>
-        <button class="nav-link ${this.activeAdminTab === 'inv' ? 'active' : ''}" onclick="app.switchAdminTab('inv')">
-          <span>INVENTORY / 03</span>
-        </button>
-        <button class="nav-link ${this.activeAdminTab === 'analytics' ? 'active' : ''}" onclick="app.switchAdminTab('analytics')">
-          <span>PERFORMANCE / 04</span>
-        </button>
-      `;
+      $('nav-actions').innerHTML = ['live|KANBAN / 01', 'menu|MENU / 02', 'inv|INVENTORY / 03', 'analytics|PERFORMANCE / 04'].map(p => {
+        const [tab, lbl] = p.split('|');
+        return `<button class="nav-link ${this.activeAdminTab === tab ? 'active' : ''}" onclick="app.switchAdminTab('${tab}')"><span>${lbl}</span></button>`;
+      }).join('');
     }
-
     refreshCurrentView() {
       if (!this.currentUser) return;
       if (this.currentUser.role === 'ADMIN') {
         this.renderAdminNavigation();
-        if (this.activeAdminTab === 'live') {
-          this.renderKanbanBoard();
-        } else if (this.activeAdminTab === 'menu') {
-          this.renderAdminMenu();
-        } else if (this.activeAdminTab === 'inv') {
-          this.renderInventory();
-        } else if (this.activeAdminTab === 'analytics') {
-          this.renderAnalytics();
-        }
+        if (this.activeAdminTab === 'live') this.renderKanbanBoard();
+        else if (this.activeAdminTab === 'menu') this.renderAdminMenu();
+        else if (this.activeAdminTab === 'inv') this.renderInventory();
+        else if (this.activeAdminTab === 'analytics') this.renderAnalytics();
       } else {
-        this.renderStudentNavigation();
-        this.renderMenuGrid();
-        this.renderRecommendations();
-        this.renderCart();
-        this.updateKitchenQueueIndicator();
-        this.updateActiveOrdersBadge();
-        if (this.activeStudentTab === 'orders') {
-          this.renderStudentOrders();
-        } else if (this.activeStudentTab === 'profile') {
-          this.renderStudentProfile();
-        }
+        this.renderStudentNavigation(); this.renderMenuGrid(); this.renderRecommendations(); this.renderCart();
+        this.updateKitchenQueueIndicator(); this.updateActiveOrdersBadge();
+        if (this.activeStudentTab === 'orders') this.renderStudentOrders();
+        else if (this.activeStudentTab === 'profile') this.renderStudentProfile();
       }
     }
-
-    // ==========================================
-    // STUDENT PORTAL
-    // ==========================================
     switchStudentTab(tab) {
       this.activeStudentTab = tab;
       ['menu', 'orders', 'profile'].forEach(t => {
-        const btn = document.getElementById(`tab-btn-${t}`);
-        const sec = document.getElementById(`section-${t}`);
-        if (btn) btn.classList.toggle('active', t === tab);
-        if (sec) sec.classList.toggle('hidden', t !== tab);
+        $(`tab-btn-${t}`)?.classList.toggle('active', t === tab);
+        show($(`section-${t}`), t === tab);
       });
-      this.renderStudentNavigation();
-      this.refreshCurrentView();
+      this.renderStudentNavigation(); this.refreshCurrentView();
     }
-
     updateActiveOrdersBadge() {
       if (!this.currentUser) return;
-      const active = this.db.getOrders(this.currentUser.id).filter(o => o.status !== 'COLLECTED');
-      const badge = document.getElementById('badge-active-orders');
-      if (badge) {
-        if (active.length > 0) {
-          badge.innerText = active.length;
-          badge.classList.remove('hidden');
-        } else {
-          badge.classList.add('hidden');
-        }
-      }
+      const cnt = this.db.getOrders(this.currentUser.id).filter(o => o.status !== 'COLLECTED').length;
+      const b = $('badge-active-orders');
+      if (b) { b.innerText = cnt; show(b, cnt > 0); }
     }
-
     updateKitchenQueueIndicator() {
-      const count = this.db.getActiveQueueCount();
-      const text = document.getElementById('kitchen-status-text');
-      if (text) {
-        text.innerText = count > 0 ? `Kitchen active Â· ${count} orders queued` : `Kitchen ready Â· Immediate pickup`;
-      }
+      const cnt = this.db.getActiveQueueCount(), el = $('kitchen-status-text');
+      if (el) el.innerText = cnt > 0 ? `Kitchen active · ${cnt} orders queued` : `Kitchen ready · Immediate pickup`;
     }
-
     renderStudentPortal() {
-      this.renderMenuGrid();
-      this.renderRecommendations();
-      this.renderCart();
-      this.updateKitchenQueueIndicator();
-      this.updateActiveOrdersBadge();
-      this.renderStudentOrders();
-      this.renderStudentProfile();
+      this.renderMenuGrid(); this.renderRecommendations(); this.renderCart();
+      this.updateKitchenQueueIndicator(); this.updateActiveOrdersBadge();
+      this.renderStudentOrders(); this.renderStudentProfile();
     }
-
-    setCategory(cat, element) {
+    setCategory(cat, el) {
       this.currentCategory = cat;
       document.querySelectorAll('#category-chips .category-text-btn').forEach(c => c.classList.remove('active'));
-      if (element) element.classList.add('active');
+      el?.classList.add('active');
       this.renderMenuGrid();
     }
-
-    filterMenu() {
-      this.renderMenuGrid();
-    }
-
+    filterMenu() { this.renderMenuGrid(); }
     renderMenuGrid() {
-      const grid = document.getElementById('food-grid');
-      if (!grid) return;
-      const search = (document.getElementById('food-search').value || '').toLowerCase().trim();
-      const foods = this.db.getFoods();
-
-      const filtered = foods.filter(f => {
-        const matchCat = this.currentCategory === 'All' || f.category === this.currentCategory;
-        const matchSearch = f.name.toLowerCase().includes(search) || f.desc.toLowerCase().includes(search);
-        return matchCat && matchSearch;
+      const g = $('food-grid');
+      if (!g) return;
+      const search = ($('food-search')?.value || '').toLowerCase().trim();
+      const list = this.db.getFoods().filter(f => {
+        const catMatch = this.currentCategory === 'All' || f.category === this.currentCategory;
+        const txtMatch = f.name.toLowerCase().includes(search) || f.desc.toLowerCase().includes(search);
+        return catMatch && txtMatch;
       });
-
-      if (filtered.length === 0) {
-        grid.innerHTML = `
-          <div style="grid-column: 1 / -1; padding: 4rem 1rem; text-align: center; color: var(--muted);">
-            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--ink); margin-bottom: 0.35rem;">No dishes found</h3>
-            <p style="font-size: 0.88rem;">Try searching for another dish or reset the category filter.</p>
-          </div>
-        `;
+      if (!list.length) {
+        g.innerHTML = `<div style="grid-column: 1 / -1; padding: 4rem 1rem; text-align: center; color: var(--muted);"><h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--ink); margin-bottom: 0.35rem;">No dishes found</h3><p style="font-size: 0.88rem;">Try searching for another dish or reset the category filter.</p></div>`;
         return;
       }
-
-      grid.innerHTML = filtered.map((f, idx) => {
-        const imgUrl = f.image || FOOD_IMAGES[f.id] || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80";
-        const indexStr = String(idx + 1).padStart(2, '0');
-
-        return `
-          <div class="menu-item-editorial ${f.available ? '' : 'unavailable'}" onclick="app.openFoodDetail(${f.id})">
-            <div class="menu-item-media">
-              <span class="menu-item-index">${indexStr}</span>
-              <img src="${imgUrl}" alt="${f.name}" loading="lazy">
-              <span class="menu-item-prep-tag">${f.prepMin} MIN</span>
-            </div>
-
-            <div class="menu-item-content">
-              <div class="menu-item-header">
-                <h4 class="menu-item-name">${f.name}</h4>
-                <span class="menu-item-price">â‚¹${f.price}</span>
-              </div>
-              <p class="menu-item-desc">${f.desc}</p>
-              
-              <div class="menu-item-actions">
-                <span class="category-micro-tag">${f.category.toUpperCase()}</span>
-                <button class="btn btn-arrow" 
-                        ${f.available ? '' : 'disabled'}
-                        onclick="event.stopPropagation(); app.addToCart(${f.id})">
-                  <span>${f.available ? 'ADD +' : 'SOLD OUT'}</span>
-                </button>
-              </div>
+      g.innerHTML = list.map((f, idx) => `
+        <div class="menu-item-editorial ${f.available ? '' : 'unavailable'}" onclick="app.openFoodDetail(${f.id})">
+          <div class="menu-item-media">
+            <span class="menu-item-index">${String(idx + 1).padStart(2, '0')}</span>
+            <img src="${f.image || FOOD_IMAGES[f.id]}" alt="${f.name}" loading="lazy">
+            <span class="menu-item-prep-tag">${f.prepMin} MIN</span>
+          </div>
+          <div class="menu-item-content">
+            <div class="menu-item-header"><h4 class="menu-item-name">${f.name}</h4><span class="menu-item-price">₹${f.price}</span></div>
+            <p class="menu-item-desc">${f.desc}</p>
+            <div class="menu-item-actions">
+              <span class="category-micro-tag">${f.category.toUpperCase()}</span>
+              <button class="btn btn-arrow" ${f.available ? '' : 'disabled'} onclick="event.stopPropagation(); app.addToCart(${f.id})"><span>${f.available ? 'ADD +' : 'SOLD OUT'}</span></button>
             </div>
           </div>
-        `;
-      }).join('');
+        </div>
+      `).join('');
     }
-
     renderRecommendations() {
-      const recBox = document.getElementById('recommendation-box');
-      const recTitle = document.getElementById('rec-title');
-      const recGrid = document.getElementById('rec-cards');
-      if (!recBox || !recTitle || !recGrid) return;
-
+      const [box, title, grid] = [$('recommendation-box'), $('rec-title'), $('rec-cards')];
+      if (!box || !title || !grid) return;
       const fav = this.db.getStudentFavourite(this.currentUser.id);
-      if (!fav) {
-        recBox.classList.add('hidden');
-        return;
-      }
-
+      if (!fav) return show(box, false);
       const recs = this.db.getRecommendations(this.currentUser.id);
-      if (recs.length === 0) {
-        recBox.classList.add('hidden');
-        return;
-      }
-
-      recBox.classList.remove('hidden');
-      recTitle.innerText = `BECAUSE YOU ORDERED ${fav.name.toUpperCase()}...`;
-      recGrid.innerHTML = recs.map(f => {
-        const imgUrl = f.image || FOOD_IMAGES[f.id] || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80";
-        return `
-          <div class="rec-item-card" onclick="app.addToCart(${f.id})">
-            <img class="rec-item-img" src="${imgUrl}" alt="${f.name}">
-            <div class="rec-item-info">
-              <strong class="rec-item-name">${f.name}</strong>
-              <div class="rec-item-meta">â‚¹${f.price} Â· ${f.prepMin}m prep</div>
-            </div>
-            <button class="btn btn-secondary btn-xs" onclick="event.stopPropagation(); app.addToCart(${f.id})">+ ADD</button>
-          </div>
-        `;
-      }).join('');
+      if (!recs.length) return show(box, false);
+      show(box, true);
+      title.innerText = `BECAUSE YOU ORDERED ${fav.name.toUpperCase()}...`;
+      grid.innerHTML = recs.map(f => `
+        <div class="rec-item-card" onclick="app.addToCart(${f.id})">
+          <img class="rec-item-img" src="${f.image || FOOD_IMAGES[f.id]}" alt="${f.name}">
+          <div class="rec-item-info"><strong class="rec-item-name">${f.name}</strong><div class="rec-item-meta">₹${f.price} · ${f.prepMin}m prep</div></div>
+          <button class="btn btn-secondary btn-xs" onclick="event.stopPropagation(); app.addToCart(${f.id})">+ ADD</button>
+        </div>
+      `).join('');
     }
-
-    // Food Detail Modal
     openFoodDetail(foodId) {
-      const food = this.db.getFoods().find(f => f.id === foodId);
-      if (!food) return;
-
-      this.selectedDetailFood = food;
-      this.detailQty = 1;
-
-      document.getElementById('detail-food-img').src = food.image || FOOD_IMAGES[food.id] || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80";
-      document.getElementById('detail-food-category').innerText = food.category.toUpperCase();
-      document.getElementById('detail-food-name').innerText = food.name;
-      document.getElementById('detail-food-price').innerText = `â‚¹${food.price}`;
-      document.getElementById('detail-food-prep').innerText = `${food.prepMin} MIN PREP`;
-      document.getElementById('detail-food-desc').innerText = food.desc;
-      document.getElementById('detail-food-qty').innerText = '1';
-
-      const addBtn = document.getElementById('btn-detail-add');
-      addBtn.disabled = !food.available;
-      addBtn.innerHTML = `<span>${food.available ? `ADD TO TRAY â€” â‚¹${food.price}` : 'CURRENTLY SOLD OUT'} &rarr;</span>`;
-
-      document.getElementById('food-detail-modal').classList.remove('hidden');
+      const f = this.db.getFoods().find(item => item.id === foodId);
+      if (!f) return;
+      this.selectedDetailFood = f; this.detailQty = 1;
+      $('detail-food-img').src = f.image || FOOD_IMAGES[f.id];
+      $('detail-food-category').innerText = f.category.toUpperCase();
+      $('detail-food-name').innerText = f.name;
+      $('detail-food-price').innerText = `₹${f.price}`;
+      $('detail-food-prep').innerText = `${f.prepMin} MIN PREP`;
+      $('detail-food-desc').innerText = f.desc;
+      $('detail-food-qty').innerText = '1';
+      const b = $('btn-detail-add');
+      b.disabled = !f.available;
+      b.innerHTML = `<span>${f.available ? `ADD TO TRAY — ₹${f.price}` : 'CURRENTLY SOLD OUT'} &rarr;</span>`;
+      show($('food-detail-modal'), true);
     }
-
-    closeFoodDetail() {
-      document.getElementById('food-detail-modal').classList.add('hidden');
-      this.selectedDetailFood = null;
-    }
-
+    closeFoodDetail() { show($('food-detail-modal'), false); this.selectedDetailFood = null; }
     changeDetailQty(delta) {
       if (!this.selectedDetailFood) return;
       this.detailQty = Math.max(1, Math.min(10, this.detailQty + delta));
-      document.getElementById('detail-food-qty').innerText = this.detailQty;
-      const total = this.selectedDetailFood.price * this.detailQty;
-      document.getElementById('btn-detail-add').innerHTML = `<span>ADD TO TRAY â€” â‚¹${total} &rarr;</span>`;
+      $('detail-food-qty').innerText = this.detailQty;
+      $('btn-detail-add').innerHTML = `<span>ADD TO TRAY — ₹${this.selectedDetailFood.price * this.detailQty} &rarr;</span>`;
     }
-
     addDetailToCart() {
-      if (!this.selectedDetailFood || !this.selectedDetailFood.available) return;
-      const existing = this.cart.find(i => i.food.id === this.selectedDetailFood.id);
-      if (existing) {
-        existing.qty = Math.min(10, existing.qty + this.detailQty);
-      } else {
-        this.cart.push({ food: this.selectedDetailFood, qty: this.detailQty });
-      }
-      this.renderCart();
-      this.closeFoodDetail();
-      this.showToast(`Added ${this.selectedDetailFood.name} to tray`);
+      if (!this.selectedDetailFood?.available) return;
+      const ex = this.cart.find(i => i.food.id === this.selectedDetailFood.id);
+      if (ex) ex.qty = Math.min(10, ex.qty + this.detailQty);
+      else this.cart.push({ food: this.selectedDetailFood, qty: this.detailQty });
+      this.renderCart(); this.closeFoodDetail(); this.showToast(`Added ${this.selectedDetailFood.name} to tray`);
     }
-
-    // Tray Slip Management
     addToCart(foodId) {
-      const food = this.db.getFoods().find(f => f.id === foodId);
-      if (!food || !food.available) return;
-
-      const existing = this.cart.find(item => item.food.id === foodId);
-      if (existing) {
-        if (existing.qty < 10) existing.qty++;
-      } else {
-        this.cart.push({ food, qty: 1 });
-      }
-
-      this.renderCart();
-      this.showToast(`Added ${food.name} to tray`);
+      const f = this.db.getFoods().find(item => item.id === foodId);
+      if (!f?.available) return;
+      const ex = this.cart.find(i => i.food.id === foodId);
+      if (ex) { if (ex.qty < 10) ex.qty++; }
+      else this.cart.push({ food: f, qty: 1 });
+      this.renderCart(); this.showToast(`Added ${f.name} to tray`);
     }
-
     changeCartQty(foodId, delta) {
-      const index = this.cart.findIndex(i => i.food.id === foodId);
-      if (index === -1) return;
-
-      this.cart[index].qty += delta;
-      if (this.cart[index].qty <= 0) {
-        this.cart.splice(index, 1);
-      }
+      const idx = this.cart.findIndex(i => i.food.id === foodId);
+      if (idx === -1) return;
+      this.cart[idx].qty += delta;
+      if (this.cart[idx].qty <= 0) this.cart.splice(idx, 1);
       this.renderCart();
     }
-
-    clearCart() {
-      this.cart = [];
-      this.renderCart();
-      this.showToast('Tray cleared');
-    }
-
-    scrollToTray() {
-      $('student-tray-sidebar')?.scrollIntoView({ behavior: 'smooth' });
-    }
-
+    clearCart() { this.cart = []; this.renderCart(); this.showToast('Tray cleared'); }
+    scrollToTray() { $('student-tray-sidebar')?.scrollIntoView({ behavior: 'smooth' }); }
     renderCart() {
-      const container = document.getElementById('cart-items');
-      const footer = document.getElementById('cart-footer');
-      const countPill = document.getElementById('nav-tray-count');
-      if (!container || !footer) return;
-
-      const cartQty = this.cart.reduce((s, i) => s + i.qty, 0);
-      if (countPill) countPill.innerText = cartQty;
-
-      if (this.cart.length === 0) {
-        container.innerHTML = `
-          <div class="tray-empty-editorial">
-            <p>Your tray is empty.</p>
-            <small>Select dishes from today's menu to start ordering.</small>
-          </div>
-        `;
-        footer.classList.add('hidden');
-        return;
+      const [cont, foot, cp] = [$('cart-items'), $('cart-footer'), $('nav-tray-count')];
+      if (!cont || !foot) return;
+      const totalQty = this.cart.reduce((s, i) => s + i.qty, 0);
+      if (cp) cp.innerText = totalQty;
+      if (!this.cart.length) {
+        cont.innerHTML = `<div class="tray-empty-editorial"><p>Your tray is empty.</p><small>Select dishes from today's menu to start ordering.</small></div>`;
+        return show(foot, false);
       }
-
-      footer.classList.remove('hidden');
-      container.innerHTML = this.cart.map(item => `
+      show(foot, true);
+      cont.innerHTML = this.cart.map(i => `
         <div class="tray-item-row">
-          <div class="tray-item-info">
-            <strong>${item.food.name}</strong>
-            <small>â‚¹${item.food.price * item.qty} (â‚¹${item.food.price} ea)</small>
-          </div>
+          <div class="tray-item-info"><strong>${i.food.name}</strong><small>₹${i.food.price * i.qty} (₹${i.food.price} ea)</small></div>
           <div class="tray-stepper">
-            <button class="btn-step" onclick="app.changeCartQty(${item.food.id}, -1)">&minus;</button>
-            <span class="tray-stepper-val">${item.qty}</span>
-            <button class="btn-step" onclick="app.changeCartQty(${item.food.id}, 1)">+</button>
+            <button class="btn-step" onclick="app.changeCartQty(${i.food.id}, -1)">&minus;</button>
+            <span class="tray-stepper-val">${i.qty}</span>
+            <button class="btn-step" onclick="app.changeCartQty(${i.food.id}, 1)">+</button>
           </div>
         </div>
       `).join('');
-
-      const subtotal = this.cart.reduce((sum, i) => sum + (i.food.price * i.qty), 0);
+      const subtotal = this.cart.reduce((s, i) => s + (i.food.price * i.qty), 0);
       const eta = this.db.calculateCartEta(this.cart);
-
-      document.getElementById('bill-subtotal').innerText = `â‚¹${subtotal}`;
-      document.getElementById('bill-total').innerText = `â‚¹${subtotal}`;
-      document.getElementById('cart-eta-val').innerText = `~${eta} mins`;
-      document.getElementById('cart-eta-calc').innerText = `Longest prep (${Math.max(...this.cart.map(i => i.food.prepMin))}m) + queue (${2 * this.db.getActiveQueueCount()}m)`;
+      $('bill-subtotal').innerText = `₹${subtotal}`;
+      $('bill-total').innerText = `₹${subtotal}`;
+      $('cart-eta-val').innerText = `~${eta} mins`;
+      $('cart-eta-calc').innerText = `Longest prep (${Math.max(...this.cart.map(i => i.food.prepMin))}m) + queue (${2 * this.db.getActiveQueueCount()}m)`;
     }
-
     placeOrder() {
-      if (!this.cart || this.cart.length === 0) {
-        this.showToast('Your tray is empty! Add dishes to place an order.');
-        return;
-      }
-      const subtotal = this.cart.reduce((sum, i) => sum + (i.food.price * i.qty), 0);
+      if (!this.cart.length) return this.showToast('Your tray is empty! Add dishes to place an order.');
+      const subtotal = this.cart.reduce((s, i) => s + (i.food.price * i.qty), 0);
       const eta = this.db.calculateCartEta(this.cart);
-
       try {
-        const safeUser = this.currentUser || { id: 2, name: "Sreeshanth", email: "demo@campus.edu", role: "STUDENT" };
-        const order = this.db.placeOrder(safeUser, this.cart, subtotal, eta);
-        this.cart = [];
-        this.renderCart();
-        this.updateActiveOrdersBadge();
-        this.switchStudentTab('orders');
-        this.renderStudentOrders();
-        this.renderStudentProfile();
+        const u = this.currentUser || { id: 2, name: "Sreeshanth", email: "demo@campus.edu", role: "STUDENT" };
+        const order = this.db.placeOrder(u, this.cart, subtotal, eta);
+        this.cart = []; this.renderCart(); this.updateActiveOrdersBadge();
+        this.switchStudentTab('orders'); this.renderStudentOrders(); this.renderStudentProfile();
         this.scheduleOrderAutoProgress(order.id);
         this.showToast(`Order #${order.id} sent to kitchen queue`);
         this.showOrderModal(order);
-      } catch (err) {
-        console.error("Order placement error:", err);
-        alert(err.message);
-        this.db.load();
-        this.renderMenuGrid();
-      }
+      } catch (err) { alert(err.message); this.db.load(); this.renderMenuGrid(); }
     }
-
     scheduleOrderAutoProgress(orderId) {
       setTimeout(() => {
-        const order = this.db.data.orders.find(o => o.id === orderId);
-        if (order && order.status === 'NEW') {
-          this.db.advanceOrderStatus(orderId);
-          this.showToast(`Kitchen started cooking Token #${orderId}`);
-          this.refreshCurrentView();
-        }
+        const o = this.db.data.orders.find(item => item.id === orderId);
+        if (o?.status === 'NEW') { this.db.advanceOrderStatus(orderId); this.showToast(`Kitchen started cooking Token #${orderId}`); this.refreshCurrentView(); }
       }, 7000);
-
       setTimeout(() => {
-        const order = this.db.data.orders.find(o => o.id === orderId);
-        if (order && order.status === 'PREPARING') {
-          this.db.advanceOrderStatus(orderId);
-          this.showToast(`Token #${orderId} is READY for pickup at Counter 01`);
-          this.refreshCurrentView();
-        }
+        const o = this.db.data.orders.find(item => item.id === orderId);
+        if (o?.status === 'PREPARING') { this.db.advanceOrderStatus(orderId); this.showToast(`Token #${orderId} is READY for pickup at Counter 01`); this.refreshCurrentView(); }
       }, 16000);
     }
-
     showOrderModal(order) {
-      document.getElementById('modal-token-num').innerText = `#${order.id}`;
-      document.getElementById('modal-eta-val').innerText = `${order.etaMin} minutes`;
-      document.getElementById('modal-total-val').innerText = `â‚¹${order.total}`;
-      document.getElementById('order-modal').classList.remove('hidden');
+      $('modal-token-num').innerText = `#${order.id}`;
+      $('modal-eta-val').innerText = `${order.etaMin} minutes`;
+      $('modal-total-val').innerText = `₹${order.total}`;
+      show($('order-modal'), true);
     }
-
-    dismissOrderModal() {
-      document.getElementById('order-modal').classList.add('hidden');
-      this.switchStudentTab('orders');
-    }
-
-    // Live Orders & Stepper
+    dismissOrderModal() { show($('order-modal'), false); this.switchStudentTab('orders'); }
     renderStudentOrders() {
-      const container = document.getElementById('orders-list');
-      if (!container) return;
-      const safeUser = this.currentUser || { id: 2, name: "Sreeshanth" };
-      const orders = this.db.getOrders(safeUser.id);
-
-      const activeOrders = orders.filter(o => o.status !== 'COLLECTED');
-      const pastOrders = orders.filter(o => o.status === 'COLLECTED');
-
+      const cont = $('orders-list');
+      if (!cont) return;
+      const u = this.currentUser || { id: 2, name: "Sreeshanth" };
+      const orders = this.db.getOrders(u.id);
+      const active = orders.filter(o => o.status !== 'COLLECTED'), past = orders.filter(o => o.status === 'COLLECTED');
       let html = '';
-
-      // Tray Pending Notice
-      if (this.cart && this.cart.length > 0) {
-        const cartQty = this.cart.reduce((sum, i) => sum + i.qty, 0);
-        const cartTotal = this.cart.reduce((sum, i) => sum + (i.food.price * i.qty), 0);
-        const itemNames = this.cart.map(i => `${i.food.name} (x${i.qty})`).join(', ');
-
-        html += `
-          <div class="pending-tray-banner">
-            <div class="pending-tray-info">
-              <span class="pending-tray-badge">TRAY READY</span>
-              <h4>You have ${cartQty} dish${cartQty > 1 ? 'es' : ''} in your tray waiting to order</h4>
-              <p style="font-size: 0.88rem; color: var(--muted);">${itemNames} Â· <strong>Total: â‚¹${cartTotal}</strong></p>
-            </div>
-            <button class="btn btn-primary btn-md" onclick="app.placeOrder()">
-              <span>CONFIRM ORDER (â‚¹${cartTotal}) &rarr;</span>
-            </button>
-          </div>
-        `;
+      if (this.cart.length) {
+        const qty = this.cart.reduce((s, i) => s + i.qty, 0), tot = this.cart.reduce((s, i) => s + (i.food.price * i.qty), 0);
+        html += `<div class="pending-tray-banner"><div class="pending-tray-info"><span class="pending-tray-badge">TRAY READY</span><h4>You have ${qty} dish${qty > 1 ? 'es' : ''} in your tray waiting to order</h4><p style="font-size: 0.88rem; color: var(--muted);">${this.cart.map(i => `${i.food.name} (x${i.qty})`).join(', ')} · <strong>Total: ₹${tot}</strong></p></div><button class="btn btn-primary btn-md" onclick="app.placeOrder()"><span>CONFIRM ORDER (₹${tot}) &rarr;</span></button></div>`;
       }
-
-      if (activeOrders.length === 0 && pastOrders.length === 0) {
-        if (!this.cart || this.cart.length === 0) {
-          html += `
-            <div style="background: var(--bg-surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 4rem 2rem; text-align: center;">
-              <h3 style="font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 0.35rem;">No Orders Placed Yet</h3>
-              <p style="color: var(--muted); margin-bottom: 1.75rem; max-width: 440px; margin-left: auto; margin-right: auto; font-size: 0.92rem;">
-                You have no active meals in the kitchen queue. Choose a fresh dish from today's menu to place your first token.
-              </p>
-              <button class="btn btn-primary btn-md" onclick="app.switchStudentTab('menu')">
-                <span>DISCOVER MENU &rarr;</span>
-              </button>
-            </div>
-          `;
-        }
-        container.innerHTML = html;
-        return;
+      if (!active.length && !past.length) {
+        if (!this.cart.length) html += `<div style="background: var(--bg-surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 4rem 2rem; text-align: center;"><h3 style="font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 0.35rem;">No Orders Placed Yet</h3><p style="color: var(--muted); margin-bottom: 1.75rem; max-width: 440px; margin: 0 auto 1.75rem auto; font-size: 0.92rem;">You have no active meals in the kitchen queue. Choose a fresh dish from today's menu to place your first token.</p><button class="btn btn-primary btn-md" onclick="app.switchStudentTab('menu')"><span>DISCOVER MENU &rarr;</span></button></div>`;
+        cont.innerHTML = html; return;
       }
-
-      // Active Orders Section
-      if (activeOrders.length > 0) {
-        const steps = [
-          { key: "NEW", label: "ORDERED" },
-          { key: "PREPARING", label: "PREPARING" },
-          { key: "READY", label: "READY" },
-          { key: "COLLECTED", label: "COLLECTED" }
-        ];
-
-        html += `
-          <div style="margin-bottom: 2.5rem;">
-            <span class="editorial-eyebrow" style="margin-bottom: 1rem;">ACTIVE KITCHEN TOKENS (${activeOrders.length})</span>
-            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-              ${activeOrders.map(o => {
-                const currentIdx = steps.findIndex(s => s.key === o.status);
-                const timeStr = new Date(o.created).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-                return `
-                  <div class="order-ticket-card">
-                    <div class="order-ticket-header">
-                      <div>
-                        <span class="order-token-badge">TOKEN #${o.id}</span>
-                        <span class="order-meta-info">Placed at ${timeStr} Â· ETA ~${o.etaMin}m</span>
-                      </div>
-                      <div style="display: flex; align-items: baseline; gap: 1.25rem;">
-                        <span class="order-total-figure">â‚¹${o.total}</span>
-                        ${o.status === 'NEW' ? `
-                          <button class="btn btn-secondary btn-xs" style="color: var(--accent); border-color: var(--accent);" onclick="app.handleCancelOrder(${o.id})">
-                            Cancel
-                          </button>
-                        ` : ''}
-                      </div>
-                    </div>
-
-                    <div class="order-timeline-stepper">
-                      ${steps.map((s, idx) => {
-                        let nodeClass = '';
-                        let bulletChar = idx + 1;
-                        if (idx < currentIdx || o.status === 'COLLECTED') {
-                          nodeClass = 'completed';
-                          bulletChar = 'âœ“';
-                        } else if (idx === currentIdx) {
-                          nodeClass = 'current';
-                          bulletChar = 'â—';
-                        }
-                        return `
-                          <div class="timeline-node ${nodeClass}">
-                            <div class="timeline-bullet">${bulletChar}</div>
-                            <span class="timeline-label">${s.label}</span>
-                          </div>
-                        `;
-                      }).join('')}
-                    </div>
-
-                    <div class="order-summary-box">
-                      <strong>Items:</strong> ${o.summary}
-                    </div>
-
-                    <div class="order-actions-bar">
-                      <span style="font-family: var(--font-mono); font-size: 0.74rem; font-weight: 600; color: ${o.status === 'READY' ? 'var(--success)' : 'var(--ink)'};">
-                        ${o.status === 'NEW' ? 'Order accepted in kitchen queue' : o.status === 'PREPARING' ? 'Cooking on the stove' : 'Ready for pickup at Counter 01'}
-                      </span>
-                      <button class="btn btn-secondary btn-xs" onclick="app.advanceOrderFromStudent(${o.id})">
-                        ${o.status === 'NEW' ? 'Start Cooking' : o.status === 'PREPARING' ? 'Mark Ready' : 'Collect Dish'} &rarr;
-                      </button>
-                    </div>
-                  </div>
-                `;
-              }).join('')}
-            </div>
-          </div>
-        `;
+      const steps = [{ k: "NEW", l: "ORDERED" }, { k: "PREPARING", l: "PREPARING" }, { k: "READY", l: "READY" }, { k: "COLLECTED", l: "COLLECTED" }];
+      if (active.length) {
+        html += `<div style="margin-bottom: 2.5rem;"><span class="editorial-eyebrow" style="margin-bottom: 1rem;">ACTIVE KITCHEN TOKENS (${active.length})</span><div style="display: flex; flex-direction: column; gap: 1.5rem;">${active.map(o => {
+          const cur = steps.findIndex(s => s.k === o.status), tStr = new Date(o.created).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          return `<div class="order-ticket-card"><div class="order-ticket-header"><div><span class="order-token-badge">TOKEN #${o.id}</span><span class="order-meta-info">Placed at ${tStr} · ETA ~${o.etaMin}m</span></div><div style="display: flex; align-items: baseline; gap: 1.25rem;"><span class="order-total-figure">₹${o.total}</span>${o.status === 'NEW' ? `<button class="btn btn-secondary btn-xs" style="color: var(--accent); border-color: var(--accent);" onclick="app.handleCancelOrder(${o.id})">Cancel</button>` : ''}</div></div><div class="order-timeline-stepper">${steps.map((s, idx) => {
+            const cls = (idx < cur || o.status === 'COLLECTED') ? 'completed' : idx === cur ? 'current' : '';
+            const bChar = (idx < cur || o.status === 'COLLECTED') ? '✓' : idx === cur ? '●' : idx + 1;
+            return `<div class="timeline-node ${cls}"><div class="timeline-bullet">${bChar}</div><span class="timeline-label">${s.l}</span></div>`;
+          }).join('')}</div><div class="order-summary-box"><strong>Items:</strong> ${o.summary}</div><div class="order-actions-bar"><span style="font-family: var(--font-mono); font-size: 0.74rem; font-weight: 600; color: ${o.status === 'READY' ? 'var(--success)' : 'var(--ink)'};">${o.status === 'NEW' ? 'Order accepted in kitchen queue' : o.status === 'PREPARING' ? 'Cooking on the stove' : 'Ready for pickup at Counter 01'}</span><button class="btn btn-secondary btn-xs" onclick="app.advanceOrderFromStudent(${o.id})">${o.status === 'NEW' ? 'Start Cooking' : o.status === 'PREPARING' ? 'Mark Ready' : 'Collect Dish'} &rarr;</button></div></div>`;
+        }).join('')}</div></div>`;
       }
-
-      // Past Orders Section
-      if (pastOrders.length > 0) {
-        html += `
-          <div>
-            <span class="editorial-eyebrow" style="margin-bottom: 1rem;">PAST FULFILLED ORDERS (${pastOrders.length})</span>
-            <div style="display: flex; flex-direction: column; gap: 0.85rem;">
-              ${pastOrders.map(o => {
-                const dateStr = new Date(o.created).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-                return `
-                  <div class="history-item-row">
-                    <div>
-                      <div style="display: flex; align-items: center; gap: 0.75rem;">
-                        <strong style="font-family: var(--font-mono); font-size: 0.95rem;">#${o.id}</strong>
-                        <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);">${dateStr}</span>
-                        <span style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: var(--success); background: var(--success-subtle); padding: 0.1rem 0.4rem; border-radius: var(--radius-xs);">COLLECTED âœ“</span>
-                      </div>
-                      <small style="color: var(--muted); display: block; margin-top: 0.25rem;">${o.summary}</small>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 1.25rem;">
-                      <span style="font-family: var(--font-mono); font-weight: 700; font-size: 1.05rem;">â‚¹${o.total}</span>
-                      <button class="btn btn-arrow" onclick="app.reorderItem(${o.id})">REORDER &rarr;</button>
-                    </div>
-                  </div>
-                `;
-              }).join('')}
-            </div>
-          </div>
-        `;
+      if (past.length) {
+        html += `<div><span class="editorial-eyebrow" style="margin-bottom: 1rem;">PAST FULFILLED ORDERS (${past.length})</span><div style="display: flex; flex-direction: column; gap: 0.85rem;">${past.map(o => `
+          <div class="history-item-row"><div><div style="display: flex; align-items: center; gap: 0.75rem;"><strong style="font-family: var(--font-mono); font-size: 0.95rem;">#${o.id}</strong><span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);">${new Date(o.created).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span><span style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: var(--success); background: var(--success-subtle); padding: 0.1rem 0.4rem; border-radius: var(--radius-xs);">COLLECTED ✓</span></div><small style="color: var(--muted); display: block; margin-top: 0.25rem;">${o.summary}</small></div><div style="display: flex; align-items: center; gap: 1.25rem;"><span style="font-family: var(--font-mono); font-weight: 700; font-size: 1.05rem;">₹${o.total}</span><button class="btn btn-arrow" onclick="app.reorderItem(${o.id})">REORDER &rarr;</button></div></div>
+        `).join('')}</div></div>`;
       }
-
-      container.innerHTML = html;
+      cont.innerHTML = html;
     }
-
-    advanceOrderFromStudent(orderId) {
-      this.db.advanceOrderStatus(orderId);
-      this.renderStudentOrders();
-      this.renderStudentProfile();
-      this.updateActiveOrdersBadge();
-      const order = this.db.data.orders.find(o => o.id === orderId);
-      if (order) {
-        if (order.status === 'COLLECTED') {
-          this.showToast(`Token #${orderId} collected. Added to your dining history.`);
-        } else {
-          this.showToast(`Token #${orderId} moved to ${order.status}`);
-        }
+    advanceOrderFromStudent(id) {
+      this.db.advanceOrderStatus(id); this.renderStudentOrders(); this.renderStudentProfile(); this.updateActiveOrdersBadge();
+      const o = this.db.data.orders.find(item => item.id === id);
+      if (o) this.showToast(o.status === 'COLLECTED' ? `Token #${id} collected. Added to your dining history.` : `Token #${id} moved to ${o.status}`);
+    }
+    handleCancelOrder(id) {
+      if (confirm(`Cancel Order #${id}? Stock will be refunded.`)) {
+        if (this.db.cancelOrder(id)) { this.showToast(`Order #${id} cancelled`); this.renderStudentOrders(); this.renderStudentProfile(); this.updateActiveOrdersBadge(); }
       }
     }
-
-    handleCancelOrder(orderId) {
-      if (confirm(`Cancel Order #${orderId}? Stock will be refunded.`)) {
-        if (this.db.cancelOrder(orderId)) {
-          this.showToast(`Order #${orderId} cancelled`);
-          this.renderStudentOrders();
-          this.renderStudentProfile();
-          this.updateActiveOrdersBadge();
-        }
-      }
-    }
-
-    reorderItem(orderId) {
-      const order = this.db.data.orders.find(o => o.id === orderId);
-      if (!order || !order.items) return;
-
-      order.items.forEach(it => {
-        const food = this.db.getFoods().find(f => f.id === it.foodId);
-        if (food && food.available) {
-          const existing = this.cart.find(c => c.food.id === food.id);
-          if (existing) {
-            existing.qty += it.qty;
-          } else {
-            this.cart.push({ food, qty: it.qty });
-          }
+    reorderItem(id) {
+      const o = this.db.data.orders.find(item => item.id === id);
+      if (!o?.items) return;
+      o.items.forEach(it => {
+        const f = this.db.getFoods().find(food => food.id === it.foodId);
+        if (f?.available) {
+          const ex = this.cart.find(c => c.food.id === f.id);
+          if (ex) ex.qty += it.qty; else this.cart.push({ food: f, qty: it.qty });
         }
       });
-
-      this.renderCart();
-      this.switchStudentTab('menu');
-      this.scrollToTray();
-      this.showToast(`Added dishes from Token #${orderId} to tray`);
+      this.renderCart(); this.switchStudentTab('menu'); this.scrollToTray(); this.showToast(`Added dishes from Token #${id} to tray`);
     }
-
     renderStudentProfile() {
-      const safeUser = this.currentUser || { id: 2, name: "Sreeshanth", email: "demo@campus.edu", studentId: "25R11A0501", role: "STUDENT" };
-      const orders = this.db.getOrders(safeUser.id);
-      const spent = orders.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
-      const fav = this.db.getStudentFavourite(safeUser.id);
-
-      const microEl = document.getElementById('profile-micro-label');
-      if (microEl) microEl.innerText = safeUser.role === 'FACULTY' ? 'FACULTY OVERVIEW' : 'STUDENT OVERVIEW';
-      const nameEl = document.getElementById('profile-name');
-      if (nameEl) nameEl.innerText = (safeUser.name || "SREESHANTH").toUpperCase();
-      const countEl = document.getElementById('stat-total-orders');
-      if (countEl) countEl.innerText = orders.length;
-      const spentEl = document.getElementById('stat-total-spent');
-      if (spentEl) spentEl.innerText = `â‚¹${spent}`;
-      const favEl = document.getElementById('stat-fav-dish');
-      if (favEl) {
-        if (fav && fav.name) {
-          favEl.innerText = fav.name;
-        } else if (orders.length > 0 && orders[0].items && orders[0].items[0]) {
-          favEl.innerText = orders[0].items[0].name;
-        } else {
-          favEl.innerText = 'â€”';
-        }
-      }
-
-      const rollEl = document.getElementById('profile-roll');
-      if (rollEl) rollEl.innerText = safeUser.facultyId || safeUser.studentId || 'N/A';
-      const idLabel = document.getElementById('profile-id-label');
-      if (idLabel) idLabel.innerText = safeUser.role === 'FACULTY' ? 'Faculty / Employee ID' : 'Roll / Student ID';
-      const emailEl = document.getElementById('profile-email');
-      if (emailEl) emailEl.innerText = safeUser.email || 'demo@campus.edu';
-
-      const historyContainer = document.getElementById('profile-orders-list');
-      const countLabel = document.getElementById('profile-history-count');
-      if (countLabel) countLabel.innerText = `${orders.length} Orders Placed`;
-
-      if (historyContainer) {
-        if (orders.length === 0) {
-          historyContainer.innerHTML = `
-            <div style="padding: 2.5rem 1rem; text-align: center; color: var(--muted);">
-              <p style="font-size: 0.92rem;">No order history yet. Discover dishes in the menu to place your first token.</p>
-            </div>
-          `;
-        } else {
-          historyContainer.innerHTML = orders.map(o => {
-            const timeStr = new Date(o.created).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-            return `
-              <div class="history-item-row">
-                <div>
-                  <div style="display: flex; align-items: center; gap: 0.75rem;">
-                    <strong style="font-family: var(--font-mono);">#${o.id}</strong>
-                    <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);">${timeStr}</span>
-                    <span style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: ${o.status === 'COLLECTED' ? 'var(--success)' : 'var(--accent)'};">
-                      ${o.status}
-                    </span>
-                  </div>
-                  <small style="color: var(--muted); display: block; margin-top: 0.25rem;">${o.summary}</small>
-                </div>
-                <div style="display: flex; align-items: center; gap: 1.25rem;">
-                  <strong style="font-family: var(--font-mono); font-size: 1.05rem;">â‚¹${o.total}</strong>
-                  <button class="btn btn-arrow" onclick="app.reorderItem(${o.id})">REORDER &rarr;</button>
-                </div>
-              </div>
-            `;
-          }).join('');
-        }
-      }
+      const u = this.currentUser || { id: 2, name: "Sreeshanth", email: "demo@campus.edu", studentId: "25R11A0501", role: "STUDENT" };
+      const orders = this.db.getOrders(u.id), spent = orders.reduce((s, o) => s + (Number(o.total) || 0), 0);
+      const fav = this.db.getStudentFavourite(u.id);
+      $('profile-micro-label').innerText = u.role === 'FACULTY' ? 'FACULTY OVERVIEW' : 'STUDENT OVERVIEW';
+      $('profile-name').innerText = (u.name || "SREESHANTH").toUpperCase();
+      $('stat-total-orders').innerText = orders.length;
+      $('stat-total-spent').innerText = `₹${spent}`;
+      $('stat-fav-dish').innerText = fav?.name || orders[0]?.items[0]?.name || '—';
+      $('profile-roll').innerText = u.facultyId || u.studentId || 'N/A';
+      $('profile-id-label').innerText = u.role === 'FACULTY' ? 'Faculty / Employee ID' : 'Roll / Student ID';
+      $('profile-email').innerText = u.email || 'demo@campus.edu';
+      $('profile-history-count').innerText = `${orders.length} Orders Placed`;
+      const cont = $('profile-orders-list');
+      if (!cont) return;
+      if (!orders.length) cont.innerHTML = `<div style="padding: 2.5rem 1rem; text-align: center; color: var(--muted);"><p style="font-size: 0.92rem;">No order history yet. Discover dishes in the menu to place your first token.</p></div>`;
+      else cont.innerHTML = orders.map(o => `
+        <div class="history-item-row"><div><div style="display: flex; align-items: center; gap: 0.75rem;"><strong style="font-family: var(--font-mono);">#${o.id}</strong><span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);">${new Date(o.created).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span><span style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: ${o.status === 'COLLECTED' ? 'var(--success)' : 'var(--accent)'};">${o.status}</span></div><small style="color: var(--muted); display: block; margin-top: 0.25rem;">${o.summary}</small></div><div style="display: flex; align-items: center; gap: 1.25rem;"><strong style="font-family: var(--font-mono); font-size: 1.05rem;">₹${o.total}</strong><button class="btn btn-arrow" onclick="app.reorderItem(${o.id})">REORDER &rarr;</button></div></div>
+      `).join('');
     }
-
-    // ==========================================
-    // CANTEEN STAFF / KITCHEN OPERATIONS
-    // ==========================================
     switchAdminTab(tab) {
       this.activeAdminTab = tab;
       ['live', 'menu', 'inv', 'analytics'].forEach(t => {
-        const btn = document.getElementById(`admin-tab-${t}`);
-        const sec = document.getElementById(`admin-sec-${t}`);
-        if (btn) btn.classList.toggle('active', t === tab);
-        if (sec) sec.classList.toggle('hidden', t !== tab);
+        $(`admin-tab-${t}`)?.classList.toggle('active', t === tab);
+        show($(`admin-sec-${t}`), t === tab);
       });
-      this.renderAdminNavigation();
-      this.refreshCurrentView();
+      this.renderAdminNavigation(); this.refreshCurrentView();
     }
-
-    renderAdminPortal() {
-      this.renderKanbanBoard();
-      this.renderAdminMenu();
-      this.renderInventory();
-      this.renderAnalytics();
-    }
-
+    renderAdminPortal() { this.renderKanbanBoard(); this.renderAdminMenu(); this.renderInventory(); this.renderAnalytics(); }
     renderKanbanBoard() {
       const orders = this.db.getOrders();
-      const colNew = document.getElementById('col-orders-new');
-      const colPrep = document.getElementById('col-orders-prep');
-      const colReady = document.getElementById('col-orders-ready');
-      if (!colNew || !colPrep || !colReady) return;
-
-      const newOrders = orders.filter(o => o.status === 'NEW');
-      const prepOrders = orders.filter(o => o.status === 'PREPARING');
-      const readyOrders = orders.filter(o => o.status === 'READY');
-
-      document.getElementById('count-new').innerText = newOrders.length;
-      document.getElementById('count-prep').innerText = prepOrders.length;
-      document.getElementById('count-ready').innerText = readyOrders.length;
-
-      const renderCard = (o, btnText) => `
-        <div class="kanban-ticket">
-          <div class="ticket-top">
-            <span class="ticket-token">#${o.id}</span>
-            <span class="ticket-cust">${o.customerName}</span>
-          </div>
-          <div class="ticket-summary">${o.summary}</div>
-          <div class="ticket-footer">
-            <span class="ticket-price">â‚¹${o.total}</span>
-            <button class="btn btn-primary btn-xs" onclick="app.advanceOrder(${o.id})">
-              <span>${btnText} &rarr;</span>
-            </button>
-          </div>
-        </div>
-      `;
-
-      colNew.innerHTML = newOrders.map(o => renderCard(o, 'START COOKING')).join('') || '<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">NO PENDING ORDERS</div>';
-      colPrep.innerHTML = prepOrders.map(o => renderCard(o, 'MARK READY')).join('') || '<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">STOVE IS CLEAR</div>';
-      colReady.innerHTML = readyOrders.map(o => renderCard(o, 'COLLECTED âœ“')).join('') || '<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">COUNTER CLEARED</div>';
+      const [cn, cp, cr] = [$('col-orders-new'), $('col-orders-prep'), $('col-orders-ready')];
+      if (!cn || !cp || !cr) return;
+      const [n, p, r] = [orders.filter(o => o.status === 'NEW'), orders.filter(o => o.status === 'PREPARING'), orders.filter(o => o.status === 'READY')];
+      $('count-new').innerText = n.length; $('count-prep').innerText = p.length; $('count-ready').innerText = r.length;
+      const card = (o, txt) => `<div class="kanban-ticket"><div class="ticket-top"><span class="ticket-token">#${o.id}</span><span class="ticket-cust">${o.customerName}</span></div><div class="ticket-summary">${o.summary}</div><div class="ticket-footer"><span class="ticket-price">₹${o.total}</span><button class="btn btn-primary btn-xs" onclick="app.advanceOrder(${o.id})"><span>${txt} &rarr;</span></button></div></div>`;
+      cn.innerHTML = n.map(o => card(o, 'START COOKING')).join('') || '<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">NO PENDING ORDERS</div>';
+      cp.innerHTML = p.map(o => card(o, 'MARK READY')).join('') || '<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">STOVE IS CLEAR</div>';
+      cr.innerHTML = r.map(o => card(o, 'COLLECTED ✓')).join('') || '<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">COUNTER CLEARED</div>';
     }
-
-    advanceOrder(orderId) {
-      this.db.advanceOrderStatus(orderId);
-      this.renderKanbanBoard();
-      this.showToast(`Order #${orderId} status advanced`);
-    }
-
+    advanceOrder(id) { this.db.advanceOrderStatus(id); this.renderKanbanBoard(); this.showToast(`Order #${id} status advanced`); }
     renderAdminMenu() {
-      const container = document.getElementById('admin-food-table');
-      if (!container) return;
-      const foods = this.db.getFoods();
-
-      container.innerHTML = foods.map(f => `
-        <div class="food-editor-row">
-          <div>
-            <strong style="font-size: 0.92rem;">${f.name}</strong>
-            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem;">
-              â‚¹${f.price} Â· ${f.category} Â· Prep: ${f.prepMin}m
-            </div>
-          </div>
-          <button class="toggle-availability-btn ${f.available ? 'active' : 'inactive'}" 
-                  onclick="app.toggleFoodAvailability(${f.id})">
-            ${f.available ? 'â— AVAILABLE' : 'âœ• SOLD OUT'}
-          </button>
-        </div>
+      const cont = $('admin-food-table');
+      if (!cont) return;
+      cont.innerHTML = this.db.getFoods().map(f => `
+        <div class="food-editor-row"><div><strong style="font-size: 0.92rem;">${f.name}</strong><div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem;">₹${f.price} · ${f.category} · Prep: ${f.prepMin}m</div></div><button class="toggle-availability-btn ${f.available ? 'active' : 'inactive'}" onclick="app.toggleFoodAvailability(${f.id})">${f.available ? '● AVAILABLE' : '✕ SOLD OUT'}</button></div>
       `).join('');
     }
-
-    toggleFoodAvailability(foodId) {
-      const food = this.db.getFoods().find(f => f.id === foodId);
-      if (food) {
-        this.db.setFoodAvailability(foodId, !food.available);
-        this.renderAdminMenu();
-        this.showToast(`${food.name} is now ${!food.available ? 'Available' : 'Sold Out'}`);
-      }
+    toggleFoodAvailability(id) {
+      const f = this.db.getFoods().find(item => item.id === id);
+      if (f) { this.db.setFoodAvailability(id, !f.available); this.renderAdminMenu(); this.showToast(`${f.name} is now ${!f.available ? 'Available' : 'Sold Out'}`); }
     }
-
     handleAddNewFood(e) {
       e.preventDefault();
-      const name = document.getElementById('new-food-name').value;
-      const price = parseFloat(document.getElementById('new-food-price').value);
-      const prep = parseInt(document.getElementById('new-food-prep').value, 10);
-      const cat = document.getElementById('new-food-cat').value;
-      const desc = document.getElementById('new-food-desc').value;
-
-      this.db.addFood({
-        name,
-        price,
-        prepMin: prep,
-        category: cat,
-        desc,
-        ingId: null,
-        perServing: 0,
-        available: true,
-        image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80"
-      });
-
-      e.target.reset();
-      this.renderAdminMenu();
-      this.showToast(`Added ${name} to canteen menu`);
+      const [name, price, prep, cat, desc] = [$('new-food-name').value, parseFloat($('new-food-price').value), parseInt($('new-food-prep').value, 10), $('new-food-cat').value, $('new-food-desc').value];
+      this.db.addFood({ name, price, prepMin: prep, category: cat, desc, ingId: null, perServing: 0, available: true, image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80" });
+      e.target.reset(); this.renderAdminMenu(); this.showToast(`Added ${name} to canteen menu`);
     }
-
     renderInventory() {
-      const container = document.getElementById('inv-table-body');
-      if (!container) return;
-      const items = this.db.getInventory();
-
-      container.innerHTML = items.map(i => {
+      const cont = $('inv-table-body');
+      if (!cont) return;
+      cont.innerHTML = this.db.getInventory().map(i => {
         const isLow = i.qty <= i.minQty;
-        return `
-          <div class="inv-stat-box ${isLow ? 'low-stock' : ''}">
-            <div style="display: flex; justify-content: space-between; align-items: baseline;">
-              <span class="inv-name">${i.ingredient}</span>
-              <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; color: ${isLow ? 'var(--warning)' : 'var(--success)'};">
-                ${isLow ? 'LOW STOCK' : 'GOOD'}
-              </span>
-            </div>
-            <div class="inv-qty">${i.qty} <small style="font-size: 0.85rem; font-weight: 500;">${i.unit}</small></div>
-            <div class="inv-meta">Threshold: min ${i.minQty} ${i.unit}</div>
-          </div>
-        `;
+        return `<div class="inv-stat-box ${isLow ? 'low-stock' : ''}"><div style="display: flex; justify-content: space-between; align-items: baseline;"><span class="inv-name">${i.ingredient}</span><span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; color: ${isLow ? 'var(--warning)' : 'var(--success)'};">${isLow ? 'LOW STOCK' : 'GOOD'}</span></div><div class="inv-qty">${i.qty} <small style="font-size: 0.85rem; font-weight: 500;">${i.unit}</small></div><div class="inv-meta">Threshold: min ${i.minQty} ${i.unit}</div></div>`;
       }).join('');
     }
-
     renderAnalytics() {
       const an = this.db.getAnalytics();
-      const totalEl = document.getElementById('an-total-orders');
-      const revEl = document.getElementById('an-total-rev');
-      const ticketEl = document.getElementById('an-avg-ticket');
-      if (totalEl) totalEl.innerText = an.totalOrders;
-      if (revEl) revEl.innerText = `â‚¹${an.totalRev}`;
-      if (ticketEl) ticketEl.innerText = `â‚¹${an.avgTicket}`;
-
-      // Popular items chart
-      const popChart = document.getElementById('chart-popular');
-      if (popChart) {
-        const maxPop = an.topDishes.length > 0 ? Math.max(...an.topDishes.map(d => d[1])) : 1;
-        popChart.innerHTML = an.topDishes.map(d => `
-          <div class="chart-bar-row">
-            <div class="chart-bar-info">
-              <span>${d[0]}</span>
-              <span>${d[1]} orders</span>
-            </div>
-            <div class="chart-track">
-              <div class="chart-fill" style="width: ${(d[1] / maxPop) * 100}%;"></div>
-            </div>
-          </div>
-        `).join('') || '<p style="color:var(--muted);font-size:0.82rem;">No orders fulfilled yet</p>';
+      $('an-total-orders').innerText = an.totalOrders;
+      $('an-total-rev').innerText = `₹${an.totalRev}`;
+      $('an-avg-ticket').innerText = `₹${an.avgTicket}`;
+      const pc = $('chart-popular'), pk = $('chart-peak');
+      if (pc) {
+        const mx = an.topDishes.length ? Math.max(...an.topDishes.map(d => d[1])) : 1;
+        pc.innerHTML = an.topDishes.map(d => `<div class="chart-bar-row"><div class="chart-bar-info"><span>${d[0]}</span><span>${d[1]} orders</span></div><div class="chart-track"><div class="chart-fill" style="width: ${(d[1] / mx) * 100}%;"></div></div></div>`).join('') || '<p style="color:var(--muted);font-size:0.82rem;">No orders fulfilled yet</p>';
       }
-
-      // Peak Hours chart
-      const peakChart = document.getElementById('chart-peak');
-      if (peakChart) {
-        const hours = Object.entries(an.hourCounts);
-        const maxHr = hours.length > 0 ? Math.max(...hours.map(h => h[1])) : 1;
-        peakChart.innerHTML = hours.map(h => `
-          <div class="chart-bar-row">
-            <div class="chart-bar-info">
-              <span>${h[0]}</span>
-              <span>${h[1]} orders</span>
-            </div>
-            <div class="chart-track">
-              <div class="chart-fill" style="width: ${(h[1] / maxHr) * 100}%;"></div>
-            </div>
-          </div>
-        `).join('') || '<p style="color:var(--muted);font-size:0.82rem;">No orders registered today</p>';
+      if (pk) {
+        const hrs = Object.entries(an.hourCounts), mx = hrs.length ? Math.max(...hrs.map(h => h[1])) : 1;
+        pk.innerHTML = hrs.map(h => `<div class="chart-bar-row"><div class="chart-bar-info"><span>${h[0]}</span><span>${h[1]} orders</span></div><div class="chart-track"><div class="chart-fill" style="width: ${(h[1] / mx) * 100}%;"></div></div></div>`).join('') || '<p style="color:var(--muted);font-size:0.82rem;">No orders registered today</p>';
       }
     }
-
     placeTestOrder() {
-      const foods = this.db.getFoods();
-      const randomFood = foods[Math.floor(Math.random() * foods.length)];
+      const foods = this.db.getFoods(), rf = foods[Math.floor(Math.random() * foods.length)];
       const student = this.db.data.users.find(u => u.role === 'STUDENT') || this.currentUser;
-      const testCart = [{ food: randomFood, qty: 1 }];
-      const subtotal = randomFood.price;
-      const eta = this.db.calculateCartEta(testCart);
-
-      try {
-        const order = this.db.placeOrder(student, testCart, subtotal, eta);
-        this.renderKanbanBoard();
-        this.showToast(`Simulated test order #${order.id} sent`);
-      } catch (err) {
-        this.showToast(err.message);
-      }
+      const tc = [{ food: rf, qty: 1 }], eta = this.db.calculateCartEta(tc);
+      try { const o = this.db.placeOrder(student, tc, rf.price, eta); this.renderKanbanBoard(); this.showToast(`Simulated test order #${o.id} sent`); }
+      catch (err) { this.showToast(err.message); }
     }
-
     resetDbPrompt() {
       if (confirm('Reset database back to factory demo state? All test orders will be cleared.')) {
-        this.db.reset();
-        this.cart = [];
-        this.render();
-        this.showToast('Database reset to defaults');
+        this.db.reset(); this.cart = []; this.render(); this.showToast('Database reset to defaults');
       }
     }
   }
 
-  // Expose global controller
   window.app = new CampusBiteApp();
 })();
-
