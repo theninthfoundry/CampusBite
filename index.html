@@ -1,15 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CampusBite — Smart Canteen & Digital Kitchen Operations</title>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>CampusBite â€” Smart Canteen & Digital Kitchen Operations</title>
   <meta name="description" content="CampusBite is a quiet, precise, editorial campus food ordering and kitchen management system. Good Food. Zero Waiting.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=3">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>âš¡</text></svg>">
 </head>
 <body>
   <!-- Toast Container -->
@@ -112,7 +111,7 @@
           <div class="form-group">
             <label for="login-pw">Password</label>
             <div class="form-input-box">
-              <input type="password" id="login-pw" placeholder="••••••••" required autocomplete="current-password">
+              <input type="password" id="login-pw" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" required autocomplete="current-password">
             </div>
           </div>
 
@@ -131,7 +130,7 @@
           <div class="demo-account-item" onclick="app.loginAsStudent()">
             <div class="demo-account-info">
               <strong>Sreeshanth</strong>
-              <small>demo@campus.edu · 25R11A0501</small>
+              <small>demo@campus.edu Â· 25R11A0501</small>
             </div>
             <span class="demo-account-role student">STUDENT</span>
           </div>
@@ -139,7 +138,7 @@
           <div class="demo-account-item" onclick="app.loginAsFaculty()">
             <div class="demo-account-info">
               <strong>Chandrashekar</strong>
-              <small>chandrashekar@campus.edu · FAC-CS-108</small>
+              <small>chandrashekar@campus.edu Â· FAC-CS-108</small>
             </div>
             <span class="demo-account-role faculty">FACULTY</span>
           </div>
@@ -147,7 +146,7 @@
           <div class="demo-account-item" onclick="app.loginAsAdmin()">
             <div class="demo-account-info">
               <strong>Canteen Staff</strong>
-              <small>admin@campus.edu · Live Kanban & Stock</small>
+              <small>admin@campus.edu Â· Live Kanban & Stock</small>
             </div>
             <span class="demo-account-role admin">KITCHEN</span>
           </div>
@@ -185,12 +184,12 @@
         <section id="section-menu" class="student-section">
           <div class="canteen-editorial-header">
             <div>
-              <span class="editorial-eyebrow">CAMPUS MAIN CANTEEN • SERVING NOW</span>
+              <span class="editorial-eyebrow">CAMPUS MAIN CANTEEN â€¢ SERVING NOW</span>
               <h2 id="student-home-title" class="editorial-title">WHAT'S FOR LUNCH?</h2>
             </div>
             <div class="kitchen-live-status">
               <span class="pulse-dot"></span>
-              <span id="kitchen-status-text">Kitchen active · 2 orders queued</span>
+              <span id="kitchen-status-text">Kitchen active Â· 2 orders queued</span>
             </div>
           </div>
 
@@ -260,11 +259,11 @@
             </div>
             <div class="editorial-stat-card">
               <span class="stat-desc">Total Canteen Spending</span>
-              <span class="stat-num" id="stat-total-spent">₹0</span>
+              <span class="stat-num" id="stat-total-spent">â‚¹0</span>
             </div>
             <div class="editorial-stat-card">
               <span class="stat-desc">All-Time Favorite Dish</span>
-              <span class="stat-num" id="stat-fav-dish" style="font-size: 1.5rem;">—</span>
+              <span class="stat-num" id="stat-fav-dish" style="font-size: 1.5rem;">â€”</span>
             </div>
           </div>
 
@@ -326,15 +325,15 @@
           <div class="tray-bill-breakdown">
             <div class="tray-bill-row">
               <span>Subtotal</span>
-              <span id="bill-subtotal">₹0</span>
+              <span id="bill-subtotal">â‚¹0</span>
             </div>
             <div class="tray-bill-row">
               <span>Canteen Tech Fee</span>
-              <span>₹0 (Free)</span>
+              <span>â‚¹0 (Free)</span>
             </div>
             <div class="tray-bill-row total">
               <strong>Total Payable</strong>
-              <strong id="bill-total">₹0</strong>
+              <strong id="bill-total">â‚¹0</strong>
             </div>
           </div>
 
@@ -343,7 +342,7 @@
           </button>
 
           <p class="tray-pickup-notice">
-            Pickup: Counter 01 & 02 · Cash / UPI on collection
+            Pickup: Counter 01 & 02 Â· Cash / UPI on collection
           </p>
         </div>
       </aside>
@@ -358,7 +357,7 @@
       <!-- Operational Header -->
       <div class="admin-header-operational">
         <div>
-          <span class="editorial-eyebrow">CANTEEN OPERATIONS • KITCHEN CONTROL</span>
+          <span class="editorial-eyebrow">CANTEEN OPERATIONS â€¢ KITCHEN CONTROL</span>
           <h2 class="editorial-title">KITCHEN DASHBOARD</h2>
         </div>
 
@@ -449,7 +448,7 @@
               </div>
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                 <div class="form-group">
-                  <label>Price (₹)</label>
+                  <label>Price (â‚¹)</label>
                   <div class="form-input-box">
                     <input type="number" id="new-food-price" min="1" step="1" placeholder="110" required>
                   </div>
@@ -518,11 +517,11 @@
           </div>
           <div class="editorial-stat-card">
             <span class="stat-desc">Gross Canteen Revenue</span>
-            <span class="stat-num" id="an-total-rev">₹0</span>
+            <span class="stat-num" id="an-total-rev">â‚¹0</span>
           </div>
           <div class="editorial-stat-card">
             <span class="stat-desc">Average Order Value</span>
-            <span class="stat-num" id="an-avg-ticket">₹0</span>
+            <span class="stat-num" id="an-avg-ticket">â‚¹0</span>
           </div>
         </div>
 
@@ -567,11 +566,11 @@
         </div>
         <div class="modal-detail-row">
           <span>PICKUP COUNTER</span>
-          <strong>Counter 01 · Main Canteen</strong>
+          <strong>Counter 01 Â· Main Canteen</strong>
         </div>
         <div class="modal-detail-row">
           <span>TOTAL PAYABLE</span>
-          <strong id="modal-total-val">₹120</strong>
+          <strong id="modal-total-val">â‚¹120</strong>
         </div>
       </div>
 
@@ -594,8 +593,8 @@
         <span id="detail-food-category" class="editorial-eyebrow">MEALS</span>
         <h2 id="detail-food-name" style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 0.5rem; line-height: 1.15;">Chicken Biryani</h2>
         <div style="display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.25rem;">
-          <span id="detail-food-price" style="font-family: var(--font-mono); font-size: 1.5rem; font-weight: 700;">₹120</span>
-          <span id="detail-food-prep" style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted);">⏱️ 12 MIN PREP</span>
+          <span id="detail-food-price" style="font-family: var(--font-mono); font-size: 1.5rem; font-weight: 700;">â‚¹120</span>
+          <span id="detail-food-prep" style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted);">â±ï¸ 12 MIN PREP</span>
         </div>
 
         <p id="detail-food-desc" style="font-size: 0.92rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.75rem;">
@@ -639,3 +638,4 @@
   <script src="app.js?v=3"></script>
 </body>
 </html>
+
