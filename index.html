@@ -239,27 +239,16 @@
     <div class="admin-layout">
       <!-- Operational Header -->
       <div class="admin-header-operational">
-        <div>
-          <span class="editorial-eyebrow">CANTEEN OPERATIONS â€¢ KITCHEN CONTROL</span>
-          <h2 class="editorial-title">KITCHEN DASHBOARD</h2>
-        </div>
-
+        <div><span class="editorial-eyebrow">CANTEEN OPERATIONS â€¢ KITCHEN CONTROL</span><h2 class="editorial-title">KITCHEN DASHBOARD</h2></div>
         <div class="admin-live-metrics-bar">
           <span class="metric-ticket-pill">NEW: <strong id="count-new">0</strong></span>
           <span class="metric-ticket-pill">PREPARING: <strong id="count-prep">0</strong></span>
           <span class="metric-ticket-pill">READY: <strong id="count-ready">0</strong></span>
         </div>
-
-        <div style="display: flex; gap: 0.75rem;">
-          <button class="btn btn-secondary btn-sm" onclick="app.switchToStudentPortal()">
-            <span>&larr; CUSTOMER MENU</span>
-          </button>
-          <button class="btn btn-secondary btn-sm" onclick="app.placeTestOrder()">
-            <span>+ TEST ORDER</span>
-          </button>
-          <button class="btn btn-ghost btn-sm" onclick="app.resetDbPrompt()">
-            <span>RESET DB</span>
-          </button>
+        <div style="display:flex;gap:0.75rem;">
+          <button class="btn btn-secondary btn-sm" onclick="app.switchToStudentPortal()"><span>&larr; CUSTOMER MENU</span></button>
+          <button class="btn btn-secondary btn-sm" onclick="app.placeTestOrder()"><span>+ TEST ORDER</span></button>
+          <button class="btn btn-ghost btn-sm" onclick="app.resetDbPrompt()"><span>RESET DB</span></button>
         </div>
       </div>
 
@@ -521,6 +510,7 @@
   <script src="app.js?v=3"></script>
 </body>
 </html>
+
 
 
 
