@@ -242,56 +242,28 @@
     // Recommendation Engine: Frequent Co-occurrence Analysis
     getStudentFavourite(userId) {
       const orders = this.getOrders(userId);
-      if (orders.length === 0) return null;
-
+      if (!orders.length) return null;
       const counts = {};
-      orders.forEach(o => {
-        o.items.forEach(it => {
-          counts[it.foodId] = (counts[it.foodId] || 0) + it.qty;
-        });
-      });
-
-      let favId = null;
-      let maxCount = -1;
-      for (const [fId, cnt] of Object.entries(counts)) {
-        if (cnt > maxCount) {
-          maxCount = cnt;
-          favId = parseInt(fId, 10);
-        }
-      }
-
+      orders.forEach(o => o.items.forEach(it => counts[it.foodId] = (counts[it.foodId] || 0) + it.qty));
+      const favId = Number(Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b, 0));
       return this.data.foods.find(f => f.id === favId) || null;
     }
 
     getRecommendations(userId) {
       const fav = this.getStudentFavourite(userId);
       if (!fav) return [];
-
       const pairCounts = {};
       this.data.orders.forEach(o => {
-        const itemIds = o.items.map(it => it.foodId);
-        if (itemIds.includes(fav.id)) {
-          itemIds.forEach(id => {
-            if (id !== fav.id) {
-              pairCounts[id] = (pairCounts[id] || 0) + 1;
-            }
-          });
+        const ids = o.items.map(it => it.foodId);
+        if (ids.includes(fav.id)) {
+          ids.filter(id => id !== fav.id).forEach(id => pairCounts[id] = (pairCounts[id] || 0) + 1);
         }
       });
-
-      const sortedIds = Object.keys(pairCounts)
-        .sort((a, b) => pairCounts[b] - pairCounts[a])
-        .slice(0, 3)
-        .map(id => parseInt(id, 10));
-
-      // Fallback to complementary drinks/desserts if order history is sparse
-      if (sortedIds.length === 0) {
+      const sortedIds = Object.keys(pairCounts).sort((a, b) => pairCounts[b] - pairCounts[a]).slice(0, 3).map(Number);
+      if (!sortedIds.length) {
         return this.data.foods.filter(f => (f.category === 'Drinks' || f.category === 'Snacks') && f.id !== fav.id).slice(0, 3);
       }
-
-      return sortedIds
-        .map(id => this.data.foods.find(f => f.id === id))
-        .filter(f => f && f.available);
+      return sortedIds.map(id => this.data.foods.find(f => f.id === id)).filter(f => f && f.available);
     }
 
     // Analytics
@@ -1430,6 +1402,7 @@
   // Expose global controller
   window.app = new CampusBiteApp();
 })();
+
 
 
 
