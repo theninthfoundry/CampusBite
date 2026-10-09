@@ -150,90 +150,17 @@ a { color: inherit; text-decoration: none; }
 .category-text-btn.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 1.5px; background: var(--accent); }
 
 /* Smart Recommendation Banner (Restrained & Invisible Intelligence) */
-.recommendation-editorial {
-  background: var(--bg-surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  padding: 1.75rem 2rem;
-  margin-bottom: 3rem;
-}
-
-.rec-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 0.25rem;
-  display: block;
-}
-
-.rec-heading {
-  font-family: var(--font-serif);
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--ink);
-  margin-bottom: 0.25rem;
-}
-
-.rec-subtext {
-  font-size: 0.85rem;
-  color: var(--muted);
-  margin-bottom: 1.5rem;
-}
-
-.rec-items-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.25rem;
-}
-
-.rec-item-card {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.85rem;
-  background: var(--bg-primary);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-xs);
-  transition: all var(--ease-fast);
-  cursor: pointer;
-}
-
-.rec-item-card:hover {
-  border-color: var(--ink);
-  background: var(--bg-surface-pure);
-}
-
-.rec-item-img {
-  width: 60px;
-  height: 60px;
-  border-radius: var(--radius-xs);
-  object-fit: cover;
-  background: var(--bg-secondary);
-}
-
-.rec-item-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.rec-item-name {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--ink);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.rec-item-meta {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--muted);
-  margin-top: 0.2rem;
-}
+.recommendation-editorial { background: var(--bg-surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 1.75rem 2rem; margin-bottom: 3rem; }
+.rec-eyebrow { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.25rem; display: block; }
+.rec-heading { font-family: var(--font-serif); font-size: 1.4rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
+.rec-subtext { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; }
+.rec-items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+.rec-item-card { display: flex; align-items: center; gap: 1rem; padding: 0.85rem; background: var(--bg-primary); border: 1px solid var(--line); border-radius: var(--radius-xs); transition: all var(--ease-fast); cursor: pointer; }
+.rec-item-card:hover { border-color: var(--ink); background: var(--bg-surface-pure); }
+.rec-item-img { width: 60px; height: 60px; border-radius: var(--radius-xs); object-fit: cover; background: var(--bg-secondary); }
+.rec-item-info { flex: 1; min-width: 0; }
+.rec-item-name { font-size: 0.88rem; font-weight: 700; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rec-item-meta { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; }
 
 /* ==========================================================================
    MENU GRID: PHOTOGRAPHIC FOOD COMPOSITIONS
@@ -1370,6 +1297,7 @@ a { color: inherit; text-decoration: none; }
     height: 220px;
   }
 }
+
 
 
 
