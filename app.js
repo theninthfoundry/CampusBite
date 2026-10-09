@@ -775,10 +775,7 @@
     }
 
     scrollToTray() {
-      const tray = document.getElementById('student-tray-sidebar');
-      if (tray) {
-        tray.scrollIntoView({ behavior: 'smooth' });
-      }
+      $('student-tray-sidebar')?.scrollIntoView({ behavior: 'smooth' });
     }
 
     renderCart() {
@@ -1375,6 +1372,7 @@
   // Expose global controller
   window.app = new CampusBiteApp();
 })();
+
 
 
 
