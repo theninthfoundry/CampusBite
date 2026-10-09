@@ -593,8 +593,7 @@
 
     setCategory(cat, element) {
       this.currentCategory = cat;
-      const chips = document.querySelectorAll('#category-chips .category-text-btn');
-      chips.forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('#category-chips .category-text-btn').forEach(c => c.classList.remove('active'));
       if (element) element.classList.add('active');
       this.renderMenuGrid();
     }
@@ -1376,6 +1375,7 @@
   // Expose global controller
   window.app = new CampusBiteApp();
 })();
+
 
 
 
