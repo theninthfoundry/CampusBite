@@ -110,10 +110,9 @@
     login(idOrEmail, pw) {
       const term = (idOrEmail || '').trim().toLowerCase();
       return this.data.users.find(u => {
-        const matchId = (u.studentId && u.studentId.toLowerCase() === term) ||
-                        (u.facultyId && u.facultyId.toLowerCase() === term);
-        const matchEmail = u.email && u.email.toLowerCase() === term;
-        return (matchId || matchEmail) && u.pw === pw;
+        const idMatch = (u.studentId && u.studentId.toLowerCase() === term) || (u.facultyId && u.facultyId.toLowerCase() === term);
+        const emailMatch = u.email && u.email.toLowerCase() === term;
+        return (idMatch || emailMatch) && u.pw === pw;
       }) || null;
     }
 
@@ -1471,5 +1470,6 @@
   // Expose global controller
   window.app = new CampusBiteApp();
 })();
+
 
 
