@@ -147,10 +147,9 @@
 
     // ETA Calculation: Max prep in tray + (2 * Active Queued Orders)
     calculateCartEta(cartItems) {
-      if (!cartItems || cartItems.length === 0) return 0;
+      if (!cartItems?.length) return 0;
       const maxPrep = Math.max(...cartItems.map(i => i.food.prepMin || 5));
-      const activeQueueCount = this.getActiveQueueCount();
-      return maxPrep + (2 * activeQueueCount);
+      return maxPrep + (2 * this.getActiveQueueCount());
     }
 
     getActiveQueueCount() {
@@ -1459,6 +1458,7 @@
   // Expose global controller
   window.app = new CampusBiteApp();
 })();
+
 
 
 
