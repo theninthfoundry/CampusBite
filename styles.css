@@ -253,289 +253,43 @@ a { color: inherit; text-decoration: none; }
 /* ==========================================================================
    VIEW 03: CANTEEN STAFF / KITCHEN DASHBOARD (OPERATIONAL)
    ========================================================================== */
-.admin-layout {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 2.5rem 2rem 5rem 2rem;
-}
-
-.admin-header-operational {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid var(--line);
-  margin-bottom: 2.5rem;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-}
-
-.admin-live-metrics-bar {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-.metric-ticket-pill {
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.metric-ticket-pill strong {
-  font-size: 1.1rem;
-  color: var(--ink);
-  margin-left: 0.35rem;
-}
-
-/* Kanban Board (3 Operational Columns) */
-.kanban-editorial-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  align-items: start;
-}
-
-.kanban-col-wrapper {
-  background: var(--bg-surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  padding: 1.5rem;
-  min-height: 520px;
-  display: flex;
-  flex-direction: column;
-}
-
-.kanban-col-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--line);
-  margin-bottom: 1.25rem;
-}
-
-.kanban-col-head h3 {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink);
-}
-
-.kanban-col-badge {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 700;
-  background: var(--ink);
-  color: var(--bg-primary);
-  padding: 0.15rem 0.5rem;
-  border-radius: var(--radius-xs);
-}
-
-.kanban-cards-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  flex: 1;
-}
-
-/* Operational Kanban Ticket Card */
-.kanban-ticket {
-  background: var(--bg-primary);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-xs);
-  padding: 1.25rem;
-  transition: all var(--ease-fast);
-}
-
-.kanban-ticket:hover {
-  border-color: var(--ink);
-  background: var(--bg-surface-pure);
-}
-
-.ticket-top {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
-}
-
-.ticket-token {
-  font-family: var(--font-mono);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.ticket-cust {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--muted);
-}
-
-.ticket-summary {
-  font-size: 0.86rem;
-  color: var(--ink);
-  margin-bottom: 1rem;
-  line-height: 1.4;
-}
-
-.ticket-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--line-subtle);
-}
-
-.ticket-price {
-  font-family: var(--font-mono);
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-/* Menu Editor & Inventory Tables */
-.editorial-data-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  padding: 2rem;
-  margin-bottom: 2rem;
-}
-
-.editorial-table-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-}
-
-.food-editor-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.25rem;
-  background: var(--bg-primary);
-  border: 1px solid var(--line-subtle);
-  border-radius: var(--radius-xs);
-  margin-bottom: 0.6rem;
-}
-
-.toggle-availability-btn {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  padding: 0.4rem 0.85rem;
-  border-radius: var(--radius-xs);
-  border: 1px solid transparent;
-  transition: all var(--ease-fast);
-}
-
-.toggle-availability-btn.active {
-  background: var(--success-subtle);
-  color: var(--success);
-  border-color: var(--success);
-}
-
-.toggle-availability-btn.inactive {
-  background: var(--accent-subtle);
-  color: var(--accent);
-  border-color: var(--accent);
-}
-
-/* Inventory Grid */
-.inv-editorial-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.25rem;
-}
-
-.inv-stat-box {
-  background: var(--bg-primary);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-xs);
-  padding: 1.25rem;
-}
-
-.inv-stat-box.low-stock {
-  border-color: var(--warning);
-  background: var(--warning-subtle);
-}
-
-.inv-name {
-  font-size: 0.95rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-}
-
-.inv-qty {
-  font-family: var(--font-mono);
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-}
-
-.inv-meta {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--muted);
-}
-
-/* Analytics & Performance */
-.analytics-metrics-editorial {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
-}
-
-.analytics-charts-split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-
-.chart-card-editorial {
-  background: var(--bg-surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  padding: 2rem;
-}
-
-.chart-bar-row {
-  margin-bottom: 1.25rem;
-}
-
-.chart-bar-info {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  color: var(--ink);
-  margin-bottom: 0.4rem;
-}
-
-.chart-track {
-  width: 100%;
-  height: 6px;
-  background: var(--bg-secondary);
-  border-radius: var(--radius-xs);
-  overflow: hidden;
-}
-
-.chart-fill {
-  height: 100%;
-  background: var(--ink);
-  border-radius: var(--radius-xs);
-  transition: width 0.4s ease;
-}
+.admin-layout { max-width: 1440px; margin: 0 auto; padding: 2.5rem 2rem 5rem 2rem; }
+.admin-header-operational { display: flex; align-items: flex-end; justify-content: space-between; padding-bottom: 2rem; border-bottom: 1px solid var(--line); margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1.5rem; }
+.admin-live-metrics-bar { display: flex; align-items: center; gap: 2rem; }
+.metric-ticket-pill { font-family: var(--font-mono); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.metric-ticket-pill strong { font-size: 1.1rem; color: var(--ink); margin-left: 0.35rem; }
+.kanban-editorial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; align-items: start; }
+.kanban-col-wrapper { background: var(--bg-surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 1.5rem; min-height: 520px; display: flex; flex-direction: column; }
+.kanban-col-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 1rem; border-bottom: 1px solid var(--line); margin-bottom: 1.25rem; }
+.kanban-col-head h3 { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); }
+.kanban-cards-container { display: flex; flex-direction: column; gap: 1rem; flex-1; }
+.kanban-ticket { background: var(--bg-primary); border: 1px solid var(--line); border-radius: var(--radius-xs); padding: 1.25rem; transition: all var(--ease-fast); }
+.kanban-ticket:hover { border-color: var(--ink); background: var(--bg-surface-pure); }
+.ticket-top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 0.5rem; }
+.ticket-token { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; color: var(--ink); }
+.ticket-cust { font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+.ticket-summary { font-size: 0.86rem; color: var(--ink); margin-bottom: 1rem; line-height: 1.4; }
+.ticket-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 0.75rem; border-top: 1px solid var(--line-subtle); }
+.ticket-price { font-family: var(--font-mono); font-size: 0.95rem; font-weight: 700; color: var(--ink); }
+.editorial-data-card { background: var(--bg-surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 2rem; margin-bottom: 2rem; }
+.editorial-table-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+.food-editor-row { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; background: var(--bg-primary); border: 1px solid var(--line-subtle); border-radius: var(--radius-xs); margin-bottom: 0.6rem; }
+.toggle-availability-btn { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; padding: 0.4rem 0.85rem; border-radius: var(--radius-xs); border: 1px solid transparent; transition: all var(--ease-fast); }
+.toggle-availability-btn.active { background: var(--success-subtle); color: var(--success); border-color: var(--success); }
+.toggle-availability-btn.inactive { background: var(--accent-subtle); color: var(--accent); border-color: var(--accent); }
+.inv-editorial-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+.inv-stat-box { background: var(--bg-primary); border: 1px solid var(--line); border-radius: var(--radius-xs); padding: 1.25rem; }
+.inv-stat-box.low-stock { border-color: var(--warning); background: var(--warning-subtle); }
+.inv-name { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.25rem; }
+.inv-qty { font-family: var(--font-mono); font-size: 1.6rem; font-weight: 700; margin-bottom: 0.25rem; }
+.inv-meta { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+.analytics-metrics-editorial { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2.5rem; }
+.analytics-charts-split { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.chart-card-editorial { background: var(--bg-surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 2rem; }
+.chart-bar-row { margin-bottom: 1.25rem; }
+.chart-bar-info { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.76rem; color: var(--ink); margin-bottom: 0.4rem; }
+.chart-track { width: 100%; height: 6px; background: var(--bg-secondary); border-radius: var(--radius-xs); overflow: hidden; }
+.chart-fill { height: 100%; background: var(--ink); border-radius: var(--radius-xs); transition: width 0.4s ease; }
 
 /* ==========================================================================
    MODAL LAYERS & DIALOGS (RESTRAINED OVERLAYS)
@@ -781,6 +535,7 @@ a { color: inherit; text-decoration: none; }
     height: 220px;
   }
 }
+
 
 
 
