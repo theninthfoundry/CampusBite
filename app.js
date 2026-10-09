@@ -214,38 +214,27 @@
 
     advanceOrderStatus(orderId) {
       const order = this.data.orders.find(o => o.id === orderId);
-      if (order) {
-        const transitions = {
-          "NEW": "PREPARING",
-          "PREPARING": "READY",
-          "READY": "COLLECTED"
-        };
-        if (transitions[order.status]) {
-          order.status = transitions[order.status];
-          this.save();
-        }
+      const next = { "NEW": "PREPARING", "PREPARING": "READY", "READY": "COLLECTED" };
+      if (order && next[order.status]) {
+        order.status = next[order.status];
+        this.save();
       }
     }
 
     cancelOrder(orderId) {
       const idx = this.data.orders.findIndex(o => o.id === orderId);
-      if (idx !== -1) {
+      if (idx !== -1 && this.data.orders[idx].status === 'NEW') {
         const order = this.data.orders[idx];
-        if (order.status === 'NEW') {
-          // Refund raw inventory
-          order.items.forEach(it => {
-            const food = this.data.foods.find(f => f.id === it.foodId);
-            if (food && food.ingId) {
-              const ing = this.data.inventory.find(i => i.id === food.ingId);
-              if (ing) {
-                ing.qty = Math.round((ing.qty + (food.perServing * it.qty)) * 100) / 100;
-              }
-            }
-          });
-          this.data.orders.splice(idx, 1);
-          this.save();
-          return true;
-        }
+        order.items.forEach(it => {
+          const food = this.data.foods.find(f => f.id === it.foodId);
+          if (food?.ingId) {
+            const ing = this.data.inventory.find(i => i.id === food.ingId);
+            if (ing) ing.qty = Math.round((ing.qty + (food.perServing * it.qty)) * 100) / 100;
+          }
+        });
+        this.data.orders.splice(idx, 1);
+        this.save();
+        return true;
       }
       return false;
     }
@@ -1441,6 +1430,7 @@
   // Expose global controller
   window.app = new CampusBiteApp();
 })();
+
 
 
 
