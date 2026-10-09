@@ -308,14 +308,7 @@
 
     init() {
       const savedUser = sessionStorage.getItem(SESSION_KEY);
-      if (savedUser) {
-        try {
-          this.currentUser = JSON.parse(savedUser);
-        } catch (e) {
-          this.currentUser = null;
-        }
-      }
-
+      if (savedUser) { try { this.currentUser = JSON.parse(savedUser); } catch { this.currentUser = null; } }
       this.setupSyncListener();
       this.render();
       this.startPolling();
@@ -323,29 +316,22 @@
 
     setupSyncListener() {
       window.addEventListener('storage', (e) => {
-        if (e.key === DB_KEY) {
-          this.db.load();
-          this.refreshCurrentView();
-        }
+        if (e.key === DB_KEY) { this.db.load(); this.refreshCurrentView(); }
       });
     }
 
     startPolling() {
       if (this.pollTimer) clearInterval(this.pollTimer);
-      this.pollTimer = setInterval(() => {
-        this.db.load();
-        this.refreshCurrentView();
-      }, 3000);
+      this.pollTimer = setInterval(() => { this.db.load(); this.refreshCurrentView(); }, 3000);
     }
 
     showToast(msg) {
-      const container = document.getElementById('toast-container');
+      const container = $('toast-container');
       if (!container) return;
       const toast = document.createElement('div');
       toast.className = 'toast';
       toast.innerHTML = `<span>${msg}</span>`;
       container.appendChild(toast);
-
       setTimeout(() => {
         toast.style.opacity = '0';
         toast.style.transform = 'translateY(10px)';
@@ -1390,6 +1376,7 @@
   // Expose global controller
   window.app = new CampusBiteApp();
 })();
+
 
 
 
