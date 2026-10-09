@@ -166,15 +166,11 @@
     }
 
     placeOrder(user, cartItems, total, etaMin) {
-      if (!cartItems || cartItems.length === 0) {
-        throw new Error("Cannot place an empty order.");
-      }
-
+      if (!cartItems?.length) throw new Error("Cannot place an empty order.");
       const safeUser = user || { id: 2, name: "Sreeshanth" };
       const userId = Number(safeUser.id) || 2;
       const userName = safeUser.name || "Sreeshanth";
 
-      // 1. Ensure stock availability
       for (const item of cartItems) {
         let food = this.data.foods.find(f => f.id === item.food.id);
         if (!food) {
@@ -189,39 +185,26 @@
             this.data.inventory.push(ing);
           }
           const required = (food.perServing || 0.2) * item.qty;
-          if (ing.qty < required) {
-            ing.qty = Math.round((ing.qty + 20.0) * 100) / 100;
-          }
+          if (ing.qty < required) ing.qty = Math.round((ing.qty + 20.0) * 100) / 100;
+          ing.qty = Math.max(0, Math.round((ing.qty - required) * 100) / 100);
         }
       }
 
-      // 2. Decrement stock
-      for (const item of cartItems) {
-        const food = this.data.foods.find(f => f.id === item.food.id);
-        if (food && food.ingId) {
-          const ing = this.data.inventory.find(i => i.id === food.ingId);
-          if (ing) {
-            ing.qty = Math.max(0, Math.round((ing.qty - (food.perServing * item.qty)) * 100) / 100);
-          }
-        }
-      }
-
-      // 3. Create Order
-      const maxId = (this.data.orders || []).reduce((max, o) => Math.max(max, Number(o.id) || 100), 100);
+      const maxId = (this.data.orders || []).reduce((m, o) => Math.max(m, Number(o.id) || 100), 100);
       const orderId = Math.max(this.data.nextOrderId || 101, maxId + 1);
       this.data.nextOrderId = orderId + 1;
 
       const summary = cartItems.map(i => `${i.food.name} x${i.qty}`).join(", ");
       const newOrder = {
         id: orderId,
-        userId: userId,
+        userId,
         customerName: userName,
         items: cartItems.map(i => ({ foodId: i.food.id, name: i.food.name, qty: i.qty, price: i.food.price })),
         total: Number(total) || cartItems.reduce((s, i) => s + (i.food.price * i.qty), 0),
         status: "NEW",
         created: new Date().toISOString(),
         etaMin: Number(etaMin) || 10,
-        summary: summary
+        summary
       };
 
       this.data.orders.unshift(newOrder);
@@ -1458,6 +1441,7 @@
   // Expose global controller
   window.app = new CampusBiteApp();
 })();
+
 
 
 
