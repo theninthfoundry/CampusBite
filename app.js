@@ -69,71 +69,36 @@
     }
 
     load() {
-      // Purge obsolete cache
-      localStorage.removeItem('campusbite_db_v1');
-      localStorage.removeItem('campusbite_db_v2');
-      localStorage.removeItem('campusbite_db_v3');
-
-      const raw = localStorage.getItem(DB_KEY);
-      if (!raw) {
+      ['campusbite_db_v1', 'campusbite_db_v2', 'campusbite_db_v3'].forEach(k => localStorage.removeItem(k));
+      try {
+        const raw = localStorage.getItem(DB_KEY);
+        this.data = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(DEFAULT_DB));
+        if (!this.data || typeof this.data !== 'object') throw 1;
+      } catch {
         this.data = JSON.parse(JSON.stringify(DEFAULT_DB));
         this.save();
-      } else {
-        try {
-          this.data = JSON.parse(raw);
-          if (!this.data || typeof this.data !== 'object') {
-            this.data = JSON.parse(JSON.stringify(DEFAULT_DB));
-          }
-        } catch (e) {
-          this.data = JSON.parse(JSON.stringify(DEFAULT_DB));
-          this.save();
-        }
       }
 
-      // Integrity validation & image injection
       if (!Array.isArray(this.data.orders)) this.data.orders = [];
-      if (!Array.isArray(this.data.foods) || this.data.foods.length === 0) {
-        this.data.foods = DEFAULT_DB.foods;
-      } else {
-        // Ensure all food items have photographic images
-        this.data.foods.forEach(f => {
-          if (!f.image && FOOD_IMAGES[f.id]) {
-            f.image = FOOD_IMAGES[f.id];
-          }
-        });
-      }
+      if (!Array.isArray(this.data.foods) || !this.data.foods.length) this.data.foods = DEFAULT_DB.foods;
+      else this.data.foods.forEach(f => { if (!f.image && FOOD_IMAGES[f.id]) f.image = FOOD_IMAGES[f.id]; });
 
-      if (!Array.isArray(this.data.inventory) || this.data.inventory.length === 0) {
-        this.data.inventory = DEFAULT_DB.inventory;
-      }
-
-      if (!Array.isArray(this.data.users)) {
-        this.data.users = DEFAULT_DB.users;
-      } else {
+      if (!Array.isArray(this.data.inventory) || !this.data.inventory.length) this.data.inventory = DEFAULT_DB.inventory;
+      if (!Array.isArray(this.data.users)) this.data.users = DEFAULT_DB.users;
+      else {
         this.data.users.forEach(u => {
-          if (u.id === 3 || u.name === "Ananya" || u.name === "Chandrashekar" || u.email === "ananya@campus.edu" || u.email === "chandrashekar@campus.edu") {
-            u.name = "Chandrashekar";
-            u.email = "chandrashekar@campus.edu";
-            u.role = "FACULTY";
-            u.facultyId = "FAC-CS-108";
-            u.studentId = null;
+          if (u.id === 3 || u.name === "Chandrashekar" || u.email === "chandrashekar@campus.edu") {
+            Object.assign(u, { name: "Chandrashekar", email: "chandrashekar@campus.edu", role: "FACULTY", facultyId: "FAC-CS-108", studentId: null });
           }
         });
       }
 
-      if (!this.data.nextOrderId || isNaN(this.data.nextOrderId)) {
-        this.data.nextOrderId = 101;
-      }
-
+      if (!this.data.nextOrderId || isNaN(this.data.nextOrderId)) this.data.nextOrderId = 101;
       this.evaluateInventoryDepletion();
     }
 
     save() {
-      try {
-        localStorage.setItem(DB_KEY, JSON.stringify(this.data));
-      } catch (e) {
-        console.error("Storage error:", e);
-      }
+      try { localStorage.setItem(DB_KEY, JSON.stringify(this.data)); } catch (e) { console.error("Storage error:", e); }
     }
 
     reset() {
@@ -1506,4 +1471,5 @@
   // Expose global controller
   window.app = new CampusBiteApp();
 })();
+
 
