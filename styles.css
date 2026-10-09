@@ -98,179 +98,29 @@ a { color: inherit; text-decoration: none; }
 .stat-caption { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
 
 /* Right Editorial Form */
-.login-panel-editorial {
-  background: var(--bg-surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  padding: 3rem 2.5rem;
-  position: relative;
-}
-
-.login-panel-header {
-  margin-bottom: 2rem;
-}
-
-.login-panel-label {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  display: block;
-  margin-bottom: 0.35rem;
-}
-
-.login-panel-title {
-  font-family: var(--font-serif);
-  font-size: 1.85rem;
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1.2;
-}
-
-/* Clean Input Fields */
-.form-group {
-  margin-bottom: 1.4rem;
-}
-
-.form-group label {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 0.45rem;
-}
-
-.form-input-box {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.form-input-box input,
-.form-input-box select {
-  width: 100%;
-  background: var(--bg-primary);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-xs);
-  padding: 0.75rem 1rem;
-  font-size: 0.92rem;
-  color: var(--ink);
-  transition: border-color var(--ease-fast);
-}
-
-.form-input-box input:focus,
-.form-input-box select:focus {
-  outline: none;
-  border-color: var(--ink);
-  background: var(--bg-surface-pure);
-}
-
-.form-input-box input::placeholder {
-  color: var(--muted-light);
-}
-
-.login-error {
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  color: var(--accent);
-  background: var(--accent-subtle);
-  border: 1px solid var(--accent);
-  padding: 0.6rem 0.85rem;
-  border-radius: var(--radius-xs);
-  margin-bottom: 1.25rem;
-}
-
-/* Hairline Divider */
-.hairline-divider {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin: 2.25rem 0 1.5rem 0;
-}
-
-.hairline-divider::before,
-.hairline-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--line);
-}
-
-.hairline-divider span {
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--muted);
-  text-transform: uppercase;
-}
-
-/* Demo Access Options */
-.demo-access-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.demo-account-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 1rem;
-  background: var(--bg-primary);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-xs);
-  cursor: pointer;
-  transition: all var(--ease-fast);
-  text-align: left;
-}
-
-.demo-account-item:hover {
-  background: var(--bg-surface-pure);
-  border-color: var(--ink);
-}
-
-.demo-account-info strong {
-  font-size: 0.84rem;
-  font-weight: 700;
-  color: var(--ink);
-  display: block;
-}
-
-.demo-account-info small {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--muted);
-}
-
-.demo-account-role {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  padding: 0.15rem 0.45rem;
-  border-radius: var(--radius-xs);
-}
-
-.demo-account-role.student {
-  background: var(--line-subtle);
-  color: var(--ink);
-}
-
-.demo-account-role.faculty {
-  background: var(--indigo-subtle);
-  color: var(--indigo);
-}
-
-.demo-account-role.admin {
-  background: var(--accent-subtle);
-  color: var(--accent);
-}
+.login-panel-editorial { background: var(--bg-surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 3rem 2.5rem; position: relative; }
+.login-panel-header { margin-bottom: 2rem; }
+.login-panel-label { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.35rem; }
+.login-panel-title { font-family: var(--font-serif); font-size: 1.85rem; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.form-group { margin-bottom: 1.4rem; }
+.form-group label { display: block; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.45rem; }
+.form-input-box { position: relative; display: flex; align-items: center; }
+.form-input-box input, .form-input-box select { width: 100%; background: var(--bg-primary); border: 1px solid var(--line); border-radius: var(--radius-xs); padding: 0.75rem 1rem; font-size: 0.92rem; color: var(--ink); transition: border-color var(--ease-fast); }
+.form-input-box input:focus, .form-input-box select:focus { outline: none; border-color: var(--ink); background: var(--bg-surface-pure); }
+.form-input-box input::placeholder { color: var(--muted-light); }
+.login-error { font-family: var(--font-mono); font-size: 0.76rem; color: var(--accent); background: var(--accent-subtle); border: 1px solid var(--accent); padding: 0.6rem 0.85rem; border-radius: var(--radius-xs); margin-bottom: 1.25rem; }
+.hairline-divider { display: flex; align-items: center; gap: 1rem; margin: 2.25rem 0 1.5rem 0; }
+.hairline-divider::before, .hairline-divider::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.hairline-divider span { font-family: var(--font-mono); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
+.demo-access-list { display: flex; flex-direction: column; gap: 0.6rem; }
+.demo-account-item { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; background: var(--bg-primary); border: 1px solid var(--line); border-radius: var(--radius-xs); cursor: pointer; transition: all var(--ease-fast); text-align: left; }
+.demo-account-item:hover { background: var(--bg-surface-pure); border-color: var(--ink); }
+.demo-account-info strong { font-size: 0.84rem; font-weight: 700; color: var(--ink); display: block; }
+.demo-account-info small { font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); }
+.demo-account-role { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; padding: 0.15rem 0.45rem; border-radius: var(--radius-xs); }
+.demo-account-role.student { background: var(--line-subtle); color: var(--ink); }
+.demo-account-role.faculty { background: var(--indigo-subtle); color: var(--indigo); }
+.demo-account-role.admin { background: var(--accent-subtle); color: var(--accent); }
 
 /* ==========================================================================
    VIEW 02: CUSTOMER / STUDENT PORTAL (EDITORIAL SHELL)
@@ -1701,6 +1551,7 @@ a { color: inherit; text-decoration: none; }
     height: 220px;
   }
 }
+
 
 
 
