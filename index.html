@@ -120,7 +120,7 @@
           <div class="profile-stats-grid">
             <div class="editorial-stat-card"><span class="stat-desc">Total Orders Placed</span><span class="stat-num" id="stat-total-orders">0</span></div>
             <div class="editorial-stat-card"><span class="stat-desc">Total Canteen Spending</span><span class="stat-num" id="stat-total-spent">₹0</span></div>
-            <div class="editorial-stat-card"><span class="stat-desc">All-Time Favorite Dish</span><span class="stat-num" id="stat-fav-dish" style="font-size:1.5rem;">—</span></div>
+            <div class="editorial-stat-card"><span class="stat-desc">All-Time Favorite Dish</span><span class="stat-num stat-num-compact" id="stat-fav-dish">—</span></div>
           </div>
           <div class="profile-identity-table">
             <div class="table-row-item"><span class="table-row-k" id="profile-id-label">Roll / Student ID</span><span class="table-row-v" id="profile-roll">25R11A0501</span></div>
@@ -129,8 +129,8 @@
           </div>
           <div class="editorial-data-card">
             <div class="editorial-table-head">
-              <h3 style="font-family: var(--font-serif); font-size: 1.35rem;">Order History & Activity</h3>
-              <span id="profile-history-count" style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--muted);">0 Orders</span>
+              <h3>Order History & Activity</h3>
+              <span id="profile-history-count" class="table-head-meta">0 Orders</span>
             </div>
             <div id="profile-orders-list" class="profile-order-history-list"></div>
           </div>
@@ -173,14 +173,14 @@
           <span class="metric-ticket-pill">PREPARING: <strong id="count-prep">0</strong></span>
           <span class="metric-ticket-pill">READY: <strong id="count-ready">0</strong></span>
         </div>
-        <div style="display:flex;gap:0.75rem;">
+        <div class="admin-actions-group">
           <button class="btn btn-secondary btn-sm" onclick="app.switchToStudentPortal()"><span>&larr; CUSTOMER MENU</span></button>
           <button class="btn btn-secondary btn-sm" onclick="app.placeTestOrder()"><span>+ TEST ORDER</span></button>
           <button class="btn btn-ghost btn-sm" onclick="app.resetDbPrompt()"><span>RESET DB</span></button>
         </div>
       </div>
 
-      <div class="tab-strip" style="margin-bottom: 2rem;">
+      <div class="tab-strip tab-strip-admin">
         <button id="admin-tab-live" class="tab-btn active" onclick="app.switchAdminTab('live')"><span class="pulse-dot"></span><span>KANBAN / 01</span></button>
         <button id="admin-tab-menu" class="tab-btn" onclick="app.switchAdminTab('menu')"><span>MENU EDITOR / 02</span></button>
         <button id="admin-tab-inv" class="tab-btn" onclick="app.switchAdminTab('inv')"><span>INVENTORY / 03</span></button>
@@ -196,13 +196,13 @@
       </section>
 
       <section id="admin-sec-menu" class="admin-section hidden">
-        <div style="display: grid; grid-template-columns: 360px 1fr; gap: 2.5rem;">
+        <div class="admin-menu-layout">
           <div class="editorial-data-card">
-            <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 0.35rem;">Add New Dish</h3>
-            <p style="font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem;">Publish freshly prepared meal to the campus menu</p>
+            <h3 class="card-section-title">Add New Dish</h3>
+            <p class="card-section-desc">Publish freshly prepared meal to the campus menu</p>
             <form onsubmit="app.handleAddNewFood(event)">
               <div class="form-group"><label>Dish Name</label><div class="form-input-box"><input type="text" id="new-food-name" placeholder="e.g. Schezwan Fried Rice" required></div></div>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-grid-2">
                 <div class="form-group"><label>Price (₹)</label><div class="form-input-box"><input type="number" id="new-food-price" min="1" step="1" placeholder="110" required></div></div>
                 <div class="form-group"><label>Prep Time (min)</label><div class="form-input-box"><input type="number" id="new-food-prep" min="1" placeholder="12" required></div></div>
               </div>
@@ -212,7 +212,7 @@
             </form>
           </div>
           <div class="editorial-data-card">
-            <div class="editorial-table-head"><h3 style="font-family: var(--font-serif); font-size: 1.35rem;">Dish Availability & Stock</h3><span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);">Instant Kitchen Sync</span></div>
+            <div class="editorial-table-head"><h3>Dish Availability & Stock</h3><span class="table-head-meta">Instant Kitchen Sync</span></div>
             <div id="admin-food-table"></div>
           </div>
         </div>
@@ -220,7 +220,7 @@
 
       <section id="admin-sec-inv" class="admin-section hidden">
         <div class="editorial-data-card">
-          <div class="editorial-table-head"><div><h3 style="font-family: var(--font-serif); font-size: 1.45rem;">Raw Ingredient Inventory</h3><p style="font-size: 0.85rem; color: var(--muted);">Dishes automatically mark sold-out if ingredients drop below minimum threshold</p></div></div>
+          <div class="editorial-table-head"><div><h3 class="inventory-title">Raw Ingredient Inventory</h3><p class="inventory-subtitle">Dishes automatically mark sold-out if ingredients drop below minimum threshold</p></div></div>
           <div id="inv-table-body" class="inv-editorial-grid"></div>
         </div>
       </section>
@@ -233,13 +233,13 @@
         </div>
         <div class="analytics-charts-split">
           <div class="chart-card-editorial">
-            <span class="editorial-eyebrow">POPULAR DISHES</span><h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 0.25rem;">Top 5 Best-Selling Items</h3>
-            <p style="font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem;">Calculated from fulfilled student tokens</p>
+            <span class="editorial-eyebrow">POPULAR DISHES</span><h3 class="chart-heading">Top 5 Best-Selling Items</h3>
+            <p class="chart-caption">Calculated from fulfilled student tokens</p>
             <div id="chart-popular"></div>
           </div>
           <div class="chart-card-editorial">
-            <span class="editorial-eyebrow">ORDER DISTRIBUTION</span><h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 0.25rem;">Peak Rush Hours</h3>
-            <p style="font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem;">Volume distribution across the day</p>
+            <span class="editorial-eyebrow">ORDER DISTRIBUTION</span><h3 class="chart-heading">Peak Rush Hours</h3>
+            <p class="chart-caption">Volume distribution across the day</p>
             <div id="chart-peak"></div>
           </div>
         </div>
@@ -250,8 +250,8 @@
   <!-- MODALS -->
   <div id="order-modal" class="modal-overlay hidden">
     <div class="modal-editorial-card">
-      <span class="editorial-eyebrow" style="color: var(--accent);">ORDER ACCEPTED BY KITCHEN</span>
-      <h2 style="font-family: var(--font-serif); font-size: 2.2rem; line-height: 1.1;">ORDER CONFIRMED.</h2>
+      <span class="editorial-eyebrow editorial-eyebrow-accent">ORDER ACCEPTED BY KITCHEN</span>
+      <h2 class="modal-confirmed-title">ORDER CONFIRMED.</h2>
       <div id="modal-token-num" class="modal-token-num">#101</div>
       <div class="modal-details-grid">
         <div class="modal-detail-row"><span>ESTIMATED READY</span><strong id="modal-eta-val">~12 minutes</strong></div>
@@ -268,15 +268,15 @@
       <div class="food-detail-media"><img id="detail-food-img" src="" alt="Food Preview"></div>
       <div class="food-detail-content">
         <span id="detail-food-category" class="editorial-eyebrow">MEALS</span>
-        <h2 id="detail-food-name" style="font-family: var(--font-serif); font-size: 2rem; margin-bottom: 0.5rem; line-height: 1.15;">Chicken Biryani</h2>
-        <div style="display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.25rem;">
-          <span id="detail-food-price" style="font-family: var(--font-mono); font-size: 1.5rem; font-weight: 700;">₹120</span>
-          <span id="detail-food-prep" style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted);">⏱️ 12 MIN PREP</span>
+        <h2 id="detail-food-name" class="food-detail-title">Chicken Biryani</h2>
+        <div class="food-detail-meta-row">
+          <span id="detail-food-price" class="food-detail-price">₹120</span>
+          <span id="detail-food-prep" class="food-detail-prep-badge">⏱️ 12 MIN PREP</span>
         </div>
-        <p id="detail-food-desc" style="font-size: 0.92rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.75rem;">Fragrant long-grain basmati rice cooked with whole spices, tender marinated chicken, and fresh mint aroma.</p>
-        <div style="border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1.25rem 0; margin-bottom: 1.75rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">QUANTITY</span>
+        <p id="detail-food-desc" class="food-detail-description">Fragrant long-grain basmati rice cooked with whole spices, tender marinated chicken, and fresh mint aroma.</p>
+        <div class="food-detail-qty-box">
+          <div class="food-detail-qty-row">
+            <span class="food-detail-qty-label">QUANTITY</span>
             <div class="tray-stepper">
               <button class="btn-step" onclick="app.changeDetailQty(-1)">&minus;</button>
               <span id="detail-food-qty" class="tray-stepper-val">1</span>
