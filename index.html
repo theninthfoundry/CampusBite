@@ -219,36 +219,14 @@
         </div>
 
         <div id="cart-footer" class="tray-slip-footer hidden">
-          <!-- Dynamic Smart ETA Box -->
-          <div class="tray-eta-box">
-            <span class="tray-eta-label">ESTIMATED PREPARATION TIME</span>
-            <strong id="cart-eta-val" class="tray-eta-val">~12 mins</strong>
-            <small id="cart-eta-calc" class="tray-eta-formula">Longest prep + queued orders</small>
-          </div>
-
-          <!-- Bill Summary -->
+          <div class="tray-eta-box"><span class="tray-eta-label">ESTIMATED PREPARATION TIME</span><strong id="cart-eta-val" class="tray-eta-val">~12 mins</strong><small id="cart-eta-calc" class="tray-eta-formula">Longest prep + queued orders</small></div>
           <div class="tray-bill-breakdown">
-            <div class="tray-bill-row">
-              <span>Subtotal</span>
-              <span id="bill-subtotal">â‚¹0</span>
-            </div>
-            <div class="tray-bill-row">
-              <span>Canteen Tech Fee</span>
-              <span>â‚¹0 (Free)</span>
-            </div>
-            <div class="tray-bill-row total">
-              <strong>Total Payable</strong>
-              <strong id="bill-total">â‚¹0</strong>
-            </div>
+            <div class="tray-bill-row"><span>Subtotal</span><span id="bill-subtotal">â‚¹0</span></div>
+            <div class="tray-bill-row"><span>Canteen Tech Fee</span><span>â‚¹0 (Free)</span></div>
+            <div class="tray-bill-row total"><strong>Total Payable</strong><strong id="bill-total">â‚¹0</strong></div>
           </div>
-
-          <button id="btn-place-order" class="btn btn-primary btn-block btn-lg" onclick="app.placeOrder()">
-            <span>CONFIRM & PLACE ORDER &rarr;</span>
-          </button>
-
-          <p class="tray-pickup-notice">
-            Pickup: Counter 01 & 02 Â· Cash / UPI on collection
-          </p>
+          <button id="btn-place-order" class="btn btn-primary btn-block btn-lg" onclick="app.placeOrder()"><span>CONFIRM & PLACE ORDER &rarr;</span></button>
+          <p class="tray-pickup-notice">Pickup: Counter 01 & 02 Â· Cash / UPI on collection</p>
         </div>
       </aside>
     </div>
@@ -543,6 +521,7 @@
   <script src="app.js?v=3"></script>
 </body>
 </html>
+
 
 
 
