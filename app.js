@@ -117,16 +117,12 @@
     }
 
     // Foods
-    getFoods() {
-      return this.data.foods;
-    }
+    getFoods() { return this.data.foods; }
 
     addFood(food) {
-      food.id = (this.data.foods.reduce((max, f) => Math.max(max, f.id), 0)) + 1;
+      food.id = (this.data.foods.reduce((m, f) => Math.max(m, f.id), 0)) + 1;
       food.available = true;
-      if (!food.image) {
-        food.image = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80";
-      }
+      food.image = food.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80";
       this.data.foods.push(food);
       this.save();
       return food;
@@ -134,10 +130,7 @@
 
     setFoodAvailability(foodId, available) {
       const food = this.data.foods.find(f => f.id === foodId);
-      if (food) {
-        food.available = available;
-        this.save();
-      }
+      if (food) { food.available = available; this.save(); }
     }
 
     // Inventory
@@ -1470,6 +1463,7 @@
   // Expose global controller
   window.app = new CampusBiteApp();
 })();
+
 
 
 
