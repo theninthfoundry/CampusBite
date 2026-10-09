@@ -213,182 +213,26 @@ a { color: inherit; text-decoration: none; }
 /* ==========================================================================
    VIEW 02 (SUB-SECTION): LIVE ORDERS & TIMELINE TRACKING
    ========================================================================== */
-.orders-editorial-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.pending-tray-banner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  background: var(--bg-surface);
-  border: 1px solid var(--ink);
-  border-radius: var(--radius-sm);
-  padding: 1.5rem 2rem;
-  margin-bottom: 2rem;
-}
-
-.pending-tray-info h4 {
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--ink);
-  margin-bottom: 0.25rem;
-}
-
-.pending-tray-badge {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--accent);
-  display: block;
-  margin-bottom: 0.25rem;
-}
-
-/* Order Ticket Card */
-.order-ticket-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  padding: 2rem;
-  margin-bottom: 1.5rem;
-  position: relative;
-}
-
-.order-ticket-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 1.25rem;
-  margin-bottom: 1.75rem;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.order-token-badge {
-  font-family: var(--font-mono);
-  font-size: 1.6rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  margin-right: 0.75rem;
-}
-
-.order-meta-info {
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  color: var(--muted);
-}
-
-.order-total-figure {
-  font-family: var(--font-mono);
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-/* High-Clarity Stepper (ORDERED â— PREPARING â— READY â— COLLECTED) */
-.order-timeline-stepper {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  position: relative;
-  margin: 2rem 0;
-  padding: 0 1rem;
-}
-
-.order-timeline-stepper::before {
-  content: '';
-  position: absolute;
-  top: 14px;
-  left: 12%;
-  right: 12%;
-  height: 2px;
-  background: var(--line);
-  z-index: 1;
-}
-
-.timeline-node {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.timeline-bullet {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--bg-surface);
-  border: 2px solid var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--muted);
-  margin-bottom: 0.6rem;
-  transition: all var(--ease-fast);
-}
-
-.timeline-label {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-/* Completed Node: Deep Ink */
-.timeline-node.completed .timeline-bullet {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--bg-primary);
-}
-
-.timeline-node.completed .timeline-label {
-  color: var(--ink);
-}
-
-/* Current Node: Lacquer Accent */
-.timeline-node.current .timeline-bullet {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #FFF;
-  box-shadow: 0 0 0 4px var(--accent-subtle);
-}
-
-.timeline-node.current .timeline-label {
-  color: var(--accent);
-}
-
-.order-summary-box {
-  background: var(--bg-primary);
-  border: 1px solid var(--line-subtle);
-  border-radius: var(--radius-xs);
-  padding: 1rem 1.25rem;
-  font-size: 0.88rem;
-  color: var(--ink);
-  margin-bottom: 1.5rem;
-}
-
-.order-actions-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--line);
-  flex-wrap: wrap;
-  gap: 1rem;
-}
+.orders-editorial-container { display: flex; flex-direction: column; gap: 2rem; }
+.pending-tray-banner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; background: var(--bg-surface); border: 1px solid var(--ink); border-radius: var(--radius-sm); padding: 1.5rem 2rem; margin-bottom: 2rem; }
+.pending-tray-info h4 { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
+.pending-tray-badge { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; color: var(--accent); display: block; margin-bottom: 0.25rem; }
+.order-ticket-card { background: var(--bg-surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 2rem; margin-bottom: 1.5rem; position: relative; }
+.order-ticket-header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--line); padding-bottom: 1.25rem; margin-bottom: 1.75rem; flex-wrap: wrap; gap: 1rem; }
+.order-token-badge { font-family: var(--font-mono); font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); margin-right: 0.75rem; }
+.order-meta-info { font-family: var(--font-mono); font-size: 0.76rem; color: var(--muted); }
+.order-total-figure { font-family: var(--font-mono); font-size: 1.35rem; font-weight: 700; color: var(--ink); }
+.order-timeline-stepper { display: grid; grid-template-columns: repeat(4, 1fr); position: relative; margin: 2rem 0; padding: 0 1rem; }
+.order-timeline-stepper::before { content: ''; position: absolute; top: 14px; left: 12%; right: 12%; height: 2px; background: var(--line); z-index: 1; }
+.timeline-node { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.timeline-bullet { width: 28px; height: 28px; border-radius: 50%; background: var(--bg-surface); border: 2px solid var(--line); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--muted); margin-bottom: 0.6rem; transition: all var(--ease-fast); }
+.timeline-label { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.timeline-node.completed .timeline-bullet { background: var(--ink); border-color: var(--ink); color: var(--bg-primary); }
+.timeline-node.completed .timeline-label { color: var(--ink); }
+.timeline-node.current .timeline-bullet { background: var(--accent); border-color: var(--accent); color: #FFF; box-shadow: 0 0 0 4px var(--accent-subtle); }
+.timeline-node.current .timeline-label { color: var(--accent); }
+.order-summary-box { background: var(--bg-primary); border: 1px solid var(--line-subtle); border-radius: var(--radius-xs); padding: 1rem 1.25rem; font-size: 0.88rem; color: var(--ink); margin-bottom: 1.5rem; }
+.order-actions-bar { display: flex; align-items: center; justify-content: space-between; padding-top: 1.25rem; border-top: 1px solid var(--line); flex-wrap: wrap; gap: 1rem; }
 
 /* ==========================================================================
    VIEW 02 (SUB-SECTION): MY PROFILE & STATS
@@ -1010,6 +854,7 @@ a { color: inherit; text-decoration: none; }
     height: 220px;
   }
 }
+
 
 
 
