@@ -134,17 +134,13 @@
     }
 
     // Inventory
-    getInventory() {
-      return this.data.inventory;
-    }
+    getInventory() { return this.data.inventory; }
 
     evaluateInventoryDepletion() {
       this.data.foods.forEach(f => {
         if (f.ingId) {
           const ing = this.data.inventory.find(i => i.id === f.ingId);
-          if (ing && ing.qty < (f.perServing || 0.1)) {
-            f.available = false;
-          }
+          if (ing && ing.qty < (f.perServing || 0.1)) f.available = false;
         }
       });
     }
@@ -1463,6 +1459,7 @@
   // Expose global controller
   window.app = new CampusBiteApp();
 })();
+
 
 
 
