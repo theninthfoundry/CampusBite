@@ -1,6 +1,6 @@
-/**
- * CampusBite — Smart Canteen & Digital Kitchen Operations
- * Japanese Editorial × Bold Minimalism × Premium Food Commerce
+﻿/**
+ * CampusBite â€” Smart Canteen & Digital Kitchen Operations
+ * Japanese Editorial Ã— Bold Minimalism Ã— Premium Food Commerce
  * State Management, Co-occurrence Recommendations, Dynamic ETA & Inventory Logic
  */
 
@@ -707,7 +707,7 @@
       const count = this.db.getActiveQueueCount();
       const text = document.getElementById('kitchen-status-text');
       if (text) {
-        text.innerText = count > 0 ? `Kitchen active · ${count} orders queued` : `Kitchen ready · Immediate pickup`;
+        text.innerText = count > 0 ? `Kitchen active Â· ${count} orders queued` : `Kitchen ready Â· Immediate pickup`;
       }
     }
 
@@ -770,7 +770,7 @@
             <div class="menu-item-content">
               <div class="menu-item-header">
                 <h4 class="menu-item-name">${f.name}</h4>
-                <span class="menu-item-price">₹${f.price}</span>
+                <span class="menu-item-price">â‚¹${f.price}</span>
               </div>
               <p class="menu-item-desc">${f.desc}</p>
               
@@ -815,7 +815,7 @@
             <img class="rec-item-img" src="${imgUrl}" alt="${f.name}">
             <div class="rec-item-info">
               <strong class="rec-item-name">${f.name}</strong>
-              <div class="rec-item-meta">₹${f.price} · ${f.prepMin}m prep</div>
+              <div class="rec-item-meta">â‚¹${f.price} Â· ${f.prepMin}m prep</div>
             </div>
             <button class="btn btn-secondary btn-xs" onclick="event.stopPropagation(); app.addToCart(${f.id})">+ ADD</button>
           </div>
@@ -834,14 +834,14 @@
       document.getElementById('detail-food-img').src = food.image || FOOD_IMAGES[food.id] || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80";
       document.getElementById('detail-food-category').innerText = food.category.toUpperCase();
       document.getElementById('detail-food-name').innerText = food.name;
-      document.getElementById('detail-food-price').innerText = `₹${food.price}`;
+      document.getElementById('detail-food-price').innerText = `â‚¹${food.price}`;
       document.getElementById('detail-food-prep').innerText = `${food.prepMin} MIN PREP`;
       document.getElementById('detail-food-desc').innerText = food.desc;
       document.getElementById('detail-food-qty').innerText = '1';
 
       const addBtn = document.getElementById('btn-detail-add');
       addBtn.disabled = !food.available;
-      addBtn.innerHTML = `<span>${food.available ? `ADD TO TRAY — ₹${food.price}` : 'CURRENTLY SOLD OUT'} &rarr;</span>`;
+      addBtn.innerHTML = `<span>${food.available ? `ADD TO TRAY â€” â‚¹${food.price}` : 'CURRENTLY SOLD OUT'} &rarr;</span>`;
 
       document.getElementById('food-detail-modal').classList.remove('hidden');
     }
@@ -856,7 +856,7 @@
       this.detailQty = Math.max(1, Math.min(10, this.detailQty + delta));
       document.getElementById('detail-food-qty').innerText = this.detailQty;
       const total = this.selectedDetailFood.price * this.detailQty;
-      document.getElementById('btn-detail-add').innerHTML = `<span>ADD TO TRAY — ₹${total} &rarr;</span>`;
+      document.getElementById('btn-detail-add').innerHTML = `<span>ADD TO TRAY â€” â‚¹${total} &rarr;</span>`;
     }
 
     addDetailToCart() {
@@ -937,7 +937,7 @@
         <div class="tray-item-row">
           <div class="tray-item-info">
             <strong>${item.food.name}</strong>
-            <small>₹${item.food.price * item.qty} (₹${item.food.price} ea)</small>
+            <small>â‚¹${item.food.price * item.qty} (â‚¹${item.food.price} ea)</small>
           </div>
           <div class="tray-stepper">
             <button class="btn-step" onclick="app.changeCartQty(${item.food.id}, -1)">&minus;</button>
@@ -950,8 +950,8 @@
       const subtotal = this.cart.reduce((sum, i) => sum + (i.food.price * i.qty), 0);
       const eta = this.db.calculateCartEta(this.cart);
 
-      document.getElementById('bill-subtotal').innerText = `₹${subtotal}`;
-      document.getElementById('bill-total').innerText = `₹${subtotal}`;
+      document.getElementById('bill-subtotal').innerText = `â‚¹${subtotal}`;
+      document.getElementById('bill-total').innerText = `â‚¹${subtotal}`;
       document.getElementById('cart-eta-val').innerText = `~${eta} mins`;
       document.getElementById('cart-eta-calc').innerText = `Longest prep (${Math.max(...this.cart.map(i => i.food.prepMin))}m) + queue (${2 * this.db.getActiveQueueCount()}m)`;
     }
@@ -1007,7 +1007,7 @@
     showOrderModal(order) {
       document.getElementById('modal-token-num').innerText = `#${order.id}`;
       document.getElementById('modal-eta-val').innerText = `${order.etaMin} minutes`;
-      document.getElementById('modal-total-val').innerText = `₹${order.total}`;
+      document.getElementById('modal-total-val').innerText = `â‚¹${order.total}`;
       document.getElementById('order-modal').classList.remove('hidden');
     }
 
@@ -1039,10 +1039,10 @@
             <div class="pending-tray-info">
               <span class="pending-tray-badge">TRAY READY</span>
               <h4>You have ${cartQty} dish${cartQty > 1 ? 'es' : ''} in your tray waiting to order</h4>
-              <p style="font-size: 0.88rem; color: var(--muted);">${itemNames} · <strong>Total: ₹${cartTotal}</strong></p>
+              <p style="font-size: 0.88rem; color: var(--muted);">${itemNames} Â· <strong>Total: â‚¹${cartTotal}</strong></p>
             </div>
             <button class="btn btn-primary btn-md" onclick="app.placeOrder()">
-              <span>CONFIRM ORDER (₹${cartTotal}) &rarr;</span>
+              <span>CONFIRM ORDER (â‚¹${cartTotal}) &rarr;</span>
             </button>
           </div>
         `;
@@ -1088,10 +1088,10 @@
                     <div class="order-ticket-header">
                       <div>
                         <span class="order-token-badge">TOKEN #${o.id}</span>
-                        <span class="order-meta-info">Placed at ${timeStr} · ETA ~${o.etaMin}m</span>
+                        <span class="order-meta-info">Placed at ${timeStr} Â· ETA ~${o.etaMin}m</span>
                       </div>
                       <div style="display: flex; align-items: baseline; gap: 1.25rem;">
-                        <span class="order-total-figure">₹${o.total}</span>
+                        <span class="order-total-figure">â‚¹${o.total}</span>
                         ${o.status === 'NEW' ? `
                           <button class="btn btn-secondary btn-xs" style="color: var(--accent); border-color: var(--accent);" onclick="app.handleCancelOrder(${o.id})">
                             Cancel
@@ -1106,10 +1106,10 @@
                         let bulletChar = idx + 1;
                         if (idx < currentIdx || o.status === 'COLLECTED') {
                           nodeClass = 'completed';
-                          bulletChar = '✓';
+                          bulletChar = 'âœ“';
                         } else if (idx === currentIdx) {
                           nodeClass = 'current';
-                          bulletChar = '●';
+                          bulletChar = 'â—';
                         }
                         return `
                           <div class="timeline-node ${nodeClass}">
@@ -1154,12 +1154,12 @@
                       <div style="display: flex; align-items: center; gap: 0.75rem;">
                         <strong style="font-family: var(--font-mono); font-size: 0.95rem;">#${o.id}</strong>
                         <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);">${dateStr}</span>
-                        <span style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: var(--success); background: var(--success-subtle); padding: 0.1rem 0.4rem; border-radius: var(--radius-xs);">COLLECTED ✓</span>
+                        <span style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: var(--success); background: var(--success-subtle); padding: 0.1rem 0.4rem; border-radius: var(--radius-xs);">COLLECTED âœ“</span>
                       </div>
                       <small style="color: var(--muted); display: block; margin-top: 0.25rem;">${o.summary}</small>
                     </div>
                     <div style="display: flex; align-items: center; gap: 1.25rem;">
-                      <span style="font-family: var(--font-mono); font-weight: 700; font-size: 1.05rem;">₹${o.total}</span>
+                      <span style="font-family: var(--font-mono); font-weight: 700; font-size: 1.05rem;">â‚¹${o.total}</span>
                       <button class="btn btn-arrow" onclick="app.reorderItem(${o.id})">REORDER &rarr;</button>
                     </div>
                   </div>
@@ -1234,7 +1234,7 @@
       const countEl = document.getElementById('stat-total-orders');
       if (countEl) countEl.innerText = orders.length;
       const spentEl = document.getElementById('stat-total-spent');
-      if (spentEl) spentEl.innerText = `₹${spent}`;
+      if (spentEl) spentEl.innerText = `â‚¹${spent}`;
       const favEl = document.getElementById('stat-fav-dish');
       if (favEl) {
         if (fav && fav.name) {
@@ -1242,7 +1242,7 @@
         } else if (orders.length > 0 && orders[0].items && orders[0].items[0]) {
           favEl.innerText = orders[0].items[0].name;
         } else {
-          favEl.innerText = '—';
+          favEl.innerText = 'â€”';
         }
       }
 
@@ -1280,7 +1280,7 @@
                   <small style="color: var(--muted); display: block; margin-top: 0.25rem;">${o.summary}</small>
                 </div>
                 <div style="display: flex; align-items: center; gap: 1.25rem;">
-                  <strong style="font-family: var(--font-mono); font-size: 1.05rem;">₹${o.total}</strong>
+                  <strong style="font-family: var(--font-mono); font-size: 1.05rem;">â‚¹${o.total}</strong>
                   <button class="btn btn-arrow" onclick="app.reorderItem(${o.id})">REORDER &rarr;</button>
                 </div>
               </div>
@@ -1335,7 +1335,7 @@
           </div>
           <div class="ticket-summary">${o.summary}</div>
           <div class="ticket-footer">
-            <span class="ticket-price">₹${o.total}</span>
+            <span class="ticket-price">â‚¹${o.total}</span>
             <button class="btn btn-primary btn-xs" onclick="app.advanceOrder(${o.id})">
               <span>${btnText} &rarr;</span>
             </button>
@@ -1345,7 +1345,7 @@
 
       colNew.innerHTML = newOrders.map(o => renderCard(o, 'START COOKING')).join('') || '<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">NO PENDING ORDERS</div>';
       colPrep.innerHTML = prepOrders.map(o => renderCard(o, 'MARK READY')).join('') || '<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">STOVE IS CLEAR</div>';
-      colReady.innerHTML = readyOrders.map(o => renderCard(o, 'COLLECTED ✓')).join('') || '<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">COUNTER CLEARED</div>';
+      colReady.innerHTML = readyOrders.map(o => renderCard(o, 'COLLECTED âœ“')).join('') || '<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">COUNTER CLEARED</div>';
     }
 
     advanceOrder(orderId) {
@@ -1364,12 +1364,12 @@
           <div>
             <strong style="font-size: 0.92rem;">${f.name}</strong>
             <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem;">
-              ₹${f.price} · ${f.category} · Prep: ${f.prepMin}m
+              â‚¹${f.price} Â· ${f.category} Â· Prep: ${f.prepMin}m
             </div>
           </div>
           <button class="toggle-availability-btn ${f.available ? 'active' : 'inactive'}" 
                   onclick="app.toggleFoodAvailability(${f.id})">
-            ${f.available ? '● AVAILABLE' : '✕ SOLD OUT'}
+            ${f.available ? 'â— AVAILABLE' : 'âœ• SOLD OUT'}
           </button>
         </div>
       `).join('');
@@ -1437,8 +1437,8 @@
       const revEl = document.getElementById('an-total-rev');
       const ticketEl = document.getElementById('an-avg-ticket');
       if (totalEl) totalEl.innerText = an.totalOrders;
-      if (revEl) revEl.innerText = `₹${an.totalRev}`;
-      if (ticketEl) ticketEl.innerText = `₹${an.avgTicket}`;
+      if (revEl) revEl.innerText = `â‚¹${an.totalRev}`;
+      if (ticketEl) ticketEl.innerText = `â‚¹${an.avgTicket}`;
 
       // Popular items chart
       const popChart = document.getElementById('chart-popular');
@@ -1506,3 +1506,4 @@
   // Expose global controller
   window.app = new CampusBiteApp();
 })();
+
