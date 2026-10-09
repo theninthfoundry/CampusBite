@@ -1,72 +1,23 @@
-/* ==========================================================================
-   CAMPUSBITE — JAPANESE EDITORIAL × BOLD MINIMALISM × PREMIUM FOOD COMMERCE
+﻿/* ==========================================================================
+   CAMPUSBITE â€” JAPANESE EDITORIAL Ã— BOLD MINIMALISM Ã— PREMIUM FOOD COMMERCE
    Design Philosophy: Space (Ma) > Typography > Imagery > Information > Decoration
-   Palette: Warm Paper (#F5F2EA) · Ink (#171717) · Hairlines (#D8D3C8) · Lacquer Accent (#A33B2F)
+   Palette: Warm Paper (#F5F2EA) Â· Ink (#171717) Â· Hairlines (#D8D3C8) Â· Lacquer Accent (#A33B2F)
    ========================================================================== */
 
 :root {
-  /* Surface & Paper Tones */
-  --bg-primary: #F5F2EA;
-  --bg-secondary: #ECE8DE;
-  --bg-surface: #FAF8F3;
-  --bg-surface-pure: #FFFFFF;
-  --bg-hover: #F1ECE2;
-
-  /* Ink & Typography */
-  --ink: #171717;
-  --ink-light: #2C2926;
-  --muted: #77736C;
-  --muted-light: #9C978E;
-  --text-inverse: #FAF8F3;
-
-  /* Fine Hairlines & Rules */
-  --line: #D8D3C8;
-  --line-dark: #C2BCB0;
-  --line-subtle: #E5E1D6;
-
-  /* Accent (Used extremely sparingly) */
-  --accent: #A33B2F;
-  --accent-hover: #8B3026;
-  --accent-subtle: #F6EDE8;
-
-  /* Operational Staff Accent */
-  --indigo: #26364A;
-  --indigo-subtle: #E9EDF2;
-
-  /* Status Colors (Quiet & Text-Backed) */
-  --success: #2E6A4F;
-  --success-subtle: #EAF3EE;
-  --warning: #B45309;
-  --warning-subtle: #FEF3C7;
-
-  /* Typography Stacks */
+  --bg-primary: #F5F2EA; --bg-secondary: #ECE8DE; --bg-surface: #FAF8F3; --bg-surface-pure: #FFFFFF; --bg-hover: #F1ECE2;
+  --ink: #171717; --ink-light: #2C2926; --muted: #77736C; --muted-light: #9C978E; --text-inverse: #FAF8F3;
+  --line: #D8D3C8; --line-dark: #C2BCB0; --line-subtle: #E5E1D6;
+  --accent: #A33B2F; --accent-hover: #8B3026; --accent-subtle: #F6EDE8;
+  --indigo: #26364A; --indigo-subtle: #E9EDF2;
+  --success: #2E6A4F; --success-subtle: #EAF3EE; --warning: #B45309; --warning-subtle: #FEF3C7;
   --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-serif: 'DM Serif Display', 'Cormorant Garamond', Georgia, serif;
   --font-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-
-  /* Structural Spacing */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.5rem;
-  --space-6: 2rem;
-  --space-7: 3rem;
-  --space-8: 4rem;
-
-  /* Restrained Radii (0-6px architectural corners, no giant pills) */
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-
-  /* Elevation (Barely-there shadows, purely for floating overlays) */
-  --shadow-subtle: 0 1px 3px rgba(23, 23, 23, 0.04);
-  --shadow-overlay: 0 12px 32px rgba(23, 23, 23, 0.08);
-
-  /* Transitions */
-  --ease-fast: 180ms cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-smooth: 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem; --space-5: 1.5rem; --space-6: 2rem; --space-7: 3rem; --space-8: 4rem;
+  --radius-xs: 2px; --radius-sm: 4px; --radius-md: 6px; --radius-lg: 8px;
+  --shadow-subtle: 0 1px 3px rgba(23, 23, 23, 0.04); --shadow-overlay: 0 12px 32px rgba(23, 23, 23, 0.08);
+  --ease-fast: 180ms cubic-bezier(0.16, 1, 0.3, 1); --ease-smooth: 280ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ==========================================================================
@@ -1453,7 +1404,7 @@ a {
   color: var(--ink);
 }
 
-/* High-Clarity Stepper (ORDERED ● PREPARING ● READY ● COLLECTED) */
+/* High-Clarity Stepper (ORDERED â— PREPARING â— READY â— COLLECTED) */
 .order-timeline-stepper {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -2199,3 +2150,4 @@ a {
     height: 220px;
   }
 }
+
