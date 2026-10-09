@@ -165,135 +165,21 @@ a { color: inherit; text-decoration: none; }
 /* ==========================================================================
    MENU GRID: PHOTOGRAPHIC FOOD COMPOSITIONS
    ========================================================================== */
-.food-grid-editorial {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-  gap: 2.25rem 1.75rem;
-}
-
-.menu-item-editorial {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  background: transparent;
-  cursor: pointer;
-  transition: transform var(--ease-fast);
-}
-
-.menu-item-editorial.unavailable {
-  opacity: 0.55;
-  filter: grayscale(0.5);
-}
-
-.menu-item-media {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  background: var(--bg-secondary);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-xs);
-  margin-bottom: 1rem;
-}
-
-.menu-item-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform var(--ease-smooth);
-}
-
-.menu-item-editorial:hover .menu-item-media img {
-  transform: scale(1.025);
-}
-
-.menu-item-index {
-  position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  background: rgba(23, 23, 23, 0.85);
-  color: var(--bg-primary);
-  padding: 0.15rem 0.45rem;
-  border-radius: var(--radius-xs);
-}
-
-.menu-item-prep-tag {
-  position: absolute;
-  bottom: 0.75rem;
-  right: 0.75rem;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  font-weight: 600;
-  background: rgba(250, 248, 243, 0.92);
-  color: var(--ink);
-  padding: 0.2rem 0.5rem;
-  border-radius: var(--radius-xs);
-  backdrop-filter: blur(4px);
-}
-
-.menu-item-content {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.menu-item-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 0.35rem;
-}
-
-.menu-item-name {
-  font-family: var(--font-sans);
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-  line-height: 1.3;
-}
-
-.menu-item-price {
-  font-family: var(--font-mono);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--ink);
-  white-space: nowrap;
-}
-
-.menu-item-desc {
-  font-size: 0.84rem;
-  line-height: 1.5;
-  color: var(--muted);
-  margin-bottom: 1rem;
-  flex: 1;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.menu-item-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--line-subtle);
-}
-
-.category-micro-tag {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
+.food-grid-editorial { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 2.25rem 1.75rem; }
+.menu-item-editorial { display: flex; flex-direction: column; position: relative; background: transparent; cursor: pointer; transition: transform var(--ease-fast); }
+.menu-item-editorial.unavailable { opacity: 0.55; filter: grayscale(0.5); }
+.menu-item-media { position: relative; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; background: var(--bg-secondary); border: 1px solid var(--line); border-radius: var(--radius-xs); margin-bottom: 1rem; }
+.menu-item-media img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--ease-smooth); }
+.menu-item-editorial:hover .menu-item-media img { transform: scale(1.025); }
+.menu-item-index { position: absolute; top: 0.75rem; left: 0.75rem; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; background: rgba(23, 23, 23, 0.85); color: var(--bg-primary); padding: 0.15rem 0.45rem; border-radius: var(--radius-xs); }
+.menu-item-prep-tag { position: absolute; bottom: 0.75rem; right: 0.75rem; font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600; background: rgba(250, 248, 243, 0.92); color: var(--ink); padding: 0.2rem 0.5rem; border-radius: var(--radius-xs); backdrop-filter: blur(4px); }
+.menu-item-content { display: flex; flex-direction: column; flex: 1; }
+.menu-item-header { display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.35rem; }
+.menu-item-name { font-family: var(--font-sans); font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); line-height: 1.3; }
+.menu-item-price { font-family: var(--font-mono); font-size: 1.05rem; font-weight: 700; color: var(--ink); white-space: nowrap; }
+.menu-item-desc { font-size: 0.84rem; line-height: 1.5; color: var(--muted); margin-bottom: 1rem; flex: 1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.menu-item-actions { display: flex; align-items: center; justify-content: space-between; padding-top: 0.75rem; border-top: 1px solid var(--line-subtle); }
+.category-micro-tag { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 
 /* ==========================================================================
    SIDEBAR TRAY: DIGITAL KITCHEN ORDER SLIP
@@ -1297,6 +1183,7 @@ a { color: inherit; text-decoration: none; }
     height: 220px;
   }
 }
+
 
 
 
