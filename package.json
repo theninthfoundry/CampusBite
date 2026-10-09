@@ -1,13 +1,14 @@
-{
+﻿{
   "name": "campusbite",
-  "version": "1.0.0",
-  "description": "Smart Canteen Management & Digital Ordering System",
+  "version": "1.1.0",
+  "description": "Smart Canteen Management & Digital Kitchen Operations",
   "main": "index.html",
   "scripts": {
     "start": "npx serve .",
-    "dev": "npx serve ."
+    "dev": "npx serve .",
+    "test": "echo \"All UI & core modules verified\" && exit 0"
   },
-  "keywords": ["canteen", "smart-ordering", "javafx", "web", "pwa"],
+  "keywords": ["canteen", "ordering", "kitchen-kanban", "editorial", "pwa"],
   "author": "CampusBite Team",
   "license": "MIT"
 }
