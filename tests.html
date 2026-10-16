@@ -7,61 +7,44 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=5">
-  <style>
-    body { background: var(--bg-primary, #FAF8F5); padding: 2.5rem 1rem; }
-    .test-container { max-width: 900px; margin: 0 auto; background: var(--bg-surface, #FFF); border: 1px solid var(--line, #E5E0D8); border-radius: var(--radius-sm, 6px); padding: 2.5rem; box-shadow: var(--shadow-sm); }
-    .test-header { display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 1.5rem; border-bottom: 2px solid var(--ink, #1F1E1D); margin-bottom: 2rem; }
-    .test-title { font-family: var(--font-serif); font-size: 2.2rem; margin: 0.2rem 0; }
-    .badge-pass { background: #22c55e; color: #fff; font-family: var(--font-mono); font-weight: 700; font-size: 0.85rem; padding: 0.35rem 0.85rem; border-radius: 4px; }
-    .badge-fail { background: #ef4444; color: #fff; font-family: var(--font-mono); font-weight: 700; font-size: 0.85rem; padding: 0.35rem 0.85rem; border-radius: 4px; }
-    .test-row { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1rem; border-bottom: 1px solid var(--line); font-size: 0.92rem; }
-    .test-row:hover { background: rgba(0,0,0,0.015); }
-    .test-status-pill { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 3px; }
-    .test-status-pill.pass { background: rgba(34,197,94,0.12); color: #15803d; border: 1px solid rgba(34,197,94,0.3); }
-    .test-status-pill.fail { background: rgba(239,68,68,0.12); color: #dc2626; border: 1px solid rgba(239,68,68,0.3); }
-    .test-meta { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); margin-left: 0.75rem; }
-    .summary-card { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
-    .metric-box { background: var(--bg-primary); border: 1px solid var(--line); padding: 1.25rem; border-radius: 4px; text-align: center; }
-    .metric-num { font-family: var(--font-mono); font-size: 1.8rem; font-weight: 700; margin-top: 0.25rem; }
-  </style>
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
-<body>
+<body class="test-page-body">
   <div id="toast-container" class="toast-container"></div>
   <div class="test-container">
     <div class="test-header">
       <div>
         <span class="editorial-eyebrow">QUALITY ASSURANCE & REGRESSION VERIFICATION</span>
         <h1 class="test-title">CampusBite Test Suite</h1>
-        <p style="color:var(--muted);font-size:0.88rem;margin:0;">Validates the 7 confirmed defects, state transitions, idempotency, and operational features.</p>
+        <p class="test-desc-text">Validates the 7 confirmed defects, state transitions, idempotency, and operational features.</p>
       </div>
       <div id="status-badge" class="badge-pass">RUNNING TESTS...</div>
     </div>
 
     <div class="summary-card">
       <div class="metric-box">
-        <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--muted);">TOTAL TESTS</span>
+        <span class="metric-label-mono">TOTAL TESTS</span>
         <div id="metric-total" class="metric-num">0</div>
       </div>
       <div class="metric-box">
-        <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--muted);">PASSED</span>
-        <div id="metric-passed" class="metric-num" style="color:#15803d;">0</div>
+        <span class="metric-label-mono">PASSED</span>
+        <div id="metric-passed" class="metric-num metric-passed-green">0</div>
       </div>
       <div class="metric-box">
-        <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--muted);">EXECUTION TIME</span>
-        <div id="metric-time" class="metric-num" style="font-size:1.4rem;margin-top:0.6rem;">0 ms</div>
+        <span class="metric-label-mono">EXECUTION TIME</span>
+        <div id="metric-time" class="metric-num metric-time-compact">0 ms</div>
       </div>
     </div>
 
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-      <h3 style="font-family:var(--font-serif);font-size:1.35rem;margin:0;">Automated Test Results</h3>
+    <div class="test-controls-bar">
+      <h3 class="test-results-heading">Automated Test Results</h3>
       <div>
         <button class="btn btn-secondary btn-xs" onclick="runTests()">RUN TESTS AGAIN</button>
-        <a href="index.html" class="btn btn-primary btn-xs" style="text-decoration:none;margin-left:0.5rem;"><span>OPEN CAMPUSBITE &rarr;</span></a>
+        <a href="index.html" class="btn btn-primary btn-xs test-open-app-btn"><span>OPEN CAMPUSBITE &rarr;</span></a>
       </div>
     </div>
 
-    <div id="test-results-list" style="border:1px solid var(--line);border-radius:4px;overflow:hidden;"></div>
+    <div id="test-results-list" class="test-results-list-wrap"></div>
   </div>
 
   <script src="supabase.js"></script>
@@ -73,8 +56,7 @@
       const badge = document.getElementById('status-badge');
       badge.className = 'badge-pass';
       badge.innerText = 'EXECUTING...';
-      badge.style.background = '#64748b';
-      listEl.innerHTML = '<div style="padding:2rem;text-align:center;font-family:var(--font-mono);">Executing test suites...</div>';
+      listEl.innerHTML = '<div class="test-row flex-center"><span class="metric-label-mono">Executing test suites...</span></div>';
 
       const t0 = performance.now();
       const results = await window.CampusBiteTests.executeAllTests();
@@ -91,21 +73,19 @@
       if (allPassed) {
         badge.className = 'badge-pass';
         badge.innerText = 'ALL PASSING ✓';
-        badge.style.background = '#22c55e';
       } else {
         badge.className = 'badge-fail';
         badge.innerText = `${totalCount - passedCount} FAILED`;
-        badge.style.background = '#ef4444';
       }
 
       listEl.innerHTML = results.map((r, idx) => `
         <div class="test-row">
           <div>
-            <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--muted);margin-right:0.5rem;">#${String(idx + 1).padStart(2, '0')}</span>
-            <strong style="color:var(--ink);">${r.name}</strong>
-            ${r.error ? `<div style="color:#dc2626;font-family:var(--font-mono);font-size:0.75rem;margin-top:0.25rem;">✕ ${r.error}</div>` : ''}
+            <span class="timeline-actor-pill">#${String(idx + 1).padStart(2, '0')}</span>
+            <strong>${r.name}</strong>
+            ${r.error ? `<div class="status-pill out-of-stock">✕ ${r.error}</div>` : ''}
           </div>
-          <div style="display:flex;align-items:center;">
+          <div class="flex-between-center">
             <span class="test-status-pill ${r.passed ? 'pass' : 'fail'}">${r.passed ? 'PASS ✓' : 'FAIL ✕'}</span>
             <span class="test-meta">${r.time}ms</span>
           </div>

@@ -52,9 +52,9 @@
         <form id="login-form" onsubmit="app.handleLogin(event)">
           <div class="form-group"><label for="login-id">Student ID or Email</label><div class="form-input-box"><input type="text" id="login-id" placeholder="demo@campus.edu or 25R11A0501" required autocomplete="username"></div></div>
           <div class="form-group">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="flex-between-center">
               <label for="login-pw">Password</label>
-              <a href="javascript:void(0)" onclick="app.openForgotPasswordModal()" style="font-size:0.75rem;color:var(--muted);text-decoration:none;">Forgot password?</a>
+              <a href="javascript:void(0)" onclick="app.openForgotPasswordModal()" class="link-muted-sm">Forgot password?</a>
             </div>
             <div class="form-input-box"><input type="password" id="login-pw" placeholder="••••••••" required autocomplete="current-password"></div>
           </div>
@@ -272,7 +272,7 @@
           <div class="editorial-stat-card"><span class="stat-desc">Gross Canteen Revenue</span><span class="stat-num" id="an-total-rev">₹0</span></div>
           <div class="editorial-stat-card"><span class="stat-desc">Average Order Value</span><span class="stat-num" id="an-avg-ticket">₹0</span></div>
         </div>
-        <div id="analytics-waste-card" class="profile-stats-grid" style="margin-bottom:2rem;"></div>
+        <div id="analytics-waste-card" class="profile-stats-grid mb-2rem"></div>
         <div class="analytics-charts-split">
           <div class="chart-card-editorial">
             <span class="editorial-eyebrow">POPULAR DISHES</span><h3 class="chart-heading">Top 5 Best-Selling Items</h3>
@@ -410,18 +410,18 @@
 
   <!-- STOCK RECONCILIATION MODAL -->
   <div id="reconciliation-modal" class="modal-overlay hidden" onclick="if(event.target === this) app.closeReconciliationModal()">
-    <div class="modal-editorial-card" style="max-width:440px;">
+    <div class="modal-editorial-card modal-width-440">
       <span class="editorial-eyebrow">AUDIT & INVENTORY CONTROL</span>
-      <h2 style="font-family:var(--font-serif);font-size:1.45rem;margin:0.25rem 0 1rem 0;">Reconcile Physical Stock</h2>
+      <h2 class="modal-section-heading">Reconcile Physical Stock</h2>
       <form onsubmit="app.handleReconciliationSubmit(event)">
         <input type="hidden" id="recon-ing-id">
         <div class="form-group">
           <label>Ingredient</label>
-          <div id="recon-ing-name" style="font-weight:700;font-size:1rem;margin-top:0.25rem;">—</div>
+          <div id="recon-ing-name" class="recon-name-text">—</div>
         </div>
         <div class="form-group">
           <label>Recorded Database Balance</label>
-          <div id="recon-current-qty" style="font-family:var(--font-mono);color:var(--muted);margin-top:0.25rem;">—</div>
+          <div id="recon-current-qty" class="recon-balance-text">—</div>
         </div>
         <div class="form-group">
           <label for="recon-actual-qty">Verified Physical Count</label>
@@ -440,7 +440,7 @@
             </select>
           </div>
         </div>
-        <div style="display:flex;gap:0.75rem;margin-top:1.25rem;">
+        <div class="modal-btn-row">
           <button type="button" class="btn btn-ghost btn-block" onclick="app.closeReconciliationModal()">Cancel</button>
           <button type="submit" class="btn btn-primary btn-block"><span>APPLY AUDIT &rarr;</span></button>
         </div>
@@ -450,15 +450,15 @@
 
   <!-- STOCK MOVEMENTS LEDGER MODAL -->
   <div id="ledger-modal" class="modal-overlay hidden" onclick="if(event.target === this) app.closeLedgerModal()">
-    <div class="modal-editorial-card" style="max-width:900px;width:95%;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+    <div class="modal-editorial-card modal-width-ledger">
+      <div class="modal-header-flex">
         <div>
           <span class="editorial-eyebrow">IMMUTABLE TRANSACTION JOURNAL</span>
-          <h2 style="font-family:var(--font-serif);font-size:1.5rem;margin:0.25rem 0;">Stock Movements Ledger</h2>
+          <h2 class="modal-title-serif">Stock Movements Ledger</h2>
         </div>
         <button class="btn btn-ghost btn-xs" onclick="app.closeLedgerModal()">✕ CLOSE</button>
       </div>
-      <div class="ledger-table-wrap" style="max-height:60vh;overflow-y:auto;">
+      <div class="ledger-table-wrap scroll-y-60vh">
         <table class="ledger-table">
           <thead>
             <tr>
@@ -480,14 +480,14 @@
 
   <!-- RECIPE BUILDER MODAL -->
   <div id="recipe-editor-modal" class="modal-overlay hidden" onclick="if(event.target === this) app.closeRecipeEditor()">
-    <div class="modal-editorial-card" style="max-width:540px;">
+    <div class="modal-editorial-card modal-width-540">
       <span class="editorial-eyebrow">RECIPE SPECIFICATION & COMPOSITION</span>
-      <h2 id="recipe-food-name" style="font-family:var(--font-serif);font-size:1.45rem;margin:0.25rem 0 1rem 0;">Recipe</h2>
+      <h2 id="recipe-food-name" class="modal-section-heading">Recipe</h2>
       <input type="hidden" id="recipe-food-id">
-      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;">Specify raw ingredient quantities deducted per portion prepared.</p>
-      <div id="recipe-ingredients-list" style="max-height:40vh;overflow-y:auto;"></div>
-      <button type="button" class="btn btn-secondary btn-xs" onclick="app.addRecipeRow()" style="margin:0.75rem 0 1.25rem 0;">+ ADD INGREDIENT</button>
-      <div style="display:flex;gap:0.75rem;">
+      <p class="text-muted-xs-mb">Specify raw ingredient quantities deducted per portion prepared.</p>
+      <div id="recipe-ingredients-list" class="scroll-y-40vh"></div>
+      <button type="button" class="btn btn-secondary btn-xs my-075-125" onclick="app.addRecipeRow()">+ ADD INGREDIENT</button>
+      <div class="flex-gap-075">
         <button type="button" class="btn btn-ghost btn-block" onclick="app.closeRecipeEditor()">Cancel</button>
         <button type="button" class="btn btn-primary btn-block" onclick="app.saveRecipeEditor()"><span>SAVE RECIPE &rarr;</span></button>
       </div>
@@ -496,13 +496,13 @@
 
   <!-- CUSTOMER FEEDBACK MODAL -->
   <div id="feedback-modal" class="modal-overlay hidden" onclick="if(event.target === this) app.closeFeedbackModal()">
-    <div class="modal-editorial-card" style="max-width:440px;">
+    <div class="modal-editorial-card modal-width-440">
       <span class="editorial-eyebrow">DINING FEEDBACK</span>
-      <h2 style="font-family:var(--font-serif);font-size:1.45rem;margin:0.25rem 0 0.75rem 0;">Rate Your Meal</h2>
+      <h2 class="modal-title-compact">Rate Your Meal</h2>
       <form onsubmit="app.submitFeedbackForm(event)">
-        <div style="text-align:center;margin-bottom:1rem;">
-          <span style="font-size:0.82rem;color:var(--muted);">How was the taste, portion, and collection speed?</span>
-          <div id="feedback-stars" class="feedback-star-row" style="justify-content:center;">
+        <div class="text-center-mb1">
+          <span class="text-muted-xs">How was the taste, portion, and collection speed?</span>
+          <div id="feedback-stars" class="feedback-star-row flex-center">
             <button type="button" class="feedback-star-btn active" onclick="app.setFeedbackRating(1)">★</button>
             <button type="button" class="feedback-star-btn active" onclick="app.setFeedbackRating(2)">★</button>
             <button type="button" class="feedback-star-btn active" onclick="app.setFeedbackRating(3)">★</button>
@@ -513,10 +513,10 @@
         <div class="form-group">
           <label for="feedback-comment">Comments or Suggestions (Optional)</label>
           <div class="form-input-box">
-            <textarea id="feedback-comment" rows="3" style="width:100%;border:none;background:transparent;padding:0.5rem;font-family:inherit;font-size:0.85rem;" placeholder="e.g. Biryani was perfectly spiced!"></textarea>
+            <textarea id="feedback-comment" rows="3" class="feedback-textarea" placeholder="e.g. Biryani was perfectly spiced!"></textarea>
           </div>
         </div>
-        <div style="display:flex;gap:0.75rem;margin-top:1rem;">
+        <div class="modal-actions-mt1">
           <button type="button" class="btn btn-ghost btn-block" onclick="app.closeFeedbackModal()">Cancel</button>
           <button type="submit" class="btn btn-primary btn-block"><span>SUBMIT REVIEW &rarr;</span></button>
         </div>
@@ -526,9 +526,9 @@
 
   <!-- PASSWORD RECOVERY MODAL -->
   <div id="forgot-pw-modal" class="modal-overlay hidden" onclick="if(event.target === this) app.closeForgotPasswordModal()">
-    <div class="modal-editorial-card" style="max-width:420px;">
+    <div class="modal-editorial-card modal-width-420">
       <span class="editorial-eyebrow">IDENTITY RECOVERY</span>
-      <h2 style="font-family:var(--font-serif);font-size:1.45rem;margin:0.25rem 0 1rem 0;">Reset Password</h2>
+      <h2 class="modal-section-heading">Reset Password</h2>
       
       <div id="forgot-step-1">
         <form onsubmit="app.handleForgotPasswordRequest(event)">
@@ -538,7 +538,7 @@
               <input type="text" id="forgot-id-input" placeholder="demo@campus.edu or 25R11A0501" required>
             </div>
           </div>
-          <div style="display:flex;gap:0.75rem;margin-top:1rem;">
+          <div class="modal-actions-mt1">
             <button type="button" class="btn btn-ghost btn-block" onclick="app.closeForgotPasswordModal()">Cancel</button>
             <button type="submit" class="btn btn-primary btn-block"><span>SEND CODE &rarr;</span></button>
           </div>
@@ -547,9 +547,9 @@
 
       <div id="forgot-step-2" class="hidden">
         <form onsubmit="app.handleResetPasswordSubmit(event)">
-          <div style="background:var(--bg-surface);border:1px solid var(--line);border-radius:var(--radius-xs);padding:0.75rem;margin-bottom:1rem;text-align:center;">
-            <span style="font-size:0.75rem;color:var(--muted);">Verification Code</span>
-            <div id="forgot-token-display" style="font-family:var(--font-mono);font-size:1.35rem;font-weight:700;letter-spacing:0.1em;color:var(--ink);">123456</div>
+          <div class="verification-code-card">
+            <span class="text-muted-label">Verification Code</span>
+            <div id="forgot-token-display" class="verification-code-display">123456</div>
           </div>
           <input type="hidden" id="forgot-token-input">
           <div class="form-group">
@@ -558,7 +558,7 @@
               <input type="password" id="forgot-new-pw" placeholder="Enter new password" required>
             </div>
           </div>
-          <div style="display:flex;gap:0.75rem;margin-top:1rem;">
+          <div class="modal-actions-mt1">
             <button type="button" class="btn btn-ghost btn-block" onclick="app.closeForgotPasswordModal()">Cancel</button>
             <button type="submit" class="btn btn-primary btn-block"><span>UPDATE PASSWORD &rarr;</span></button>
           </div>
@@ -569,10 +569,10 @@
 
   <!-- SUPABASE CONNECTION MODAL -->
   <div id="supabase-modal" class="modal-overlay hidden" onclick="if(event.target === this) app.closeSupabaseModal()">
-    <div class="modal-editorial-card" style="max-width:500px;">
+    <div class="modal-editorial-card modal-width-500">
       <span class="editorial-eyebrow">HOSTED POSTGRESQL CLOUD</span>
-      <h2 style="font-family:var(--font-serif);font-size:1.45rem;margin:0.25rem 0 0.5rem 0;">Supabase Configuration</h2>
-      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1.25rem;">
+      <h2 class="modal-title-sub">Supabase Configuration</h2>
+      <p class="modal-desc-text">
         CampusBite connects to hosted Supabase PostgreSQL using <code>supabase_schema.sql</code>. If unconfigured or offline, it functions seamlessly in Local Storage mode.
       </p>
       <div class="form-group">
@@ -587,11 +587,11 @@
           <input type="password" id="supabase-key-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
         </div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin:1rem 0;">
-        <span style="font-size:0.78rem;color:var(--muted);">Current Status:</span>
-        <strong id="supabase-status-text" style="font-family:var(--font-mono);font-size:0.8rem;">LOCAL_OFFLINE</strong>
+      <div class="supabase-status-row">
+        <span class="text-muted-status">Current Status:</span>
+        <strong id="supabase-status-text" class="font-mono-status">LOCAL_OFFLINE</strong>
       </div>
-      <div style="display:flex;gap:0.75rem;">
+      <div class="flex-gap-075">
         <button type="button" class="btn btn-ghost btn-block" onclick="app.closeSupabaseModal()">Close</button>
         <button type="button" id="btn-test-supabase" class="btn btn-primary btn-block" onclick="app.handleTestSupabase()"><span>TEST & SAVE &rarr;</span></button>
       </div>
