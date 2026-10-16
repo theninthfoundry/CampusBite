@@ -5,11 +5,12 @@
   <title>CampusBite — Smart Canteen & Digital Kitchen Operations</title>
   <meta name="description" content="CampusBite is a quiet, precise, editorial campus food ordering and kitchen management system. Good Food. Zero Waiting.">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=5">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 </head>
 <body>
-  <div id="toast-container" class="toast-container"></div>
+  <!-- FIXED TOAST NOTIFICATION CONTAINER (DEFECT 7 FIX) -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
 
   <!-- EDITORIAL TOP NAVIGATION -->
   <header id="app-header" class="app-header">
@@ -18,7 +19,7 @@
       <nav id="nav-actions" class="nav-actions hidden"></nav>
       <div id="user-controls" class="user-controls hidden">
         <button id="btn-tray-toggle" class="tray-nav-trigger" onclick="app.scrollToTray()" title="View Tray">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
           <span>TRAY</span><span id="nav-tray-count" class="tray-count">0</span>
         </button>
         <button id="btn-toggle-portal" class="portal-switch-btn" onclick="app.togglePortalRole()"><span>STAFF KITCHEN &rarr;</span></button>
@@ -50,7 +51,13 @@
         <div class="login-panel-header"><span class="login-panel-label">CAMPUS IDENTIFICATION</span><h2 class="login-panel-title">Sign in to Canteen</h2></div>
         <form id="login-form" onsubmit="app.handleLogin(event)">
           <div class="form-group"><label for="login-id">Student ID or Email</label><div class="form-input-box"><input type="text" id="login-id" placeholder="demo@campus.edu or 25R11A0501" required autocomplete="username"></div></div>
-          <div class="form-group"><label for="login-pw">Password</label><div class="form-input-box"><input type="password" id="login-pw" placeholder="••••••••" required autocomplete="current-password"></div></div>
+          <div class="form-group">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <label for="login-pw">Password</label>
+              <a href="javascript:void(0)" onclick="app.openForgotPasswordModal()" style="font-size:0.75rem;color:var(--muted);text-decoration:none;">Forgot password?</a>
+            </div>
+            <div class="form-input-box"><input type="password" id="login-pw" placeholder="••••••••" required autocomplete="current-password"></div>
+          </div>
           <div id="login-error" class="login-error hidden"></div>
           <button type="submit" class="btn btn-primary btn-block btn-lg"><span>SIGN IN &rarr;</span></button>
         </form>
@@ -162,7 +169,7 @@
           <div class="tray-empty-editorial"><p>Your tray is empty.</p><small>Select dishes from today's menu to start ordering.</small></div>
         </div>
         <div id="cart-footer" class="tray-slip-footer hidden">
-          <div class="tray-eta-box"><span class="tray-eta-label">ESTIMATED PREPARATION TIME</span><strong id="cart-eta-val" class="tray-eta-val">~12 mins</strong><small id="cart-eta-calc" class="tray-eta-formula">Longest prep + queued orders</small></div>
+          <div class="tray-eta-box"><span class="tray-eta-label">ESTIMATED PREPARATION TIME</span><strong id="cart-eta-val" class="tray-eta-val">~12 mins</strong><small id="cart-eta-calc" class="tray-eta-formula">Portions ready in warmer + cooking batches</small></div>
           <div class="tray-bill-breakdown">
             <div class="tray-bill-row"><span>Subtotal</span><span id="bill-subtotal">₹0</span></div>
             <div class="tray-bill-row"><span>Canteen Tech Fee</span><span>₹0 (Free)</span></div>
@@ -179,13 +186,17 @@
   <main id="view-admin" class="view-screen hidden">
     <div class="admin-layout">
       <div class="admin-header-operational">
-        <div><span class="editorial-eyebrow">CANTEEN OPERATIONS • KITCHEN CONTROL</span><h2 class="editorial-title">KITCHEN DASHBOARD</h2></div>
+        <div>
+          <span class="editorial-eyebrow">CANTEEN OPERATIONS • KITCHEN CONTROL</span>
+          <h2 class="editorial-title">KITCHEN DASHBOARD</h2>
+        </div>
         <div class="admin-live-metrics-bar">
           <span class="metric-ticket-pill">NEW: <strong id="count-new">0</strong></span>
           <span class="metric-ticket-pill">PREPARING: <strong id="count-prep">0</strong></span>
           <span class="metric-ticket-pill">READY: <strong id="count-ready">0</strong></span>
         </div>
         <div class="admin-actions-group">
+          <button class="supabase-status-badge local" onclick="app.openSupabaseModal()" title="View database connection">☁️ LOCAL / SUPABASE</button>
           <button class="btn btn-secondary btn-sm" onclick="app.switchToStudentPortal()"><span>&larr; CUSTOMER MENU</span></button>
           <button class="btn btn-secondary btn-sm" onclick="app.placeTestOrder()"><span>+ TEST ORDER</span></button>
           <button class="btn btn-ghost btn-sm" onclick="app.resetDbPrompt()"><span>RESET DB</span></button>
@@ -194,12 +205,15 @@
 
       <div class="tab-strip tab-strip-admin">
         <button id="admin-tab-live" class="tab-btn active" onclick="app.switchAdminTab('live')"><span class="pulse-dot"></span><span>KANBAN / 01</span></button>
-        <button id="admin-tab-menu" class="tab-btn" onclick="app.switchAdminTab('menu')"><span>MENU EDITOR / 02</span></button>
+        <button id="admin-tab-menu" class="tab-btn" onclick="app.switchAdminTab('menu')"><span>MENU & RECIPES / 02</span></button>
         <button id="admin-tab-inv" class="tab-btn" onclick="app.switchAdminTab('inv')"><span>INVENTORY / 03</span></button>
-        <button id="admin-tab-analytics" class="tab-btn" onclick="app.switchAdminTab('analytics')"><span>PERFORMANCE / 04</span></button>
-        <button id="admin-tab-lastplate" class="tab-btn" onclick="app.switchAdminTab('lastplate')"><span>LAST PLATE / 05</span></button>
+        <button id="admin-tab-prep" class="tab-btn" onclick="app.switchAdminTab('prep')"><span>PREP COACH / 04</span></button>
+        <button id="admin-tab-analytics" class="tab-btn" onclick="app.switchAdminTab('analytics')"><span>PERFORMANCE / 05</span></button>
+        <button id="admin-tab-lastplate" class="tab-btn" onclick="app.switchAdminTab('lastplate')"><span>LAST PLATE / 06</span></button>
+        <button id="admin-tab-feedback" class="tab-btn" onclick="app.switchAdminTab('feedback')"><span>FEEDBACK / 07</span></button>
       </div>
 
+      <!-- TAB 01: KANBAN -->
       <section id="admin-sec-live" class="admin-section">
         <div class="kanban-editorial-grid">
           <div class="kanban-col-wrapper"><div class="kanban-col-head"><h3>NEW ORDERS</h3></div><div id="col-orders-new" class="kanban-cards-container"></div></div>
@@ -208,6 +222,7 @@
         </div>
       </section>
 
+      <!-- TAB 02: MENU & RECIPES -->
       <section id="admin-sec-menu" class="admin-section hidden">
         <div class="admin-menu-layout">
           <div class="editorial-data-card">
@@ -225,25 +240,39 @@
             </form>
           </div>
           <div class="editorial-data-card">
-            <div class="editorial-table-head"><h3>Dish Availability & Stock</h3><span class="table-head-meta">Instant Kitchen Sync</span></div>
+            <div class="editorial-table-head"><h3>Dish Availability, Costs & Multi-Ingredient Recipes</h3><span class="table-head-meta">Instant Kitchen Sync</span></div>
             <div id="admin-food-table"></div>
           </div>
         </div>
       </section>
 
+      <!-- TAB 03: INVENTORY -->
       <section id="admin-sec-inv" class="admin-section hidden">
         <div class="editorial-data-card">
-          <div class="editorial-table-head"><div><h3 class="inventory-title">Raw Ingredient Inventory</h3><p class="inventory-subtitle">Dishes automatically mark sold-out if ingredients drop below minimum threshold</p></div></div>
+          <div class="editorial-table-head">
+            <div>
+              <h3 class="inventory-title">Raw Ingredient Inventory</h3>
+              <p class="inventory-subtitle">Real physical stock balances. Dishes automatically sold-out when below minimum thresholds.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="app.openLedgerModal()"><span>VIEW MOVEMENTS LEDGER &rarr;</span></button>
+          </div>
           <div id="inv-table-body" class="inv-editorial-grid"></div>
         </div>
       </section>
 
+      <!-- TAB 04: PREP COACH -->
+      <section id="admin-sec-prep" class="admin-section hidden">
+        <div id="prep-coach-content"></div>
+      </section>
+
+      <!-- TAB 05: PERFORMANCE & ANALYTICS -->
       <section id="admin-sec-analytics" class="admin-section hidden">
         <div class="analytics-metrics-editorial">
           <div class="editorial-stat-card"><span class="stat-desc">Total Completed Orders</span><span class="stat-num" id="an-total-orders">0</span></div>
           <div class="editorial-stat-card"><span class="stat-desc">Gross Canteen Revenue</span><span class="stat-num" id="an-total-rev">₹0</span></div>
           <div class="editorial-stat-card"><span class="stat-desc">Average Order Value</span><span class="stat-num" id="an-avg-ticket">₹0</span></div>
         </div>
+        <div id="analytics-waste-card" class="profile-stats-grid" style="margin-bottom:2rem;"></div>
         <div class="analytics-charts-split">
           <div class="chart-card-editorial">
             <span class="editorial-eyebrow">POPULAR DISHES</span><h3 class="chart-heading">Top 5 Best-Selling Items</h3>
@@ -258,7 +287,7 @@
         </div>
       </section>
 
-      <!-- SECTION 05: LAST PLATE KITCHEN MANAGEMENT -->
+      <!-- TAB 06: LAST PLATE SURPLUS -->
       <section id="admin-sec-lastplate" class="admin-section hidden">
         <div class="admin-menu-layout">
           <div class="editorial-data-card">
@@ -271,7 +300,7 @@
                 <div class="form-group"><label for="lp-price">Price (₹ / portion)</label><div class="form-input-box"><input type="number" id="lp-price" min="0" step="1" placeholder="80" required></div></div>
               </div>
               <div class="form-grid-2">
-                <div class="form-group"><label for="lp-deadline">Collection Deadline</label><div class="form-input-box"><input type="datetime-local" id="lp-deadline" title="Collection Deadline" placeholder="Select collection deadline" required></div></div>
+                <div class="form-group"><label for="lp-deadline">Collection Deadline</label><div class="form-input-box"><input type="datetime-local" id="lp-deadline" required></div></div>
                 <div class="form-group"><label for="lp-location">Pickup Location</label><div class="form-input-box"><input type="text" id="lp-location" placeholder="Counter 02" required></div></div>
               </div>
               <div class="form-group"><label for="lp-description">Description (Optional)</label><div class="form-input-box"><input type="text" id="lp-description" placeholder="Aromatic basmati, tender chicken — prepared for lunch service"></div></div>
@@ -309,10 +338,16 @@
           <div id="lp-impact-stats" class="profile-stats-grid"></div>
         </div>
       </section>
+
+      <!-- TAB 07: FEEDBACK -->
+      <section id="admin-sec-feedback" class="admin-section hidden">
+        <div id="admin-sec-feedback-content"></div>
+      </section>
     </div>
   </main>
 
   <!-- MODALS -->
+  <!-- ORDER CONFIRMED MODAL -->
   <div id="order-modal" class="modal-overlay hidden">
     <div class="modal-editorial-card">
       <span class="editorial-eyebrow editorial-eyebrow-accent">ORDER ACCEPTED BY KITCHEN</span>
@@ -327,6 +362,7 @@
     </div>
   </div>
 
+  <!-- LAST PLATE RESERVATION MODAL -->
   <div id="lp-reservation-modal" class="modal-overlay hidden">
     <div class="modal-editorial-card">
       <span class="editorial-eyebrow editorial-eyebrow-accent">RESERVATION CONFIRMED • READY FOR PICKUP</span>
@@ -344,6 +380,7 @@
     </div>
   </div>
 
+  <!-- FOOD DETAIL MODAL -->
   <div id="food-detail-modal" class="food-detail-overlay hidden" onclick="if(event.target === this) app.closeFoodDetail()">
     <div class="food-detail-sheet">
       <button class="btn-close-modal" onclick="app.closeFoodDetail()" title="Close">&times;</button>
@@ -371,6 +408,196 @@
     </div>
   </div>
 
+  <!-- STOCK RECONCILIATION MODAL -->
+  <div id="reconciliation-modal" class="modal-overlay hidden" onclick="if(event.target === this) app.closeReconciliationModal()">
+    <div class="modal-editorial-card" style="max-width:440px;">
+      <span class="editorial-eyebrow">AUDIT & INVENTORY CONTROL</span>
+      <h2 style="font-family:var(--font-serif);font-size:1.45rem;margin:0.25rem 0 1rem 0;">Reconcile Physical Stock</h2>
+      <form onsubmit="app.handleReconciliationSubmit(event)">
+        <input type="hidden" id="recon-ing-id">
+        <div class="form-group">
+          <label>Ingredient</label>
+          <div id="recon-ing-name" style="font-weight:700;font-size:1rem;margin-top:0.25rem;">—</div>
+        </div>
+        <div class="form-group">
+          <label>Recorded Database Balance</label>
+          <div id="recon-current-qty" style="font-family:var(--font-mono);color:var(--muted);margin-top:0.25rem;">—</div>
+        </div>
+        <div class="form-group">
+          <label for="recon-actual-qty">Verified Physical Count</label>
+          <div class="form-input-box">
+            <input type="number" id="recon-actual-qty" step="0.1" min="0" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="recon-reason">Audit Reason</label>
+          <div class="form-input-box">
+            <select id="recon-reason" required>
+              <option value="Physical stocktake verification">Physical stocktake verification</option>
+              <option value="Supplier invoice discrepancy">Supplier invoice discrepancy</option>
+              <option value="Spoilage or damaged packaging">Spoilage or damaged packaging</option>
+              <option value="Staff meal deduction">Staff meal deduction</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex;gap:0.75rem;margin-top:1.25rem;">
+          <button type="button" class="btn btn-ghost btn-block" onclick="app.closeReconciliationModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-block"><span>APPLY AUDIT &rarr;</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- STOCK MOVEMENTS LEDGER MODAL -->
+  <div id="ledger-modal" class="modal-overlay hidden" onclick="if(event.target === this) app.closeLedgerModal()">
+    <div class="modal-editorial-card" style="max-width:900px;width:95%;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+        <div>
+          <span class="editorial-eyebrow">IMMUTABLE TRANSACTION JOURNAL</span>
+          <h2 style="font-family:var(--font-serif);font-size:1.5rem;margin:0.25rem 0;">Stock Movements Ledger</h2>
+        </div>
+        <button class="btn btn-ghost btn-xs" onclick="app.closeLedgerModal()">✕ CLOSE</button>
+      </div>
+      <div class="ledger-table-wrap" style="max-height:60vh;overflow-y:auto;">
+        <table class="ledger-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>OPERATION</th>
+              <th>ITEM</th>
+              <th>DELTA</th>
+              <th>BALANCE AFTER</th>
+              <th>REASON</th>
+              <th>ACTOR</th>
+              <th>TIME</th>
+            </tr>
+          </thead>
+          <tbody id="ledger-modal-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECIPE BUILDER MODAL -->
+  <div id="recipe-editor-modal" class="modal-overlay hidden" onclick="if(event.target === this) app.closeRecipeEditor()">
+    <div class="modal-editorial-card" style="max-width:540px;">
+      <span class="editorial-eyebrow">RECIPE SPECIFICATION & COMPOSITION</span>
+      <h2 id="recipe-food-name" style="font-family:var(--font-serif);font-size:1.45rem;margin:0.25rem 0 1rem 0;">Recipe</h2>
+      <input type="hidden" id="recipe-food-id">
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;">Specify raw ingredient quantities deducted per portion prepared.</p>
+      <div id="recipe-ingredients-list" style="max-height:40vh;overflow-y:auto;"></div>
+      <button type="button" class="btn btn-secondary btn-xs" onclick="app.addRecipeRow()" style="margin:0.75rem 0 1.25rem 0;">+ ADD INGREDIENT</button>
+      <div style="display:flex;gap:0.75rem;">
+        <button type="button" class="btn btn-ghost btn-block" onclick="app.closeRecipeEditor()">Cancel</button>
+        <button type="button" class="btn btn-primary btn-block" onclick="app.saveRecipeEditor()"><span>SAVE RECIPE &rarr;</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOMER FEEDBACK MODAL -->
+  <div id="feedback-modal" class="modal-overlay hidden" onclick="if(event.target === this) app.closeFeedbackModal()">
+    <div class="modal-editorial-card" style="max-width:440px;">
+      <span class="editorial-eyebrow">DINING FEEDBACK</span>
+      <h2 style="font-family:var(--font-serif);font-size:1.45rem;margin:0.25rem 0 0.75rem 0;">Rate Your Meal</h2>
+      <form onsubmit="app.submitFeedbackForm(event)">
+        <div style="text-align:center;margin-bottom:1rem;">
+          <span style="font-size:0.82rem;color:var(--muted);">How was the taste, portion, and collection speed?</span>
+          <div id="feedback-stars" class="feedback-star-row" style="justify-content:center;">
+            <button type="button" class="feedback-star-btn active" onclick="app.setFeedbackRating(1)">★</button>
+            <button type="button" class="feedback-star-btn active" onclick="app.setFeedbackRating(2)">★</button>
+            <button type="button" class="feedback-star-btn active" onclick="app.setFeedbackRating(3)">★</button>
+            <button type="button" class="feedback-star-btn active" onclick="app.setFeedbackRating(4)">★</button>
+            <button type="button" class="feedback-star-btn active" onclick="app.setFeedbackRating(5)">★</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="feedback-comment">Comments or Suggestions (Optional)</label>
+          <div class="form-input-box">
+            <textarea id="feedback-comment" rows="3" style="width:100%;border:none;background:transparent;padding:0.5rem;font-family:inherit;font-size:0.85rem;" placeholder="e.g. Biryani was perfectly spiced!"></textarea>
+          </div>
+        </div>
+        <div style="display:flex;gap:0.75rem;margin-top:1rem;">
+          <button type="button" class="btn btn-ghost btn-block" onclick="app.closeFeedbackModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-block"><span>SUBMIT REVIEW &rarr;</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- PASSWORD RECOVERY MODAL -->
+  <div id="forgot-pw-modal" class="modal-overlay hidden" onclick="if(event.target === this) app.closeForgotPasswordModal()">
+    <div class="modal-editorial-card" style="max-width:420px;">
+      <span class="editorial-eyebrow">IDENTITY RECOVERY</span>
+      <h2 style="font-family:var(--font-serif);font-size:1.45rem;margin:0.25rem 0 1rem 0;">Reset Password</h2>
+      
+      <div id="forgot-step-1">
+        <form onsubmit="app.handleForgotPasswordRequest(event)">
+          <div class="form-group">
+            <label for="forgot-id-input">Student ID or Registered Email</label>
+            <div class="form-input-box">
+              <input type="text" id="forgot-id-input" placeholder="demo@campus.edu or 25R11A0501" required>
+            </div>
+          </div>
+          <div style="display:flex;gap:0.75rem;margin-top:1rem;">
+            <button type="button" class="btn btn-ghost btn-block" onclick="app.closeForgotPasswordModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-block"><span>SEND CODE &rarr;</span></button>
+          </div>
+        </form>
+      </div>
+
+      <div id="forgot-step-2" class="hidden">
+        <form onsubmit="app.handleResetPasswordSubmit(event)">
+          <div style="background:var(--bg-surface);border:1px solid var(--line);border-radius:var(--radius-xs);padding:0.75rem;margin-bottom:1rem;text-align:center;">
+            <span style="font-size:0.75rem;color:var(--muted);">Verification Code</span>
+            <div id="forgot-token-display" style="font-family:var(--font-mono);font-size:1.35rem;font-weight:700;letter-spacing:0.1em;color:var(--ink);">123456</div>
+          </div>
+          <input type="hidden" id="forgot-token-input">
+          <div class="form-group">
+            <label for="forgot-new-pw">New Password</label>
+            <div class="form-input-box">
+              <input type="password" id="forgot-new-pw" placeholder="Enter new password" required>
+            </div>
+          </div>
+          <div style="display:flex;gap:0.75rem;margin-top:1rem;">
+            <button type="button" class="btn btn-ghost btn-block" onclick="app.closeForgotPasswordModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-block"><span>UPDATE PASSWORD &rarr;</span></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUPABASE CONNECTION MODAL -->
+  <div id="supabase-modal" class="modal-overlay hidden" onclick="if(event.target === this) app.closeSupabaseModal()">
+    <div class="modal-editorial-card" style="max-width:500px;">
+      <span class="editorial-eyebrow">HOSTED POSTGRESQL CLOUD</span>
+      <h2 style="font-family:var(--font-serif);font-size:1.45rem;margin:0.25rem 0 0.5rem 0;">Supabase Configuration</h2>
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1.25rem;">
+        CampusBite connects to hosted Supabase PostgreSQL using <code>supabase_schema.sql</code>. If unconfigured or offline, it functions seamlessly in Local Storage mode.
+      </p>
+      <div class="form-group">
+        <label for="supabase-url-input">Project URL</label>
+        <div class="form-input-box">
+          <input type="url" id="supabase-url-input" placeholder="https://xyzcompany.supabase.co">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="supabase-key-input">Anon Public API Key</label>
+        <div class="form-input-box">
+          <input type="password" id="supabase-key-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin:1rem 0;">
+        <span style="font-size:0.78rem;color:var(--muted);">Current Status:</span>
+        <strong id="supabase-status-text" style="font-family:var(--font-mono);font-size:0.8rem;">LOCAL_OFFLINE</strong>
+      </div>
+      <div style="display:flex;gap:0.75rem;">
+        <button type="button" class="btn btn-ghost btn-block" onclick="app.closeSupabaseModal()">Close</button>
+        <button type="button" id="btn-test-supabase" class="btn btn-primary btn-block" onclick="app.handleTestSupabase()"><span>TEST & SAVE &rarr;</span></button>
+      </div>
+    </div>
+  </div>
+
   <!-- MOBILE NAV -->
   <nav class="mobile-bottom-nav">
     <button class="mobile-nav-btn active" onclick="app.switchStudentTab('menu')"><span>DISCOVER</span></button>
@@ -379,6 +606,7 @@
     <button class="mobile-nav-btn" onclick="app.scrollToTray()"><span>TRAY</span></button>
   </nav>
 
-  <script src="app.js?v=4"></script>
+  <script src="supabase.js"></script>
+  <script src="app.js?v=5"></script>
 </body>
 </html>
