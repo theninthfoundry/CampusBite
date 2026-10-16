@@ -8,6 +8,7 @@
   const DB_KEY = 'campusbite_db_v4', SESSION_KEY = 'campusbite_session_v2';
   const $ = id => document.getElementById(id);
   const show = (el, v) => el && el.classList.toggle('hidden', !v);
+  const escHtml = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
   const FOOD_IMAGES = {
     1: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80",
@@ -55,7 +56,11 @@
       { id: 13, name: "Ice Cream Scoop", desc: "Velvety Madagascar vanilla bean ice cream scoop in chilled bowl", price: 35, category: "Desserts", prepMin: 1, ingId: null, perServing: 0, available: true, image: FOOD_IMAGES[13] }
     ],
     orders: [],
-    nextOrderId: 101
+    nextOrderId: 101,
+    lastPlateListings: [],
+    lastPlateReservations: [],
+    nextLastPlateId: 1,
+    nextReservationId: 1
   };
 
   class Database {
@@ -84,6 +89,11 @@
       }
       if (!this.data.nextOrderId || isNaN(this.data.nextOrderId)) this.data.nextOrderId = 101;
       this.evaluateInventoryDepletion();
+      if (!Array.isArray(this.data.lastPlateListings)) this.data.lastPlateListings = [];
+      if (!Array.isArray(this.data.lastPlateReservations)) this.data.lastPlateReservations = [];
+      if (!this.data.nextLastPlateId) this.data.nextLastPlateId = 1;
+      if (!this.data.nextReservationId) this.data.nextReservationId = 1;
+      this.refreshListingStates();
     }
     save() { try { localStorage.setItem(DB_KEY, JSON.stringify(this.data)); } catch (e) { console.error("Storage error:", e); } }
     reset() { this.data = JSON.parse(JSON.stringify(DEFAULT_DB)); this.save(); }
@@ -230,6 +240,102 @@
       });
       return { totalOrders: completed.length, totalRev, avgTicket, topDishes: Object.entries(itemCounts).sort((a, b) => b[1] - a[1]).slice(0, 5), hourCounts };
     }
+    /* === LAST PLATE DATA OPERATIONS === */
+    refreshListingStates() {
+      const now = new Date();
+      (this.data.lastPlateListings || []).forEach(l => {
+        if (l.status === 'ACTIVE' && new Date(l.deadline) <= now) l.status = 'EXPIRED';
+      });
+    }
+    getLastPlateListings(includeAll) {
+      this.refreshListingStates();
+      if (includeAll) return this.data.lastPlateListings || [];
+      return (this.data.lastPlateListings || []).filter(l => l.status === 'ACTIVE');
+    }
+    publishLastPlateListing({ dishName, price, portions, deadline, location, description }) {
+      if (!dishName || !portions || !deadline || !location) throw new Error('All required fields must be provided.');
+      const p = parseInt(portions, 10), pr = parseFloat(price);
+      if (!Number.isInteger(p) || p <= 0) throw new Error('Portions must be a positive integer.');
+      if (isNaN(pr) || pr < 0) throw new Error('Price cannot be negative.');
+      const dl = new Date(deadline);
+      if (isNaN(dl.getTime()) || dl <= new Date()) throw new Error('Collection deadline must be a valid future time.');
+      const id = this.data.nextLastPlateId || 1;
+      this.data.nextLastPlateId = id + 1;
+      const listing = { id, dishName: String(dishName).trim(), price: pr, portions: p, portionsRemaining: p, deadline: dl.toISOString(), location: String(location).trim(), description: description ? String(description).trim() : '', status: 'ACTIVE', createdAt: new Date().toISOString(), isDemo: false };
+      this.data.lastPlateListings.push(listing);
+      this.save();
+      return listing;
+    }
+    closeLastPlateListing(id) {
+      const l = (this.data.lastPlateListings || []).find(x => x.id === id);
+      if (l && (l.status === 'ACTIVE' || l.status === 'SOLD_OUT')) { l.status = 'CLOSED'; this.save(); }
+    }
+    reserveLastPlate(listingId, userId, userName, qty) {
+      this.load();
+      this.refreshListingStates();
+      const listing = (this.data.lastPlateListings || []).find(l => l.id === listingId);
+      if (!listing) throw new Error('Listing not found.');
+      if (listing.status !== 'ACTIVE') throw new Error(listing.status === 'SOLD_OUT' ? 'This listing is sold out.' : listing.status === 'EXPIRED' ? 'This listing has expired.' : 'This listing is no longer available.');
+      if (new Date(listing.deadline) <= new Date()) { listing.status = 'EXPIRED'; this.save(); throw new Error('Collection deadline has passed.'); }
+      const q = parseInt(qty, 10);
+      if (!Number.isInteger(q) || q <= 0) throw new Error('Quantity must be a positive integer.');
+      if (q > listing.portionsRemaining) throw new Error(`Only ${listing.portionsRemaining} portion(s) remaining.`);
+      listing.portionsRemaining -= q;
+      if (listing.portionsRemaining === 0) listing.status = 'SOLD_OUT';
+      const resId = this.data.nextReservationId || 1;
+      this.data.nextReservationId = resId + 1;
+      const token = 'LP-' + String(resId).padStart(3, '0') + String.fromCharCode(65 + Math.floor(Math.random() * 26));
+      const reservation = { id: resId, listingId, userId: Number(userId), userName: String(userName), qty: q, token, reservedAt: new Date().toISOString(), collectionStatus: 'PENDING', collectedAt: null };
+      this.data.lastPlateReservations.push(reservation);
+      this.save();
+      return reservation;
+    }
+    markReservationCollected(resId) {
+      const res = (this.data.lastPlateReservations || []).find(r => r.id === resId);
+      if (!res) throw new Error('Reservation not found.');
+      if (res.collectionStatus === 'COLLECTED') return res;
+      res.collectionStatus = 'COLLECTED';
+      res.collectedAt = new Date().toISOString();
+      this.save();
+      return res;
+    }
+    getReservationsForListing(listingId) {
+      return (this.data.lastPlateReservations || []).filter(r => r.listingId === listingId);
+    }
+    getUserReservations(userId) {
+      return (this.data.lastPlateReservations || []).filter(r => r.userId === Number(userId));
+    }
+    getLastPlateImpact() {
+      const listings = this.data.lastPlateListings || [];
+      const reservations = this.data.lastPlateReservations || [];
+      const totalListed = listings.reduce((s, l) => s + l.portions, 0);
+      const totalReserved = reservations.reduce((s, r) => s + r.qty, 0);
+      const totalCollected = reservations.filter(r => r.collectionStatus === 'COLLECTED').reduce((s, r) => s + r.qty, 0);
+      const unclaimed = listings.filter(l => l.status === 'EXPIRED' || l.status === 'CLOSED').reduce((s, l) => s + l.portionsRemaining, 0);
+      return { totalListed, totalReserved, totalCollected, unclaimed, reservedNotCollected: totalReserved - totalCollected, listingCount: listings.length };
+    }
+    loadLastPlateSampleData() {
+      if ((this.data.lastPlateListings || []).some(l => l.isDemo)) return false;
+      const now = new Date();
+      const samples = [
+        { dishName: 'Chicken Biryani', price: 80, portions: 5, location: 'Counter 02', description: 'Prepared for lunch — aromatic basmati with tender chicken', deadline: new Date(now.getTime() + 45 * 60000).toISOString() },
+        { dishName: 'Veg Fried Rice', price: 50, portions: 3, location: 'Counter 01', description: 'Wok-tossed with seasonal vegetables and soy glaze', deadline: new Date(now.getTime() + 30 * 60000).toISOString() },
+        { dishName: 'Paneer Wrap', price: 65, portions: 4, location: 'Counter 02', description: 'Grilled paneer in whole-wheat wrap with mint chutney', deadline: new Date(now.getTime() + 60 * 60000).toISOString() }
+      ];
+      samples.forEach(s => {
+        const id = this.data.nextLastPlateId || 1;
+        this.data.nextLastPlateId = id + 1;
+        this.data.lastPlateListings.push({ id, ...s, portionsRemaining: s.portions, status: 'ACTIVE', createdAt: now.toISOString(), isDemo: true });
+      });
+      this.save();
+      return true;
+    }
+    clearLastPlateSampleData() {
+      const demoIds = (this.data.lastPlateListings || []).filter(l => l.isDemo).map(l => l.id);
+      this.data.lastPlateListings = (this.data.lastPlateListings || []).filter(l => !l.isDemo);
+      this.data.lastPlateReservations = (this.data.lastPlateReservations || []).filter(r => !demoIds.includes(r.listingId));
+      this.save();
+    }
   }
 
   class CampusBiteApp {
@@ -243,6 +349,8 @@
       this.selectedDetailFood = null;
       this.detailQty = 1;
       this.pollTimer = null;
+      this.lpQty = {};
+      this._reserving = false;
       this.init();
     }
     init() {
@@ -359,7 +467,7 @@
       `;
     }
     renderAdminNavigation() {
-      $('nav-actions').innerHTML = ['live|KANBAN / 01', 'menu|MENU / 02', 'inv|INVENTORY / 03', 'analytics|PERFORMANCE / 04'].map(p => {
+      $('nav-actions').innerHTML = ['live|KANBAN / 01', 'menu|MENU / 02', 'inv|INVENTORY / 03', 'analytics|PERFORMANCE / 04', 'lastplate|LAST PLATE / 05'].map(p => {
         const [tab, lbl] = p.split('|');
         return `<button class="nav-link ${this.activeAdminTab === tab ? 'active' : ''}" onclick="app.switchAdminTab('${tab}')"><span>${lbl}</span></button>`;
       }).join('');
@@ -372,10 +480,11 @@
         else if (this.activeAdminTab === 'menu') this.renderAdminMenu();
         else if (this.activeAdminTab === 'inv') this.renderInventory();
         else if (this.activeAdminTab === 'analytics') this.renderAnalytics();
+        else if (this.activeAdminTab === 'lastplate') this.renderLastPlateAdmin();
       } else {
-        this.renderStudentNavigation(); this.renderMenuGrid(); this.renderRecommendations(); this.renderCart();
+        this.renderStudentNavigation(); this.renderMenuGrid(); this.renderRecommendations(); this.renderLastPlateStudent(); this.renderCart();
         this.updateKitchenQueueIndicator(); this.updateActiveOrdersBadge();
-        if (this.activeStudentTab === 'orders') this.renderStudentOrders();
+        if (this.activeStudentTab === 'orders') { this.renderStudentOrders(); this.renderStudentLPReservations(); }
         else if (this.activeStudentTab === 'profile') this.renderStudentProfile();
       }
     }
@@ -398,9 +507,9 @@
       if (el) el.innerText = cnt > 0 ? `Kitchen active · ${cnt} orders queued` : `Kitchen ready · Immediate pickup`;
     }
     renderStudentPortal() {
-      this.renderMenuGrid(); this.renderRecommendations(); this.renderCart();
+      this.renderMenuGrid(); this.renderRecommendations(); this.renderLastPlateStudent(); this.renderCart();
       this.updateKitchenQueueIndicator(); this.updateActiveOrdersBadge();
-      this.renderStudentOrders(); this.renderStudentProfile();
+      this.renderStudentOrders(); this.renderStudentLPReservations(); this.renderStudentProfile();
     }
     setCategory(cat, el) {
       this.currentCategory = cat;
@@ -639,13 +748,13 @@
     }
     switchAdminTab(tab) {
       this.activeAdminTab = tab;
-      ['live', 'menu', 'inv', 'analytics'].forEach(t => {
+      ['live', 'menu', 'inv', 'analytics', 'lastplate'].forEach(t => {
         $(`admin-tab-${t}`)?.classList.toggle('active', t === tab);
         show($(`admin-sec-${t}`), t === tab);
       });
       this.renderAdminNavigation(); this.refreshCurrentView();
     }
-    renderAdminPortal() { this.renderKanbanBoard(); this.renderAdminMenu(); this.renderInventory(); this.renderAnalytics(); }
+    renderAdminPortal() { this.renderKanbanBoard(); this.renderAdminMenu(); this.renderInventory(); this.renderAnalytics(); this.renderLastPlateAdmin(); }
     renderKanbanBoard() {
       const orders = this.db.getOrders();
       const [cn, cp, cr] = [$('col-orders-new'), $('col-orders-prep'), $('col-orders-ready')];
@@ -706,9 +815,181 @@
       catch (err) { this.showToast(err.message); }
     }
     resetDbPrompt() {
-      if (confirm('Reset database back to factory demo state? All test orders will be cleared.')) {
+      if (confirm('Reset database back to factory demo state? All orders and Last Plate data will be cleared.')) {
         this.db.reset(); this.cart = []; this.render(); this.showToast('Database reset to defaults');
       }
+    }
+    /* === LAST PLATE: STUDENT EXPERIENCE === */
+    renderLastPlateStudent() {
+      const grid = $('last-plate-grid');
+      const section = $('last-plate-student');
+      if (!grid || !section) return;
+      this.db.refreshListingStates();
+      const allListings = this.db.data.lastPlateListings || [];
+      const visible = allListings.filter(l => l.status === 'ACTIVE' || l.status === 'SOLD_OUT');
+      if (!visible.length) { show(section, false); return; }
+      show(section, true);
+      const now = new Date();
+      grid.innerHTML = visible.map(l => {
+        const deadline = new Date(l.deadline);
+        const minsLeft = Math.max(0, Math.floor((deadline - now) / 60000));
+        const timeStr = deadline.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const isActive = l.status === 'ACTIVE';
+        const curQty = this.lpQty[l.id] || 1;
+        return `<div class="lp-listing-card ${isActive ? '' : 'lp-listing-inactive'}">
+          <div class="lp-card-header">
+            <h4 class="lp-card-name">${escHtml(l.dishName)}</h4>
+            <span class="lp-status-badge lp-status-${l.status.toLowerCase()}">${l.status.replace('_', ' ')}</span>
+          </div>
+          ${l.description ? `<p class="lp-card-desc">${escHtml(l.description)}</p>` : ''}
+          <div class="lp-card-details">
+            <div class="lp-card-detail"><span class="lp-detail-label">PRICE</span><strong>₹${l.price}/portion</strong></div>
+            <div class="lp-card-detail"><span class="lp-detail-label">AVAILABLE</span><strong>${l.portionsRemaining} of ${l.portions}</strong></div>
+            <div class="lp-card-detail"><span class="lp-detail-label">COLLECT BY</span><strong>${timeStr}</strong></div>
+            <div class="lp-card-detail"><span class="lp-detail-label">PICKUP</span><strong>${escHtml(l.location)}</strong></div>
+          </div>
+          ${isActive ? `<div class="lp-card-footer">
+            <div class="lp-card-ready-badge">✓ READY FOR PICKUP${minsLeft > 0 ? ` · ${minsLeft} min left` : ''}</div>
+            <div class="lp-card-actions">
+              <div class="tray-stepper"><button class="btn-step" onclick="event.stopPropagation(); app.changeLpQty(${l.id}, -1)">−</button><span id="lp-qty-${l.id}" class="tray-stepper-val">${curQty}</span><button class="btn-step" onclick="event.stopPropagation(); app.changeLpQty(${l.id}, 1)">+</button></div>
+              <button class="btn btn-primary btn-sm" onclick="app.handleReserveLastPlate(${l.id})"><span>RESERVE →</span></button>
+            </div>
+          </div>` : `<div class="lp-card-closed-notice">${l.status === 'SOLD_OUT' ? 'All portions have been reserved' : 'Collection window has closed'}</div>`}
+        </div>`;
+      }).join('');
+    }
+    changeLpQty(listingId, delta) {
+      const listing = (this.db.data.lastPlateListings || []).find(l => l.id === listingId);
+      if (!listing || listing.status !== 'ACTIVE') return;
+      const current = this.lpQty[listingId] || 1;
+      this.lpQty[listingId] = Math.max(1, Math.min(listing.portionsRemaining, current + delta));
+      const el = $(`lp-qty-${listingId}`);
+      if (el) el.innerText = this.lpQty[listingId];
+    }
+    handleReserveLastPlate(listingId) {
+      if (this._reserving) return;
+      this._reserving = true;
+      try {
+        const qty = this.lpQty[listingId] || 1;
+        const u = this.currentUser || { id: 2, name: 'Sreeshanth' };
+        const reservation = this.db.reserveLastPlate(listingId, u.id, u.name, qty);
+        const listing = (this.db.data.lastPlateListings || []).find(l => l.id === listingId);
+        this.lpQty[listingId] = 1;
+        this.renderLastPlateStudent();
+        this.showLastPlateModal(reservation, listing);
+        this.showToast(`Reserved ${qty} portion(s) — Token: ${reservation.token}`);
+      } catch (err) {
+        this.showToast(err.message);
+      } finally {
+        setTimeout(() => { this._reserving = false; }, 500);
+      }
+    }
+    showLastPlateModal(res, listing) {
+      $('lp-modal-token').innerText = res.token;
+      $('lp-modal-dish').innerText = listing ? listing.dishName : 'Last Plate';
+      $('lp-modal-qty').innerText = `${res.qty} portion(s)`;
+      $('lp-modal-total').innerText = listing ? `₹${listing.price * res.qty}` : '—';
+      $('lp-modal-location').innerText = listing ? listing.location : '—';
+      $('lp-modal-deadline').innerText = listing ? new Date(listing.deadline).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—';
+      show($('lp-reservation-modal'), true);
+    }
+    dismissLastPlateModal() {
+      show($('lp-reservation-modal'), false);
+      this.switchStudentTab('orders');
+    }
+    renderStudentLPReservations() {
+      const cont = $('lp-student-reservations');
+      if (!cont) return;
+      const u = this.currentUser || { id: 2 };
+      const lpRes = this.db.getUserReservations(u.id);
+      if (!lpRes.length) { cont.innerHTML = ''; return; }
+      cont.innerHTML = `<div style="margin-top: 2.5rem;"><span class="editorial-eyebrow" style="margin-bottom: 1rem;">LAST PLATE RESERVATIONS (${lpRes.length})</span><div style="display: flex; flex-direction: column; gap: 0.85rem;">${lpRes.map(r => {
+        const listing = (this.db.data.lastPlateListings || []).find(l => l.id === r.listingId);
+        const dlStr = listing ? new Date(listing.deadline).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—';
+        return `<div class="history-item-row"><div><div style="display: flex; align-items: center; gap: 0.75rem;"><strong style="font-family: var(--font-mono); font-size: 0.95rem;">${escHtml(r.token)}</strong><span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);">${new Date(r.reservedAt).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span><span class="lp-status-badge lp-status-${r.collectionStatus.toLowerCase()}">${r.collectionStatus}</span></div><small style="color: var(--muted); display: block; margin-top: 0.25rem;">${listing ? escHtml(listing.dishName) : 'Unknown'} × ${r.qty} · Collect by ${dlStr}${listing ? ' · ' + escHtml(listing.location) : ''}</small></div><div style="display: flex; align-items: center; gap: 1.25rem;"><strong style="font-family: var(--font-mono); font-size: 1.05rem;">${listing ? '₹' + (listing.price * r.qty) : '—'}</strong></div></div>`;
+      }).join('')}</div></div>`;
+    }
+    /* === LAST PLATE: KITCHEN MANAGEMENT === */
+    renderLastPlateAdmin() {
+      const listingsEl = $('lp-admin-listings');
+      const resEl = $('lp-admin-reservations');
+      const impactEl = $('lp-impact-stats');
+      const resCountEl = $('lp-res-count');
+      if (!listingsEl) return;
+      this.db.refreshListingStates();
+      const listings = this.db.data.lastPlateListings || [];
+      const reservations = this.db.data.lastPlateReservations || [];
+      if (!listings.length) {
+        listingsEl.innerHTML = '<div style="padding: 2rem 1rem; text-align: center; color: var(--muted);"><p style="font-size: 0.92rem;">No listings yet. Publish your first Last Plate listing.</p></div>';
+      } else {
+        listingsEl.innerHTML = listings.map(l => {
+          const res = reservations.filter(r => r.listingId === l.id);
+          const collected = res.filter(r => r.collectionStatus === 'COLLECTED').reduce((s, r) => s + r.qty, 0);
+          const pending = res.filter(r => r.collectionStatus === 'PENDING').reduce((s, r) => s + r.qty, 0);
+          const dlStr = new Date(l.deadline).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          return `<div class="food-editor-row"><div><strong style="font-size: 0.92rem;">${escHtml(l.dishName)}${l.isDemo ? ' <span class="lp-demo-tag">SAMPLE</span>' : ''}</strong><div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem;">₹${l.price} · ${l.portionsRemaining}/${l.portions} left · By ${dlStr} · ${escHtml(l.location)}</div><div style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); margin-top: 0.1rem;">Reserved: ${pending + collected} · Collected: ${collected} · Pending pickup: ${pending}</div></div><div style="display: flex; align-items: center; gap: 0.5rem;"><span class="lp-status-badge lp-status-${l.status.toLowerCase()}">${l.status.replace('_', ' ')}</span>${l.status === 'ACTIVE' || l.status === 'SOLD_OUT' ? `<button class="btn btn-ghost btn-xs" onclick="app.handleCloseLastPlateListing(${l.id})">CLOSE</button>` : ''}</div></div>`;
+        }).join('');
+      }
+      if (resCountEl) resCountEl.innerText = `${reservations.length} Reservations`;
+      if (resEl) {
+        if (!reservations.length) {
+          resEl.innerHTML = '<div style="padding: 2rem 1rem; text-align: center; color: var(--muted);"><p style="font-size: 0.92rem;">No reservations yet.</p></div>';
+        } else {
+          resEl.innerHTML = reservations.map(r => {
+            const listing = listings.find(l => l.id === r.listingId);
+            return `<div class="food-editor-row"><div><div style="display: flex; align-items: center; gap: 0.75rem;"><strong style="font-family: var(--font-mono); font-size: 0.88rem;">${escHtml(r.token)}</strong><span style="font-size: 0.82rem;">${escHtml(r.userName)}</span><span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);">${new Date(r.reservedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span></div><small style="color: var(--muted); display: block; margin-top: 0.15rem;">${listing ? escHtml(listing.dishName) : 'Unknown'} × ${r.qty} portion(s)</small></div><div style="display: flex; align-items: center; gap: 0.5rem;"><span class="lp-status-badge lp-status-${r.collectionStatus.toLowerCase()}">${r.collectionStatus}</span>${r.collectionStatus === 'PENDING' ? `<button class="btn btn-primary btn-xs" onclick="app.handleMarkCollected(${r.id})"><span>COLLECTED ✓</span></button>` : ''}</div></div>`;
+          }).join('');
+        }
+      }
+      if (impactEl) {
+        const impact = this.db.getLastPlateImpact();
+        impactEl.innerHTML = `<div class="editorial-stat-card"><span class="stat-desc">Portions Listed</span><span class="stat-num">${impact.totalListed}</span></div><div class="editorial-stat-card"><span class="stat-desc">Portions Reserved</span><span class="stat-num">${impact.totalReserved}</span></div><div class="editorial-stat-card"><span class="stat-desc">Portions Collected through Last Plate</span><span class="stat-num">${impact.totalCollected}</span></div><div class="editorial-stat-card"><span class="stat-desc">Unclaimed after Closure / Expiry</span><span class="stat-num">${impact.unclaimed}</span></div><div class="editorial-stat-card"><span class="stat-desc">Reserved, Not Yet Collected</span><span class="stat-num">${impact.reservedNotCollected}</span></div>`;
+      }
+    }
+    handlePublishLastPlate(e) {
+      e.preventDefault();
+      try {
+        const listing = this.db.publishLastPlateListing({
+          dishName: $('lp-dish-name').value,
+          portions: $('lp-portions').value,
+          price: $('lp-price').value,
+          deadline: $('lp-deadline').value,
+          location: $('lp-location').value,
+          description: $('lp-description').value
+        });
+        e.target.reset();
+        this.renderLastPlateAdmin();
+        this.showToast(`Published: ${listing.dishName} (${listing.portions} portions)`);
+      } catch (err) { this.showToast(err.message); }
+    }
+    handleCloseLastPlateListing(id) {
+      if (confirm('Close this listing? No new reservations will be accepted.')) {
+        this.db.closeLastPlateListing(id);
+        this.renderLastPlateAdmin();
+        this.showToast('Listing closed');
+      }
+    }
+    handleMarkCollected(resId) {
+      try {
+        const res = this.db.markReservationCollected(resId);
+        this.renderLastPlateAdmin();
+        this.showToast(`Reservation ${res.token} marked as collected`);
+      } catch (err) { this.showToast(err.message); }
+    }
+    loadLastPlateSampleData() {
+      if (this.db.loadLastPlateSampleData()) {
+        this.renderLastPlateAdmin();
+        this.renderLastPlateStudent();
+        this.showToast('Sample Last Plate listings loaded');
+      } else {
+        this.showToast('Sample data already loaded');
+      }
+    }
+    clearLastPlateSampleData() {
+      this.db.clearLastPlateSampleData();
+      this.renderLastPlateAdmin();
+      this.renderLastPlateStudent();
+      this.showToast('Sample Last Plate data cleared');
     }
   }
 

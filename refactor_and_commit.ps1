@@ -21,9 +21,7 @@ if ($LASTEXITCODE -ne 0 -or $isGit -ne "true") {
 }
 
 # Ensure git author is configured
-$gitName = git config user.name
-$gitEmail = git config user.email
-if (-not $gitName -or -not $gitEmail) {
+if (-not (git config user.name) -or -not (git config user.email)) {
     git config user.name "CampusBite Developer"
     git config user.email "dev@campusbite.edu"
     Write-Host "[i] Configured default git author credentials." -ForegroundColor Gray
@@ -42,8 +40,7 @@ $initTotal     = $initHtmlLines + $initCssLines + $initJsLines
 Write-Host ("[i] Baseline Line Count: index.html ({0}) + styles.css ({1}) + app.js ({2}) = {3} lines" -f $initHtmlLines, $initCssLines, $initJsLines, $initTotal) -ForegroundColor DarkYellow
 Write-Host ""
 
-[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseApprovedVerbs", "")]
-function Commit-Step {
+function Invoke-CommitStep {
     param(
         [int]$Step,
         [int]$TotalSteps,
@@ -73,6 +70,7 @@ function Commit-Step {
         Write-Host "SYNCED" -ForegroundColor Cyan
     }
 }
+Set-Alias -Name Commit-Step -Value Invoke-CommitStep
 
 # Total commits: 50
 $TOTAL = 50

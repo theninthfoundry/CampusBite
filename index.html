@@ -100,6 +100,17 @@
             <p class="rec-subtext">Students frequently pair these together during peak lunch hours</p>
             <div id="rec-cards" class="rec-items-grid"></div>
           </div>
+          <!-- LAST PLATE: SURPLUS READY NOW -->
+          <div id="last-plate-student" class="last-plate-section hidden">
+            <div class="last-plate-header">
+              <div>
+                <span class="editorial-eyebrow editorial-eyebrow-accent">LAST PLATE • SURPLUS READY NOW</span>
+                <h3 class="editorial-title" style="font-size: 1.35rem; margin: 0.2rem 0 0.35rem 0;">GOOD FOOD. A LITTLE LESS WASTE.</h3>
+                <p class="last-plate-subtext">Prepared surplus portions ready for immediate counter pickup at discounted student pricing before collection closes.</p>
+              </div>
+            </div>
+            <div id="last-plate-grid" class="last-plate-grid"></div>
+          </div>
           <div id="food-grid" class="food-grid-editorial"></div>
         </section>
 
@@ -110,6 +121,7 @@
             <div class="kitchen-live-status"><span class="pulse-dot"></span><span>Syncing with kitchen queue live</span></div>
           </div>
           <div id="orders-list" class="orders-editorial-container"></div>
+          <div id="lp-student-reservations"></div>
         </section>
 
         <!-- SECTION 03: PROFILE & STATS -->
@@ -185,6 +197,7 @@
         <button id="admin-tab-menu" class="tab-btn" onclick="app.switchAdminTab('menu')"><span>MENU EDITOR / 02</span></button>
         <button id="admin-tab-inv" class="tab-btn" onclick="app.switchAdminTab('inv')"><span>INVENTORY / 03</span></button>
         <button id="admin-tab-analytics" class="tab-btn" onclick="app.switchAdminTab('analytics')"><span>PERFORMANCE / 04</span></button>
+        <button id="admin-tab-lastplate" class="tab-btn" onclick="app.switchAdminTab('lastplate')"><span>LAST PLATE / 05</span></button>
       </div>
 
       <section id="admin-sec-live" class="admin-section">
@@ -244,6 +257,58 @@
           </div>
         </div>
       </section>
+
+      <!-- SECTION 05: LAST PLATE KITCHEN MANAGEMENT -->
+      <section id="admin-sec-lastplate" class="admin-section hidden">
+        <div class="admin-menu-layout">
+          <div class="editorial-data-card">
+            <h3 class="card-section-title">Publish Last Plate Listing</h3>
+            <p class="card-section-desc">Offer prepared surplus portions before the collection window closes</p>
+            <form onsubmit="app.handlePublishLastPlate(event)">
+              <div class="form-group"><label>Dish Name</label><div class="form-input-box"><input type="text" id="lp-dish-name" placeholder="e.g. Chicken Biryani" required></div></div>
+              <div class="form-grid-2">
+                <div class="form-group"><label>Prepared Portions</label><div class="form-input-box"><input type="number" id="lp-portions" min="1" step="1" placeholder="5" required></div></div>
+                <div class="form-group"><label>Price (₹ / portion)</label><div class="form-input-box"><input type="number" id="lp-price" min="0" step="1" placeholder="80" required></div></div>
+              </div>
+              <div class="form-grid-2">
+                <div class="form-group"><label>Collection Deadline</label><div class="form-input-box"><input type="datetime-local" id="lp-deadline" required></div></div>
+                <div class="form-group"><label>Pickup Location</label><div class="form-input-box"><input type="text" id="lp-location" placeholder="Counter 02" required></div></div>
+              </div>
+              <div class="form-group"><label>Description (Optional)</label><div class="form-input-box"><input type="text" id="lp-description" placeholder="Aromatic basmati, tender chicken — prepared for lunch service"></div></div>
+              <button type="submit" class="btn btn-primary btn-block btn-md"><span>+ PUBLISH SURPLUS PORTIONS</span></button>
+            </form>
+          </div>
+
+          <div class="editorial-data-card">
+            <div class="editorial-table-head">
+              <div>
+                <h3>Active & Closed Listings</h3>
+                <span class="table-head-meta">Staff Kitchen Control</span>
+              </div>
+              <div class="lp-demo-actions">
+                <button type="button" class="btn btn-secondary btn-xs" onclick="app.loadLastPlateSampleData()"><span>+ SAMPLE LISTINGS</span></button>
+                <button type="button" class="btn btn-ghost btn-xs" onclick="app.clearLastPlateSampleData()"><span>CLEAR SAMPLES</span></button>
+              </div>
+            </div>
+            <div id="lp-admin-listings"></div>
+          </div>
+        </div>
+
+        <div class="editorial-data-card" style="margin-top: 1.75rem;">
+          <div class="editorial-table-head">
+            <h3>Student Reservations & Collections</h3>
+            <span id="lp-res-count" class="table-head-meta">0 Reservations</span>
+          </div>
+          <div id="lp-admin-reservations"></div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <span class="editorial-eyebrow">MEASURED OUTCOMES</span>
+          <h3 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 0.25rem 0 0.4rem 0;">Last Plate Kitchen Impact</h3>
+          <p style="color: var(--muted); font-size: 0.82rem; margin-bottom: 1.25rem;">Calculated directly from real listing and reservation records. Reflects portions collected through Last Plate.</p>
+          <div id="lp-impact-stats" class="profile-stats-grid"></div>
+        </div>
+      </section>
     </div>
   </main>
 
@@ -259,6 +324,23 @@
         <div class="modal-detail-row"><span>TOTAL PAYABLE</span><strong id="modal-total-val">₹120</strong></div>
       </div>
       <button class="btn btn-primary btn-block btn-lg" onclick="app.dismissOrderModal()"><span>TRACK ORDER &rarr;</span></button>
+    </div>
+  </div>
+
+  <div id="lp-reservation-modal" class="modal-overlay hidden">
+    <div class="modal-editorial-card">
+      <span class="editorial-eyebrow editorial-eyebrow-accent">RESERVATION CONFIRMED • READY FOR PICKUP</span>
+      <h2 class="modal-confirmed-title">PORTION RESERVED.</h2>
+      <div id="lp-modal-token" class="modal-token-num">LP-001</div>
+      <div class="modal-details-grid">
+        <div class="modal-detail-row"><span>DISH</span><strong id="lp-modal-dish">—</strong></div>
+        <div class="modal-detail-row"><span>QUANTITY</span><strong id="lp-modal-qty">—</strong></div>
+        <div class="modal-detail-row"><span>TOTAL PAYABLE</span><strong id="lp-modal-total">—</strong></div>
+        <div class="modal-detail-row"><span>PICKUP LOCATION</span><strong id="lp-modal-location">—</strong></div>
+        <div class="modal-detail-row"><span>COLLECT BY</span><strong id="lp-modal-deadline">—</strong></div>
+      </div>
+      <p style="font-size: 0.78rem; color: var(--muted); margin: 1rem 0; text-align: center;">Show this token to canteen staff at the counter to collect your portion. Pay on collection.</p>
+      <button class="btn btn-primary btn-block btn-lg" onclick="app.dismissLastPlateModal()"><span>VIEW RESERVATIONS &rarr;</span></button>
     </div>
   </div>
 
