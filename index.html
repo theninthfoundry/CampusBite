@@ -15,20 +15,28 @@
   <!-- EDITORIAL TOP NAVIGATION -->
   <header id="app-header" class="app-header">
     <div class="header-container">
-      <div class="brand" onclick="app.navigateHome()"><span class="brand-title">CAMPUSBITE</span><span class="brand-tag">SMART CANTEEN / 2026</span></div>
+      <div class="brand" onclick="app.navigateHome()"><span class="brand-title">CAMPUSBITE</span></div>
+      
+      <!-- MULTILINGUAL SELECTOR (EN / తెలుగు / हिंदी) -->
+      <div class="lang-selector-group" id="lang-selector-group" aria-label="Language selection">
+        <button type="button" class="lang-btn active" data-lang="en" onclick="app.setLanguage('en')">EN</button>
+        <button type="button" class="lang-btn" data-lang="te" onclick="app.setLanguage('te')">తెలుగు</button>
+        <button type="button" class="lang-btn" data-lang="hi" onclick="app.setLanguage('hi')">हिंदी</button>
+      </div>
+
       <nav id="nav-actions" class="nav-actions hidden"></nav>
       <div id="user-controls" class="user-controls hidden">
         <button id="btn-tray-toggle" class="tray-nav-trigger" onclick="app.scrollToTray()" title="View Tray">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-          <span>TRAY</span><span id="nav-tray-count" class="tray-count">0</span>
+          <span id="lbl-tray">TRAY</span><span id="nav-tray-count" class="tray-count">0</span>
         </button>
-        <button id="btn-toggle-portal" class="portal-switch-btn" onclick="app.togglePortalRole()"><span>STAFF KITCHEN &rarr;</span></button>
+        <button id="btn-toggle-portal" class="portal-switch-btn" onclick="app.togglePortalRole()"><span id="lbl-portal-switch">STAFF KITCHEN &rarr;</span></button>
         <div class="user-identity">
           <span id="user-avatar" class="user-avatar">S</span>
           <span id="user-display-name" class="user-name">Sreeshanth</span>
           <span id="user-display-role" class="user-role-badge student">STUDENT</span>
         </div>
-        <button class="btn-signout" onclick="app.logout()" title="Sign Out"><span>EXIT</span></button>
+        <button class="btn-signout" onclick="app.logout()" title="Sign Out"><span id="lbl-exit">EXIT</span></button>
       </div>
     </div>
   </header>
@@ -75,11 +83,11 @@
   <main id="view-student" class="view-screen hidden">
     <div class="student-layout">
       <div class="student-main-content">
-        <div class="tab-strip">
-          <button id="tab-btn-menu" class="tab-btn active" onclick="app.switchStudentTab('menu')"><span>DISCOVER / 01</span></button>
-          <button id="tab-btn-orders" class="tab-btn" onclick="app.switchStudentTab('orders')"><span>LIVE ORDERS / 02</span><span id="badge-active-orders" class="nav-count-pill hidden">0</span></button>
-          <button id="tab-btn-profile" class="tab-btn" onclick="app.switchStudentTab('profile')"><span>PROFILE & STATS / 03</span></button>
-          <button id="tab-btn-dashboard" class="tab-btn tab-btn-highlight" onclick="app.switchToAdminDashboard()" title="Open live Kitchen Kanban"><span class="pulse-dot"></span><span>KITCHEN DASHBOARD / 04</span></button>
+        <div class="tab-strip" id="student-tab-strip">
+          <button id="tab-btn-menu" class="tab-btn active" onclick="app.switchStudentTab('menu')"><span id="lbl-tab-student-menu">DISCOVER / 01</span></button>
+          <button id="tab-btn-orders" class="tab-btn" onclick="app.switchStudentTab('orders')"><span id="lbl-tab-student-orders">LIVE ORDERS / 02</span><span id="badge-active-orders" class="nav-count-pill hidden">0</span></button>
+          <button id="tab-btn-profile" class="tab-btn" onclick="app.switchStudentTab('profile')"><span id="lbl-tab-student-profile">PROFILE & STATS / 03</span></button>
+          <button id="tab-btn-dashboard" class="tab-btn tab-btn-highlight" onclick="app.switchToAdminDashboard()" title="Open live Kitchen Kanban"><span class="pulse-dot"></span><span id="lbl-tab-student-dash">KITCHEN DASHBOARD / 04</span></button>
         </div>
 
         <!-- SECTION 01: DISCOVER MENU -->
@@ -187,38 +195,38 @@
     <div class="admin-layout">
       <div class="admin-header-operational">
         <div>
-          <span class="editorial-eyebrow">CANTEEN OPERATIONS • KITCHEN CONTROL</span>
-          <h2 class="editorial-title">KITCHEN DASHBOARD</h2>
+          <span class="editorial-eyebrow" id="admin-eyebrow-text">CANTEEN OPERATIONS • KITCHEN CONTROL</span>
+          <h2 class="editorial-title" id="admin-title-text">KITCHEN DASHBOARD</h2>
         </div>
         <div class="admin-live-metrics-bar">
-          <span class="metric-ticket-pill">NEW: <strong id="count-new">0</strong></span>
-          <span class="metric-ticket-pill">PREPARING: <strong id="count-prep">0</strong></span>
-          <span class="metric-ticket-pill">READY: <strong id="count-ready">0</strong></span>
+          <span class="metric-ticket-pill"><span id="lbl-metric-new">NEW:</span> <strong id="count-new">0</strong></span>
+          <span class="metric-ticket-pill"><span id="lbl-metric-prep">PREPARING:</span> <strong id="count-prep">0</strong></span>
+          <span class="metric-ticket-pill"><span id="lbl-metric-ready">READY:</span> <strong id="count-ready">0</strong></span>
         </div>
         <div class="admin-actions-group">
           <button class="supabase-status-badge local" onclick="app.openSupabaseModal()" title="View database connection">☁️ LOCAL / SUPABASE</button>
-          <button class="btn btn-secondary btn-sm" onclick="app.switchToStudentPortal()"><span>&larr; CUSTOMER MENU</span></button>
-          <button class="btn btn-secondary btn-sm" onclick="app.placeTestOrder()"><span>+ TEST ORDER</span></button>
-          <button class="btn btn-ghost btn-sm" onclick="app.resetDbPrompt()"><span>RESET DB</span></button>
+          <button class="btn btn-secondary btn-sm" onclick="app.switchToStudentPortal()"><span id="lbl-admin-customer-menu">&larr; CUSTOMER MENU</span></button>
+          <button class="btn btn-secondary btn-sm" onclick="app.placeTestOrder()"><span id="lbl-admin-test-order">+ TEST ORDER</span></button>
+          <button class="btn btn-ghost btn-sm" onclick="app.resetDbPrompt()"><span id="lbl-admin-reset-db">RESET DB</span></button>
         </div>
       </div>
 
-      <div class="tab-strip tab-strip-admin">
-        <button id="admin-tab-live" class="tab-btn active" onclick="app.switchAdminTab('live')"><span class="pulse-dot"></span><span>KANBAN / 01</span></button>
-        <button id="admin-tab-menu" class="tab-btn" onclick="app.switchAdminTab('menu')"><span>MENU & RECIPES / 02</span></button>
-        <button id="admin-tab-inv" class="tab-btn" onclick="app.switchAdminTab('inv')"><span>INVENTORY / 03</span></button>
-        <button id="admin-tab-prep" class="tab-btn" onclick="app.switchAdminTab('prep')"><span>PREP COACH / 04</span></button>
-        <button id="admin-tab-analytics" class="tab-btn" onclick="app.switchAdminTab('analytics')"><span>PERFORMANCE / 05</span></button>
-        <button id="admin-tab-lastplate" class="tab-btn" onclick="app.switchAdminTab('lastplate')"><span>LAST PLATE / 06</span></button>
-        <button id="admin-tab-feedback" class="tab-btn" onclick="app.switchAdminTab('feedback')"><span>FEEDBACK / 07</span></button>
+      <div class="tab-strip tab-strip-admin" id="admin-tab-strip">
+        <button id="admin-tab-live" class="tab-btn active" onclick="app.switchAdminTab('live')"><span id="admin-live-pulse" class="pulse-dot"></span><span id="lbl-tab-admin-live">KANBAN / 01</span></button>
+        <button id="admin-tab-menu" class="tab-btn" onclick="app.switchAdminTab('menu')"><span id="lbl-tab-admin-menu">MENU & RECIPES / 02</span></button>
+        <button id="admin-tab-inv" class="tab-btn" onclick="app.switchAdminTab('inv')"><span id="lbl-tab-admin-inv">INVENTORY / 03</span></button>
+        <button id="admin-tab-prep" class="tab-btn" onclick="app.switchAdminTab('prep')"><span id="lbl-tab-admin-prep">PREP COACH / 04</span></button>
+        <button id="admin-tab-analytics" class="tab-btn" onclick="app.switchAdminTab('analytics')"><span id="lbl-tab-admin-analytics">PERFORMANCE / 05</span></button>
+        <button id="admin-tab-lastplate" class="tab-btn" onclick="app.switchAdminTab('lastplate')"><span id="lbl-tab-admin-lastplate">LAST PLATE / 06</span></button>
+        <button id="admin-tab-feedback" class="tab-btn" onclick="app.switchAdminTab('feedback')"><span id="lbl-tab-admin-feedback">FEEDBACK / 07</span></button>
       </div>
 
       <!-- TAB 01: KANBAN -->
       <section id="admin-sec-live" class="admin-section">
         <div class="kanban-editorial-grid">
-          <div class="kanban-col-wrapper"><div class="kanban-col-head"><h3>NEW ORDERS</h3></div><div id="col-orders-new" class="kanban-cards-container"></div></div>
-          <div class="kanban-col-wrapper"><div class="kanban-col-head"><h3>ON THE STOVE / PREPARING</h3></div><div id="col-orders-prep" class="kanban-cards-container"></div></div>
-          <div class="kanban-col-wrapper"><div class="kanban-col-head"><h3>READY AT COUNTER</h3></div><div id="col-orders-ready" class="kanban-cards-container"></div></div>
+          <div class="kanban-col-wrapper"><div class="kanban-col-head"><h3 id="lbl-kanban-new">NEW ORDERS</h3></div><div id="col-orders-new" class="kanban-cards-container"></div></div>
+          <div class="kanban-col-wrapper"><div class="kanban-col-head"><h3 id="lbl-kanban-prep">ON THE STOVE / PREPARING</h3></div><div id="col-orders-prep" class="kanban-cards-container"></div></div>
+          <div class="kanban-col-wrapper"><div class="kanban-col-head"><h3 id="lbl-kanban-ready">READY AT COUNTER</h3></div><div id="col-orders-ready" class="kanban-cards-container"></div></div>
         </div>
       </section>
 

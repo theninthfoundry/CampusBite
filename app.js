@@ -27,6 +27,321 @@
     13: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=800&q=80"
   };
 
+  const I18N = {
+    en: {
+      brandTitle: "CAMPUSBITE",
+      tray: "TRAY",
+      staffKitchen: "STAFF KITCHEN →",
+      customerMenu: "← CUSTOMER MENU",
+      exit: "EXIT",
+      studentRole: "STUDENT",
+      facultyRole: "FACULTY",
+      adminRole: "KITCHEN",
+      
+      heroEyebrow: "CAMPUSBITE / SMART CANTEEN",
+      heroHeadline: "GOOD FOOD.<br><span class=\"headline-italic\">ZERO WAITING.</span>",
+      heroStatement: "Skip the counter rush. Order ahead, follow live kitchen preparation, and collect your meal steaming hot at Counter 01.",
+      avgPickup: "~08 MIN",
+      avgPickupLabel: "AVG PICKUP",
+      liveStock: "100%",
+      liveStockLabel: "LIVE STOCK",
+      smartKitchen: "01",
+      smartKitchenLabel: "SMART KITCHEN",
+      campusIdLabel: "CAMPUS IDENTIFICATION",
+      signInTitle: "Sign in to Canteen",
+      idPlaceholder: "demo@campus.edu or 25R11A0501",
+      idLabel: "Student ID or Email",
+      pwLabel: "Password",
+      forgotPw: "Forgot password?",
+      signInBtn: "SIGN IN →",
+      demoAccess: "DEMO ONE-CLICK ACCESS",
+      
+      tabDiscover: "DISCOVER / 01",
+      tabOrders: "LIVE ORDERS / 02",
+      tabProfile: "PROFILE & STATS / 03",
+      tabDashboard: "KITCHEN DASHBOARD / 04",
+      
+      servingNow: "CAMPUS MAIN CANTEEN • SERVING NOW",
+      whatsForLunch: "WHAT'S FOR LUNCH?",
+      facultyDining: "FACULTY LOUNGE DINING",
+      searchPlaceholder: "Search dishes, snacks, drinks...",
+      catAll: "ALL",
+      catMeals: "MEALS",
+      catSnacks: "SNACKS",
+      catDrinks: "DRINKS",
+      catDesserts: "DESSERTS",
+      recEyebrow: "FREQUENTLY PAIRED PAIRINGS",
+      recHeading: "BECAUSE YOU LOVE CHICKEN BIRYANI...",
+      recSubtext: "Students frequently pair these together during peak lunch hours",
+      addBtn: "ADD +",
+      paused: "PAUSED",
+      soldOut: "SOLD OUT",
+      readyPortions: "READY:",
+      minPrep: "MIN",
+      
+      yourTray: "YOUR TRAY",
+      clear: "CLEAR",
+      emptyTrayTitle: "Your tray is empty.",
+      emptyTraySub: "Select dishes from today's menu to start ordering.",
+      subtotal: "Subtotal",
+      totalPayable: "Total Payable",
+      placeOrderBtn: "CONFIRM & PLACE ORDER →",
+      
+      adminEyebrow: "CANTEEN OPERATIONS • KITCHEN CONTROL",
+      adminTitle: "KITCHEN DASHBOARD",
+      metricNew: "NEW:",
+      metricPrep: "PREPARING:",
+      metricReady: "READY:",
+      testOrder: "+ TEST ORDER",
+      resetDb: "RESET DB",
+      
+      adminKanban: "KANBAN / 01",
+      adminMenu: "MENU & RECIPES / 02",
+      adminInv: "INVENTORY / 03",
+      adminPrep: "PREP COACH / 04",
+      adminPerf: "PERFORMANCE / 05",
+      adminLastPlate: "LAST PLATE / 06",
+      adminFeedback: "FEEDBACK / 07",
+      
+      colNew: "NEW ORDERS",
+      colPrep: "ON THE STOVE / PREPARING",
+      colReady: "READY AT COUNTER",
+      startCooking: "START COOKING →",
+      markReady: "MARK READY →",
+      collected: "COLLECTED ✓",
+      noShow: "NO-SHOW",
+      noPendingOrders: "NO PENDING ORDERS",
+      stoveClear: "STOVE IS CLEAR",
+      counterCleared: "COUNTER CLEARED",
+      
+      totalReviews: "Total Reviews",
+      avgRating: "Average Rating",
+      custSatisfaction: "Customer Satisfaction",
+      feedbackFeedTitle: "Student Feedback Feed",
+      noFeedback: "No feedback reviews submitted yet.",
+      verifiedReviews: "Verified Token Reviews"
+    },
+    te: {
+      brandTitle: "CAMPUSBITE",
+      tray: "ట్రే",
+      staffKitchen: "సిబ్బంది కిచెన్ →",
+      customerMenu: "← కస్టమర్ మెనూ",
+      exit: "లాగౌట్",
+      studentRole: "విద్యార్థి",
+      facultyRole: "అధ్యాపకులు",
+      adminRole: "కిచెన్",
+      
+      heroEyebrow: "క్యాంపస్‌బైట్ / స్మార్ట్ క్యాంటీన్",
+      heroHeadline: "మంచి ఆహారం.<br><span class=\"headline-italic\">సున్నా నిరీక్షణ.</span>",
+      heroStatement: "కౌంటర్ రద్దీని నివారించండి. ముందుగా ఆర్డర్ చేయండి, లైవ్ కిచెన్ ప్రిపరేషన్ చూడండి మరియు కౌంటర్ 01 వద్ద వేడివేడిగా అందుకోండి.",
+      avgPickup: "~08 నిమి",
+      avgPickupLabel: "సగటు సమయం",
+      liveStock: "100%",
+      liveStockLabel: "లైవ్ స్టాక్",
+      smartKitchen: "01",
+      smartKitchenLabel: "స్మార్ట్ కిచెన్",
+      campusIdLabel: "క్యాంపస్ గుర్తింపు",
+      signInTitle: "క్యాంటీన్‌లోకి ప్రవేశించండి",
+      idPlaceholder: "demo@campus.edu లేదా 25R11A0501",
+      idLabel: "విద్యార్థి ఐడి లేదా ఇమెయిల్",
+      pwLabel: "పాస్‌వర్డ్",
+      forgotPw: "పాస్‌వర్డ్ మర్చిపోయారా?",
+      signInBtn: "సైన్ ఇన్ →",
+      demoAccess: "డెమో వన్-క్లిక్ యాక్సెస్",
+      
+      tabDiscover: "మెనూ / 01",
+      tabOrders: "లైవ్ ఆర్డర్లు / 02",
+      tabProfile: "ప్రొఫైల్ & వివరాలు / 03",
+      tabDashboard: "కిచెన్ డాష్‌బోర్డ్ / 04",
+      
+      servingNow: "క్యాంపస్ ప్రధాన క్యాంటీన్ • ఇప్పుడు అందుబాటులో",
+      whatsForLunch: "ఈరోజు భోజనం ఏమిటి?",
+      facultyDining: "ఫ్యాకల్టీ లాంజ్ భోజనం",
+      searchPlaceholder: "వంటకాలు, స్నాక్స్, పానీయాలను వెతకండి...",
+      catAll: "అన్నీ",
+      catMeals: "భోజనం",
+      catSnacks: "స్నాక్స్",
+      catDrinks: "పానీయాలు",
+      catDesserts: "మిఠాయిలు",
+      recEyebrow: "తరచుగా కలిసి తీసుకునేవి",
+      recHeading: "మీకు ఇష్టమైన చికెన్ బిర్యానీతో పాటు...",
+      recSubtext: "విద్యార్థులు లంచ్ సమయంలో వీటిని ఎక్కువగా జతచేసుకుంటారు",
+      addBtn: "జతచేయి +",
+      paused: "నిలిపివేయబడింది",
+      soldOut: "పూర్తయింది",
+      readyPortions: "సిద్ధం:",
+      minPrep: "నిమి",
+      
+      yourTray: "మీ ట్రే",
+      clear: "ఖాళీ చేయి",
+      emptyTrayTitle: "మీ ట్రే ఖాళీగా ఉంది.",
+      emptyTraySub: "ఆర్డర్ చేయడానికి నేటి మెనూ నుండి వంటకాలను ఎంచుకోండి.",
+      subtotal: "ఉపమొత్తం",
+      totalPayable: "మొత్తం చెల్లింపు",
+      placeOrderBtn: "ఆర్డర్ నిర్ధారించండి →",
+      
+      adminEyebrow: "క్యాంటీన్ నిర్వహణ • కిచెన్ కంట్రోల్",
+      adminTitle: "కిచెన్ డాష్‌బోర్డ్",
+      metricNew: "కొత్తవి:",
+      metricPrep: "తయారవుతున్నవి:",
+      metricReady: "సిద్ధంగా ఉన్నాయి:",
+      testOrder: "+ టెస్ట్ ఆర్డర్",
+      resetDb: "డేటా రీసెట్",
+      
+      adminKanban: "కాన్బన్ / 01",
+      adminMenu: "మెనూ & వంటకాలు / 02",
+      adminInv: "ఇన్వెంటరీ / 03",
+      adminPrep: "ప్రిప్ కోచ్ / 04",
+      adminPerf: "విశ్లేషణలు / 05",
+      adminLastPlate: "లాస్ట్ ప్లేట్ / 06",
+      adminFeedback: "ఫీడ్‌బ్యాక్ / 07",
+      
+      colNew: "కొత్త ఆర్డర్లు",
+      colPrep: "స్టవ్ పై / తయారవుతున్నవి",
+      colReady: "కౌంటర్ వద్ద సిద్ధంగా ఉన్నాయి",
+      startCooking: "వంట ప్రారంభించండి →",
+      markReady: "సిద్ధంగా మార్క్ చేయండి →",
+      collected: "అందుకున్నారు ✓",
+      noShow: "రాలేదు",
+      noPendingOrders: "పెండింగ్ ఆర్డర్లు లేవు",
+      stoveClear: "స్టవ్ ఖాళీగా ఉంది",
+      counterCleared: "కౌంటర్ ఖాళీగా ఉంది",
+      
+      totalReviews: "మొత్తం సమీక్షలు",
+      avgRating: "సగటు రేటింగ్",
+      custSatisfaction: "కస్టమర్ సంతృప్తి",
+      feedbackFeedTitle: "విద్యార్థి అభిప్రాయాల ఫీడ్",
+      noFeedback: "ఇంకా ఎలాంటి అభిప్రాయాలు నమోదు కాలేదు.",
+      verifiedReviews: "ధృవీకరించబడిన సమీక్షలు"
+    },
+    hi: {
+      brandTitle: "CAMPUSBITE",
+      tray: "ट्रे",
+      staffKitchen: "स्टाफ किचन →",
+      customerMenu: "← ग्राहक मेनू",
+      exit: "लॉग आउट",
+      studentRole: "छात्र",
+      facultyRole: "संकाय",
+      adminRole: "किचन",
+      
+      heroEyebrow: "कैंपसबाइट / स्मार्ट कैंटीन",
+      heroHeadline: "स्वादिष्ट भोजन।<br><span class=\"headline-italic\">शून्य प्रतीक्षा।</span>",
+      heroStatement: "काउंटर की भीड़ से बचें। पहले से ऑर्डर करें, लाइव किचन तैयारी देखें, और काउंटर 01 पर अपना भोजन गरमा-गरम प्राप्त करें।",
+      avgPickup: "~08 मिनट",
+      avgPickupLabel: "औसत पिकअप",
+      liveStock: "100%",
+      liveStockLabel: "लाइव स्टॉक",
+      smartKitchen: "01",
+      smartKitchenLabel: "स्मार्ट किचन",
+      campusIdLabel: "कैंपस पहचान",
+      signInTitle: "कैंटीन में साइन इन करें",
+      idPlaceholder: "demo@campus.edu या 25R11A0501",
+      idLabel: "छात्र आईडी या ईमेल",
+      pwLabel: "पासवर्ड",
+      forgotPw: "पासवर्ड भूल गए?",
+      signInBtn: "साइन इन करें →",
+      demoAccess: "डेमो एक-क्लिक एक्सेस",
+      
+      tabDiscover: "मेनू / 01",
+      tabOrders: "लाइव ऑर्डर / 02",
+      tabProfile: "प्रोफ़ाइल और विवरण / 03",
+      tabDashboard: "किचन डैशबोर्ड / 04",
+      
+      servingNow: "कैंपस मुख्य कैंटीन • अभी उपलब्ध",
+      whatsForLunch: "आज दोपहर का भोजन क्या है?",
+      facultyDining: "संकाय लाउंज भोजन",
+      searchPlaceholder: "व्यंजन, नाश्ता, पेय खोजें...",
+      catAll: "सभी",
+      catMeals: "भोजन",
+      catSnacks: "नाश्ता",
+      catDrinks: "पेय",
+      catDesserts: "मिठाई",
+      recEyebrow: "अक्सर साथ में चुने जाने वाले",
+      recHeading: "क्योंकि आपको चिकन बिरयानी पसंद है...",
+      recSubtext: "छात्र अक्सर दोपहर के भोजन के दौरान इन्हें साथ लेते हैं",
+      addBtn: "जोड़ें +",
+      paused: "रोक दिया गया",
+      soldOut: "समाप्त",
+      readyPortions: "तैयार:",
+      minPrep: "मिनट",
+      
+      yourTray: "आपकी ट्रे",
+      clear: "हटाएं",
+      emptyTrayTitle: "आपकी ट्रे खाली है।",
+      emptyTraySub: "आज के मेनू से व्यंजन चुनकर ऑर्डर शुरू करें।",
+      subtotal: "उप-योग",
+      totalPayable: "कुल देय राशि",
+      placeOrderBtn: "ऑर्डर कन्फर्म करें →",
+      
+      adminEyebrow: "कैंटीन संचालन • किचन नियंत्रण",
+      adminTitle: "किचन डैशबोर्ड",
+      metricNew: "नए:",
+      metricPrep: "तैयारी में:",
+      metricReady: "तैयार:",
+      testOrder: "+ टेस्ट ऑर्डर",
+      resetDb: "रीसेट डेटा",
+      
+      adminKanban: "कानबन / 01",
+      adminMenu: "मेनू और रेसिपी / 02",
+      adminInv: "इन्वेंटरी / 03",
+      adminPrep: "प्रेप कोच / 04",
+      adminPerf: "प्रदर्शन / 05",
+      adminLastPlate: "लास्ट प्लेट / 06",
+      adminFeedback: "प्रतिक्रिया / 07",
+      
+      colNew: "नए ऑर्डर",
+      colPrep: "स्टोव पर / तैयारी जारी",
+      colReady: "काउंटर पर तैयार",
+      startCooking: "पकाना शुरू करें →",
+      markReady: "तैयार मार्क करें →",
+      collected: "ले लिया गया ✓",
+      noShow: "नहीं आए",
+      noPendingOrders: "कोई लंबित ऑर्डर नहीं",
+      stoveClear: "स्टोव खाली है",
+      counterCleared: "काउंटर खाली है",
+      
+      totalReviews: "कुल समीक्षाएं",
+      avgRating: "औसत रेटिंग",
+      custSatisfaction: "ग्राहक संतुष्टि",
+      feedbackFeedTitle: "छात्र प्रतिक्रिया फ़ीड",
+      noFeedback: "अभी तक कोई समीक्षा प्रस्तुत नहीं की गई है।",
+      verifiedReviews: "सत्यापित समीक्षाएं"
+    }
+  };
+
+  const FOOD_TRANSLATIONS = {
+    te: {
+      1: { name: "చికెన్ బిర్యానీ", desc: "సువాసనగల బాస్మతి బియ్యం, మసాలా చికెన్, వేయించిన ఉల్లిపాయలు & పుదీనా పరిమళం", cat: "భోజనం" },
+      2: { name: "వెజ్ బిర్యానీ", desc: "పొడవైన బాస్మతి బియ్యం, కుంకుమపువ్వు, తాజా కూరగాయలు & సుగంధ ద్రవ్యాలు", cat: "భోజనం" },
+      3: { name: "పన్నీర్ బటర్ మసాలా", desc: "క్రీమీ టొమాటో-వెన్న గ్రేవీలో మృదువైన పన్నీర్ ముక్కలు, 2 రోటీలతో", cat: "భోజనం" },
+      4: { name: "మసాలా దోశ", desc: "కరకరలాడే దోశ, బంగాళాదుంప మసాలా, సాంబార్ & కొబ్బరి చట్నీ", cat: "స్నాక్స్" },
+      5: { name: "సమోసా (2 ముక్కలు)", desc: "బంగాళాదుంప, బఠానీలతో నింపిన వేడివేడి సమోసాలు, పుదీనా చట్నీతో", cat: "స్నాక్స్" },
+      6: { name: "ఫిల్టర్ కాఫీ", desc: "సాంప్రదాయ దక్షిణ భారత డికాక్షన్ కాఫీ, తాజా నురుగు పాలు", cat: "పానీయాలు" },
+      7: { name: "మామిడి లస్సీ", desc: "అల్ఫోన్సో మామిడి పల్ప్, తాజా పెరుగు, యాలకుల సువాసన", cat: "పానీయాలు" },
+      8: { name: "మసాలా చాయ్", desc: "అల్లం, యాలకులు మరియు తాజా మసాలాలతో కాచిన వేడి టీ", cat: "పానీయాలు" },
+      9: { name: "గులాబ్ జామూన్ (2 ముక్కలు)", desc: "యాలకుల చక్కెర పాకంలో నానబెట్టిన వేడివేడి గులాబ్ జామూన్", cat: "మిఠాయిలు" },
+      10: { name: "వెజ్ బర్గర్", desc: "కరకరలాడే కూరగాయల ప్యాటీ, తాజా లెట్యూస్ & చీజ్ సాస్", cat: "స్నాక్స్" },
+      11: { name: "చికెన్ ఫ్రైడ్ రైస్", desc: "చికెన్ ముక్కలు, కోడిగుడ్డు, స్ప్రింగ్ ఆనియన్స్‌తో టాస్ చేసిన రైస్", cat: "భోజనం" },
+      12: { name: "కోల్డ్ కాఫీ", desc: "చల్లటి కాఫీ బ్లెండ్, వనిల్లా ఐస్‌క్రీమ్ మరియు చాక్లెట్ డ్రిజిల్", cat: "పానీయాలు" },
+      13: { name: "వెజ్ పఫ్", desc: "మసాలా కూరగాయలతో నింపిన కరకరలాడే బేకరీ పఫ్", cat: "స్నాక్స్" }
+    },
+    hi: {
+      1: { name: "चिकन बिरयानी", desc: "मसालेदार बासमती चावल, कोमल चिकन, कैरामेलाइज्ड प्याज और पुदीने की खुशबू", cat: "भोजन" },
+      2: { name: "वेज बिरयानी", desc: "लंबा बासमती चावल, केसर, ताज़ी सब्ज़ियाँ और भुने हुए खड़े मसाले", cat: "भोजन" },
+      3: { name: "पनीर बटर मसाला", desc: "मखमली टमाटर-मक्खन ग्रेवी में ताज़ा पनीर, 2 तंदूरी रोटी के साथ", cat: "भोजन" },
+      4: { name: "मसाला डोसा", desc: "कुरकुरा डोसा, आलू मसाला, सांभर और नारियल की ताज़ा चटनी", cat: "नाश्ता" },
+      5: { name: "समोसा (2 नग)", desc: "मसालेदार आलू और मटर भरा कुरकुरा समोसा, हरी चटनी के साथ", cat: "नाश्ता" },
+      6: { name: "फ़िल्टर कॉफ़ी", desc: "पारंपरिक दक्षिण भारतीय डिकॉक्शन कॉफ़ी, झागदार दूध के साथ", cat: "पेय" },
+      7: { name: "मैंगो लस्सी", desc: "अल्फांसो आम का गूदा, ताज़ा दही और इलायची का स्वादिष्ट मिश्रण", cat: "पेय" },
+      8: { name: "मसाला चाय", desc: "अदरक, इलायची और ताज़े मसालों से बनी कड़क गर्म चाय", cat: "पेय" },
+      9: { name: "गुलाब जामुन (2 नग)", desc: "इलायची की चाशनी में डूबा गर्म और रसीला गुलाब जामुन", cat: "मिठाई" },
+      10: { name: "वेज बर्गर", desc: "कुरकुरी वेज टिक्की, ताज़ा लेट्यूस और स्पेशल सॉस के साथ", cat: "नाश्ता" },
+      11: { name: "चिकन फ्राइड राइस", desc: "चिकन, अंडा और हरी प्याज के साथ वोक में भुना स्वादिष्ट चावल", cat: "भोजन" },
+      12: { name: "कोल्ड कॉफ़ी", desc: "ठंडी क्रीमी कॉफ़ी, वैनिला आइसक्रीम और चॉकलेट सिरप के साथ", cat: "पेय" },
+      13: { name: "वेज पफ", desc: "मसालेदार सब्ज़ियों से भरा कुरकुरा बेकरी पफ", cat: "नाश्ता" }
+    }
+  };
+
   const DEFAULT_DB = {
     users: [
       { id: 1, name: "Canteen Admin", email: "admin@campus.edu", pw: "admin123", role: "ADMIN", studentId: null, facultyId: null, isActive: true },
@@ -1075,7 +1390,144 @@
       this._reserving = false;
       this.feedbackRating = 5;
       this.activeFeedbackOrderId = null;
+      this.currentLang = localStorage.getItem('campusbite_lang') || 'en';
       this.init();
+    }
+
+    t(key) {
+      const dict = I18N[this.currentLang] || I18N.en;
+      return dict[key] || I18N.en[key] || key;
+    }
+
+    setLanguage(lang) {
+      if (!['en', 'te', 'hi'].includes(lang)) lang = 'en';
+      this.currentLang = lang;
+      localStorage.setItem('campusbite_lang', lang);
+      this.applyLanguage();
+      this.refreshCurrentView();
+    }
+
+    applyLanguage() {
+      // Sync language selector buttons
+      document.querySelectorAll('#lang-selector-group .lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === this.currentLang);
+      });
+
+      // Update static header elements
+      const lblTray = $('lbl-tray'); if (lblTray) lblTray.innerText = this.t('tray');
+      const lblExit = $('lbl-exit'); if (lblExit) lblExit.innerText = this.t('exit');
+      const roleBadge = $('user-display-role');
+      if (roleBadge && this.currentUser) {
+        roleBadge.innerText = this.t(this.currentUser.role.toLowerCase() + 'Role');
+      }
+      const portalBtn = $('btn-toggle-portal');
+      if (portalBtn && this.currentUser) {
+        const isAdminOrStaff = this.currentUser.role === 'ADMIN' || this.currentUser.role === 'STAFF';
+        portalBtn.innerHTML = isAdminOrStaff ? `<span>&larr; ${this.t('customerMenu')}</span>` : `<span>${this.t('staffKitchen')} &rarr;</span>`;
+      }
+
+      // Update Login Screen
+      const heroEyebrow = document.querySelector('.hero-eyebrow span');
+      if (heroEyebrow) heroEyebrow.innerText = this.t('heroEyebrow');
+      const heroHeadline = document.querySelector('.hero-headline');
+      if (heroHeadline) heroHeadline.innerHTML = this.t('heroHeadline');
+      const heroStmt = document.querySelector('.hero-statement');
+      if (heroStmt) heroStmt.innerText = this.t('heroStatement');
+      const statCaptions = document.querySelectorAll('.stat-caption');
+      if (statCaptions.length >= 3) {
+        statCaptions[0].innerText = this.t('avgPickupLabel');
+        statCaptions[1].innerText = this.t('liveStockLabel');
+        statCaptions[2].innerText = this.t('smartKitchenLabel');
+      }
+      const loginPanelLabel = document.querySelector('.login-panel-label');
+      if (loginPanelLabel) loginPanelLabel.innerText = this.t('campusIdLabel');
+      const loginPanelTitle = document.querySelector('.login-panel-title');
+      if (loginPanelTitle) loginPanelTitle.innerText = this.t('signInTitle');
+      const loginIdInput = $('login-id');
+      if (loginIdInput) loginIdInput.placeholder = this.t('idPlaceholder');
+      const loginSubmitBtn = document.querySelector('#login-form button[type="submit"] span');
+      if (loginSubmitBtn) loginSubmitBtn.innerHTML = `${this.t('signInBtn')}`;
+      const demoDivider = document.querySelector('.hairline-divider span');
+      if (demoDivider) demoDivider.innerText = this.t('demoAccess');
+
+      // Update Student View Headers
+      const studentServingEyebrow = document.querySelector('#section-menu .editorial-eyebrow');
+      if (studentServingEyebrow) studentServingEyebrow.innerText = this.t('servingNow');
+      const studentTitle = $('student-home-title');
+      if (studentTitle && this.currentUser) {
+        studentTitle.innerText = this.currentUser.role === 'FACULTY' ? this.t('facultyDining') : this.t('whatsForLunch');
+      }
+      const searchInput = $('food-search');
+      if (searchInput) searchInput.placeholder = this.t('searchPlaceholder');
+
+      // Update category buttons
+      const catBtns = document.querySelectorAll('#category-chips .category-text-btn');
+      if (catBtns.length >= 5) {
+        catBtns[0].innerText = this.t('catAll');
+        catBtns[1].innerText = this.t('catMeals');
+        catBtns[2].innerText = this.t('catSnacks');
+        catBtns[3].innerText = this.t('catDrinks');
+        catBtns[4].innerText = this.t('catDesserts');
+      }
+
+      // Update Tray header
+      const trayTitle = document.querySelector('.tray-slip-title span');
+      if (trayTitle) trayTitle.innerText = this.t('yourTray');
+      const trayClear = document.querySelector('.tray-slip-clear');
+      if (trayClear) trayClear.innerText = this.t('clear');
+      const placeOrderBtn = document.querySelector('#btn-place-order span');
+      if (placeOrderBtn) placeOrderBtn.innerHTML = `${this.t('placeOrderBtn')}`;
+
+      // Update Admin Header
+      const adminEyebrow = $('admin-eyebrow-text');
+      if (adminEyebrow) adminEyebrow.innerText = this.t('adminEyebrow');
+      const adminTitle = $('admin-title-text');
+      if (adminTitle) adminTitle.innerText = this.t('adminTitle');
+      const mNew = $('lbl-metric-new'); if (mNew) mNew.innerText = this.t('metricNew');
+      const mPrep = $('lbl-metric-prep'); if (mPrep) mPrep.innerText = this.t('metricPrep');
+      const mReady = $('lbl-metric-ready'); if (mReady) mReady.innerText = this.t('metricReady');
+      const aCustMenu = $('lbl-admin-customer-menu'); if (aCustMenu) aCustMenu.innerText = this.t('customerMenu');
+      const aTestOrd = $('lbl-admin-test-order'); if (aTestOrd) aTestOrd.innerText = this.t('testOrder');
+      const aResetDb = $('lbl-admin-reset-db'); if (aResetDb) aResetDb.innerText = this.t('resetDb');
+
+      // Update Kanban Column Headers
+      const kNew = $('lbl-kanban-new'); if (kNew) kNew.innerText = this.t('colNew');
+      const kPrep = $('lbl-kanban-prep'); if (kPrep) kPrep.innerText = this.t('colPrep');
+      const kReady = $('lbl-kanban-ready'); if (kReady) kReady.innerText = this.t('colReady');
+
+      this.updateAdminTabLabels();
+      this.updateStudentTabLabels();
+    }
+
+    updateAdminTabLabels() {
+      const lLive = $('lbl-tab-admin-live'); if (lLive) lLive.innerText = this.t('adminKanban');
+      const lMenu = $('lbl-tab-admin-menu'); if (lMenu) lMenu.innerText = this.t('adminMenu');
+      const lInv = $('lbl-tab-admin-inv'); if (lInv) lInv.innerText = this.t('adminInv');
+      const lPrep = $('lbl-tab-admin-prep'); if (lPrep) lPrep.innerText = this.t('adminPrep');
+      const lPerf = $('lbl-tab-admin-analytics'); if (lPerf) lPerf.innerText = this.t('adminPerf');
+      const lLP = $('lbl-tab-admin-lastplate'); if (lLP) lLP.innerText = this.t('adminLastPlate');
+      const lFeed = $('lbl-tab-admin-feedback'); if (lFeed) lFeed.innerText = this.t('adminFeedback');
+
+      ['live', 'menu', 'inv', 'prep', 'analytics', 'lastplate', 'feedback'].forEach(t => {
+        $(`admin-tab-${t}`)?.classList.toggle('active', t === this.activeAdminTab);
+      });
+
+      const pulseEl = $('admin-live-pulse');
+      if (pulseEl) {
+        const pendingCount = this.db.getOrders().filter(o => o.status === 'NEW' || o.status === 'ACCEPTED').length;
+        show(pulseEl, pendingCount > 0);
+      }
+    }
+
+    updateStudentTabLabels() {
+      const lMenu = $('lbl-tab-student-menu'); if (lMenu) lMenu.innerText = this.t('tabDiscover');
+      const lOrders = $('lbl-tab-student-orders'); if (lOrders) lOrders.innerText = this.t('tabOrders');
+      const lProfile = $('lbl-tab-student-profile'); if (lProfile) lProfile.innerText = this.t('tabProfile');
+      const lDash = $('lbl-tab-student-dash'); if (lDash) lDash.innerText = this.t('tabDashboard');
+
+      ['menu', 'orders', 'profile'].forEach(t => {
+        $(`tab-btn-${t}`)?.classList.toggle('active', t === this.activeStudentTab);
+      });
     }
 
     init() {
@@ -1085,6 +1537,7 @@
         catch { this.currentUser = null; }
       }
       this.setupSyncListener();
+      this.applyLanguage();
       this.render();
       this.startPolling();
     }
@@ -1198,52 +1651,40 @@
         show(vl, true); show(vs, false); show(va, false); show(uc, false); show(na, false);
         return;
       }
-      show(vl, false); show(uc, true); show(na, true);
+      show(vl, false); show(uc, true); show(na, false);
       $('user-display-name').innerText = this.currentUser.name;
       const b = $('user-display-role');
-      b.innerText = this.currentUser.role;
+      b.innerText = this.t(this.currentUser.role.toLowerCase() + 'Role');
       b.className = `user-role-badge ${this.currentUser.role.toLowerCase()}`;
       $('user-avatar').innerText = this.currentUser.name.charAt(0);
 
       const sw = $('btn-toggle-portal'), tr = $('btn-tray-toggle');
       const isAdminOrStaff = this.currentUser.role === 'ADMIN' || this.currentUser.role === 'STAFF';
-      sw.innerHTML = isAdminOrStaff ? `<span>&larr; CUSTOMER MENU</span>` : `<span>STAFF KITCHEN &rarr;</span>`;
+      sw.innerHTML = isAdminOrStaff ? `<span>&larr; ${this.t('customerMenu')}</span>` : `<span>${this.t('staffKitchen')} &rarr;</span>`;
       if (tr) show(tr, !isAdminOrStaff);
+      const lblTray = $('lbl-tray'); if (lblTray) lblTray.innerText = this.t('tray');
+      const lblExit = $('lbl-exit'); if (lblExit) lblExit.innerText = this.t('exit');
 
       if (isAdminOrStaff) {
         this.renderAdminNavigation(); show(vs, false); show(va, true); this.renderAdminPortal();
       } else {
         this.renderStudentNavigation(); show(vs, true); show(va, false);
         const titleEl = $('student-home-title');
-        if (titleEl) titleEl.innerText = this.currentUser.role === 'FACULTY' ? "FACULTY LOUNGE DINING" : "WHAT'S FOR LUNCH?";
+        if (titleEl) titleEl.innerText = this.currentUser.role === 'FACULTY' ? this.t('facultyDining') : this.t('whatsForLunch');
         this.renderStudentPortal();
       }
     }
 
     renderStudentNavigation() {
       const nav = $('nav-actions');
-      const cnt = this.db.getOrders(this.currentUser.id).filter(o => o.status !== 'COLLECTED' && o.status !== 'CANCELLED').length;
-      nav.innerHTML = `
-        <button class="nav-link ${this.activeStudentTab === 'menu' ? 'active' : ''}" onclick="app.switchStudentTab('menu')"><span>DISCOVER / 01</span></button>
-        <button class="nav-link ${this.activeStudentTab === 'orders' ? 'active' : ''}" onclick="app.switchStudentTab('orders')"><span>ORDERS / 02</span>${cnt ? `<span class="nav-count-pill">${cnt}</span>` : ''}</button>
-        <button class="nav-link ${this.activeStudentTab === 'profile' ? 'active' : ''}" onclick="app.switchStudentTab('profile')"><span>PROFILE / 03</span></button>
-      `;
+      if (nav) { nav.innerHTML = ''; show(nav, false); }
+      this.updateStudentTabLabels();
     }
 
     renderAdminNavigation() {
-      const tabs = [
-        'live|KANBAN / 01',
-        'menu|MENU & RECIPES / 02',
-        'inv|INVENTORY / 03',
-        'prep|PREP COACH / 04',
-        'analytics|PERFORMANCE / 05',
-        'lastplate|LAST PLATE / 06',
-        'feedback|FEEDBACK / 07'
-      ];
-      $('nav-actions').innerHTML = tabs.map(p => {
-        const [tab, lbl] = p.split('|');
-        return `<button class="nav-link ${this.activeAdminTab === tab ? 'active' : ''}" onclick="app.switchAdminTab('${tab}')"><span>${lbl}</span></button>`;
-      }).join('');
+      const nav = $('nav-actions');
+      if (nav) { nav.innerHTML = ''; show(nav, false); }
+      this.updateAdminTabLabels();
     }
 
     refreshCurrentView() {
@@ -1337,27 +1778,32 @@
       g.innerHTML = list.map((f, idx) => {
         const isPaused = f.isPausedByAdmin;
         const isOutOfStock = f.isOutOfStock;
-        let badgeTxt = 'ADD +';
+        let badgeTxt = this.t('addBtn');
         let badgeClass = 'available';
-        if (isPaused) { badgeTxt = 'PAUSED'; badgeClass = 'paused'; }
-        else if (!f.available) { badgeTxt = 'SOLD OUT'; badgeClass = 'out-of-stock'; }
+        if (isPaused) { badgeTxt = this.t('paused'); badgeClass = 'paused'; }
+        else if (!f.available) { badgeTxt = this.t('soldOut'); badgeClass = 'out-of-stock'; }
+
+        const trans = FOOD_TRANSLATIONS[this.currentLang]?.[f.id];
+        const foodName = trans?.name || f.name;
+        const foodDesc = trans?.desc || f.desc;
+        const foodCat = trans?.cat || f.category;
 
         return `
           <div class="menu-item-editorial ${f.available ? '' : 'unavailable'}" onclick="app.openFoodDetail(${f.id})">
             <div class="menu-item-media">
               <span class="menu-item-index">${String(idx + 1).padStart(2, '0')}</span>
-              <img src="${f.image || FOOD_IMAGES[f.id]}" alt="${escHtml(f.name)}" loading="lazy">
-              <span class="menu-item-prep-tag">${f.prepMin} MIN</span>
-              ${f.preparedPortionsAvailable > 0 ? `<span style="position:absolute;top:0.75rem;left:0.75rem;background:#15803d;color:#fff;font-family:var(--font-mono);font-size:0.65rem;font-weight:700;padding:0.15rem 0.45rem;border-radius:var(--radius-xs);">READY: ${f.preparedPortionsAvailable}</span>` : ''}
+              <img src="${f.image || FOOD_IMAGES[f.id]}" alt="${escHtml(foodName)}" loading="lazy">
+              <span class="menu-item-prep-tag">${f.prepMin} ${this.t('minPrep')}</span>
+              ${f.preparedPortionsAvailable > 0 ? `<span style="position:absolute;top:0.75rem;left:0.75rem;background:#15803d;color:#fff;font-family:var(--font-mono);font-size:0.65rem;font-weight:700;padding:0.15rem 0.45rem;border-radius:var(--radius-xs);">${this.t('readyPortions')} ${f.preparedPortionsAvailable}</span>` : ''}
             </div>
             <div class="menu-item-content">
               <div class="menu-item-header">
-                <h4 class="menu-item-name">${escHtml(f.name)}</h4>
+                <h4 class="menu-item-name">${escHtml(foodName)}</h4>
                 <span class="menu-item-price">₹${f.price}</span>
               </div>
-              <p class="menu-item-desc">${escHtml(f.desc)}</p>
+              <p class="menu-item-desc">${escHtml(foodDesc)}</p>
               <div class="menu-item-actions">
-                <span class="category-micro-tag">${escHtml(f.category.toUpperCase())} · ${escHtml(f.dietary)}</span>
+                <span class="category-micro-tag">${escHtml(foodCat.toUpperCase())} · ${escHtml(f.dietary)}</span>
                 <button class="btn btn-arrow" ${f.available ? '' : 'disabled'} onclick="event.stopPropagation(); app.addToCart(${f.id})">
                   <span>${badgeTxt}</span>
                 </button>
@@ -1754,11 +2200,11 @@
           <div class="ticket-footer">
             <span class="ticket-price">₹${o.total}</span>
             <button class="btn btn-primary btn-xs" onclick="app.advanceKanbanOrder(${o.id}, '${o.status}', 'PREPARING')">
-              <span>START COOKING &rarr;</span>
+              <span>${this.t('startCooking')}</span>
             </button>
           </div>
         </div>
-      `).join('') || '<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">NO PENDING ORDERS</div>';
+      `).join('') || `<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">${this.t('noPendingOrders')}</div>`;
 
       cp.innerHTML = p.map(o => `
         <div class="kanban-ticket">
@@ -1767,11 +2213,11 @@
           <div class="ticket-footer">
             <span class="ticket-price">₹${o.total}</span>
             <button class="btn btn-primary btn-xs" onclick="app.advanceKanbanOrder(${o.id}, 'PREPARING', 'READY')">
-              <span>MARK READY &rarr;</span>
+              <span>${this.t('markReady')}</span>
             </button>
           </div>
         </div>
-      `).join('') || '<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">STOVE IS CLEAR</div>';
+      `).join('') || `<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">${this.t('stoveClear')}</div>`;
 
       cr.innerHTML = r.map(o => `
         <div class="kanban-ticket">
@@ -1780,14 +2226,14 @@
           <div class="ticket-footer">
             <span class="ticket-price">₹${o.total}</span>
             <div style="display:flex;gap:0.4rem;">
-              <button class="btn btn-ghost btn-xs" onclick="app.handleNoShowOrder(${o.id})">NO-SHOW</button>
+              <button class="btn btn-ghost btn-xs" onclick="app.handleNoShowOrder(${o.id})">${this.t('noShow')}</button>
               <button class="btn btn-primary btn-xs" onclick="app.advanceKanbanOrder(${o.id}, 'READY', 'COLLECTED')">
-                <span>COLLECTED ✓</span>
+                <span>${this.t('collected')}</span>
               </button>
             </div>
           </div>
         </div>
-      `).join('') || '<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">COUNTER CLEARED</div>';
+      `).join('') || `<div style="color:var(--muted);font-family:var(--font-mono);font-size:0.75rem;text-align:center;padding:3rem 1rem;">${this.t('counterCleared')}</div>`;
     }
 
     advanceKanbanOrder(orderId, expectedCurrentStatus, targetStatus) {
@@ -2225,13 +2671,13 @@
 
       cont.innerHTML = `
         <div class="analytics-metrics-editorial" style="margin-bottom:2rem;">
-          <div class="editorial-stat-card"><span class="stat-desc">Total Reviews</span><span class="stat-num">${list.length}</span></div>
-          <div class="editorial-stat-card"><span class="stat-desc">Average Rating</span><span class="stat-num">★ ${avg} / 5</span></div>
-          <div class="editorial-stat-card"><span class="stat-desc">Customer Satisfaction</span><span class="stat-num">${Math.round((parseFloat(avg) / 5) * 100)}%</span></div>
+          <div class="editorial-stat-card"><span class="stat-desc">${this.t('totalReviews')}</span><span class="stat-num">${list.length}</span></div>
+          <div class="editorial-stat-card"><span class="stat-desc">${this.t('avgRating')}</span><span class="stat-num">★ ${avg} / 5</span></div>
+          <div class="editorial-stat-card"><span class="stat-desc">${this.t('custSatisfaction')}</span><span class="stat-num">${Math.round((parseFloat(avg) / 5) * 100)}%</span></div>
         </div>
 
         <div class="editorial-data-card">
-          <div class="editorial-table-head"><h3>Student Feedback Feed</h3><span class="table-head-meta">Verified Token Reviews</span></div>
+          <div class="editorial-table-head"><h3>${this.t('feedbackFeedTitle')}</h3><span class="table-head-meta">${this.t('verifiedReviews')}</span></div>
           <div style="display:flex;flex-direction:column;gap:1rem;">
             ${list.map(f => `
               <div class="feedback-card-item">
@@ -2244,7 +2690,7 @@
                 </div>
                 <p style="font-size:0.88rem;color:var(--ink);">${escHtml(f.comment) || '<em>No written comment provided</em>'}</p>
               </div>
-            `).join('') || '<p style="color:var(--muted);padding:2rem;text-align:center;">No feedback reviews submitted yet.</p>'}
+            `).join('') || `<p style="color:var(--muted);padding:2rem;text-align:center;">${this.t('noFeedback')}</p>`}
           </div>
         </div>
       `;
