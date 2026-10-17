@@ -5,11 +5,13 @@ on:
     branches: [ "main", "master" ]
     paths:
       - 'web/**'
+      - 'supabase/**'
       - '.github/workflows/ci.yml'
   pull_request:
     branches: [ "main", "master" ]
     paths:
       - 'web/**'
+      - 'supabase/**'
       - '.github/workflows/ci.yml'
   workflow_dispatch:
 

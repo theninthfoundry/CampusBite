@@ -3,61 +3,55 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import React from 'react';
 import App from '../app/App';
 
-describe('CampusBite Stage 1 Application Shell', () => {
-  it('renders brand header, navigation, and student portal by default', () => {
+describe('CampusBite Stage 3 Application Shell & Ordering Flow', () => {
+  it('renders brand header, navigation, and student dining portal', async () => {
     render(<App />);
 
-    // Brand and subtitle
     expect(screen.getByText('CampusBite')).toBeInTheDocument();
-    expect(screen.getByText(/Smart Campus Dining/i)).toBeInTheDocument();
-
-    // Verification of fixtures warning / tag
-    expect(screen.getByText(/\[Development Fixture Data — Stage 1 Foundation\]/i)).toBeInTheDocument();
-
-    // Menu items present
-    expect(screen.getByText(/Steamed Idli Sambar/i)).toBeInTheDocument();
+    expect(screen.getByText(/Authoritative Kitchen Synchronization/i)).toBeInTheDocument();
+    expect(screen.getByText(/BREAK-FIT™ Smart Academic Timing/i)).toBeInTheDocument();
   });
 
-  it('allows toggling between Student and Kitchen portals', () => {
+  it('allows toggling between Student Canteen and Kitchen Operations', async () => {
     render(<App />);
 
-    // Initially in Student portal
     const toggleButton = screen.getByRole('button', { name: /Switch to Kitchen Operations/i });
     expect(toggleButton).toBeInTheDocument();
 
     // Switch to Kitchen
     fireEvent.click(toggleButton);
-
-    // Kitchen board should now be displayed
-    expect(screen.getByText(/Kitchen Operations Queue/i)).toBeInTheDocument();
-    expect(screen.getByText(/Incoming Orders/i)).toBeInTheDocument();
+    expect(screen.getByText(/Kitchen Operations & Live Queue/i)).toBeInTheDocument();
+    expect(screen.getByText(/Physical Raw Stock Ledger/i)).toBeInTheDocument();
 
     // Switch back
-    const studentToggleButton = screen.getByRole('button', { name: /Switch to Student Portal/i });
-    fireEvent.click(studentToggleButton);
-    expect(screen.getByText(/Smart Campus Dining/i)).toBeInTheDocument();
+    const studentToggle = screen.getByRole('button', { name: /Switch to Student Portal/i });
+    fireEvent.click(studentToggle);
+    expect(screen.getByText(/Authoritative Kitchen Synchronization/i)).toBeInTheDocument();
   });
 
-  it('filters items when BREAK-FIT option is selected', () => {
+  it('filters dishes when a BREAK-FIT timing option is selected', async () => {
     render(<App />);
 
-    // Select 5-min break
-    const fiveMinOption = screen.getByRole('radio', { name: /⚡ 5-min Quick Bite/i });
+    const fiveMinOption = screen.getByRole('radio', { name: /⚡ 5-min Recess/i });
     fireEvent.click(fiveMinOption);
 
-    // 4 min item (Steamed Idli) should be visible
-    expect(screen.getByText(/Steamed Idli Sambar/i)).toBeInTheDocument();
-    // 15 min item (Chicken Biryani) should be filtered out
-    expect(screen.queryByText(/Hyderabadi Chicken Biryani/i)).not.toBeInTheDocument();
+    // Dishes ready in warmer (Samosas, Gulab Jamun) should be present
+    expect(screen.getByText(/Samosa \(2 pcs\)/i)).toBeInTheDocument();
   });
 
-  it('supports adding item to cart and displays notification', () => {
+  it('adds an item to tray and opens the checkout verification modal', async () => {
     render(<App />);
 
-    const addButtons = screen.getAllByRole('button', { name: /\+ Add to Cart/i });
+    const addButtons = screen.getAllByRole('button', { name: /\+ Add to Tray/i });
     fireEvent.click(addButtons[0]);
 
-    // Cart pill should update
-    expect(screen.getByText(/1 item in cart/i)).toBeInTheDocument();
+    // View Tray button should appear
+    const viewTrayBtn = await screen.findByRole('button', { name: /View tray with 1 items/i });
+    expect(viewTrayBtn).toBeInTheDocument();
+
+    // Open Checkout
+    fireEvent.click(viewTrayBtn);
+    expect(screen.getByText(/Order Review & Confirmation/i)).toBeInTheDocument();
+    expect(screen.getByText(/Authoritative Total:/i)).toBeInTheDocument();
   });
 });
