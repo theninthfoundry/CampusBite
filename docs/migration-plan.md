@@ -15,14 +15,13 @@ To guarantee zero downtime and eliminate regression risks, this migration follow
 
 | Feature | Legacy Behavior (`app.js`) | Verification Status | Migrated to `web/`? | Target Production Architecture | Relevant Tests | Limitations & Notes |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Menu Discovery** | In-memory array & `localStorage`, filtered by veg/prep | Verified (26/26 browser tests) | Partial (Stage 1 Fixtures) | Supabase `food_items` table with real-time availability | `tests.html`, `app.test.tsx` | Stage 1 uses curated fixtures |
-| **BREAK-FIT™ Filter** | Filters items by `prepTimeMins <= selectedTime` | Verified | Yes (Component ready) | Pure domain function combined with dynamic kitchen prep estimates | `app.test.tsx` | Needs live queue telemetry in Stage 2 |
-| **LAST PLATE™ Surplus** | Client-side listing & quantity decrement | Verified | Partial (UI & reservation hook) | Supabase atomic RPC with row-level locks preventing race conditions | `tests.html` (Test 18) | Concurrency requires DB transaction |
-| **Student Cart & Ordering**| `localStorage` cart, generates local order ID | Verified | Shell implemented | Secure Supabase insert with user JWT & idempotency key | `tests.html` (Test 1-5), `app.test.tsx` | No browser persistence in Stage 1 |
-| **Idempotent Requests** | Client-side idempotency log in `localStorage` | Verified | Target behavior defined | Database table `idempotency_keys` with unique constraints | `tests.html` (Test 15) | Pure browser state is insufficient for multi-device |
-| **Kitchen Operations Kanban** | Client-rendered status board, manual state flips | Verified | Yes (Interactive board) | Supabase Realtime channel listening to `orders` table updates | `tests.html` (Test 12-14), `app.test.tsx` | Role authorization required in Stage 2 |
-| **Preparation Batches** | Grouping like items into prep batches | Verified | Target behavior defined | Kitchen aggregation service / SQL view grouping open orders | `tests.html` (Test 10) | Preserved in legacy; targeted for Stage 2 |
-| **Inventory Ledger** | Local deductions on order placement | Verified | Domain types defined | PostgreSQL triggers on `order_items` decrementing `inventory` | `tests.html` (Test 6-9) | Critical risk if client-enforced |
+| **Menu Discovery** | In-memory array & `localStorage`, filtered by veg/prep | Verified (26/26 browser tests) | Yes (Connected to DTO) | Supabase `public_menu_items` view & dynamic warmer badges | `tests.html`, `app.test.tsx` | Stage 3 Authoritative DTO |
+| **BREAK-FIT™ Filter** | Filters items by `prepTimeMins <= selectedTime` | Verified | Yes (Engine integrated) | Centralized ETA calculation factoring warmer stock & queue buffer | `eta.test.ts`, `app.test.tsx` | Multi-interval explainable heuristics |
+| **LAST PLATE™ Surplus** | Client-side listing & quantity decrement | Verified | Partial (UI & reservation hook) | Supabase atomic RPC with row-level locks preventing race conditions | `tests.html` (Test 18) | Stage 4 completes batch transfers |
+| **Student Cart & Ordering**| `localStorage` cart, generates local order ID | Verified | Yes (Checkout Modal & RPC) | Authoritative `create_order_atomic` RPC with idempotency key | `orderService.test.ts`, `app.test.tsx` | Zero client-side price trust |
+| **Idempotent Requests** | Client-side idempotency log in `localStorage` | Verified | Yes (Enforced in DB) | PostgreSQL `idempotency_keys` table with unique constraint | `orderService.test.ts` (idempotency suite) | Multi-device duplicate safe |
+| **Kitchen Operations Kanban** | Client-rendered status board, manual state flips | Verified | Yes (Full Kanban + Controls) | Concurrency-safe status advance, dish pause toggles, raw inventory additions | `orderService.test.ts`, `app.test.tsx` | Exclusive row locks (`SELECT ... FOR UPDATE`) |
+| **Raw Inventory Management** | In-browser array | Verified | Yes (Added to Kitchen) | PostgreSQL `inventory` table with dynamic add & quick adjust | `orderService.test.ts` | Added in response to user request |
 | **Multi-Language Support** | In-app dictionary (EN, HI, TE) | Verified | Yes (Header language selector) | i18next or lightweight typed localization dictionary | Browser visual audit | Extended language toggle in header |
 | **JavaFX Desktop Client** | Separate Java desktop app with Maven | Verified (Preserved untouched) | Not Applicable | Remains standalone JavaFX desktop app | `mvn test` | Academic project, isolated from web migration |
 
@@ -33,28 +32,30 @@ To guarantee zero downtime and eliminate regression risks, this migration follow
 ```mermaid
 graph TD
     Stage0[Stage 0: Reconnaissance & Audit] --> Stage1[Stage 1: Frontend Foundation & Safety]
-    Stage1 --> Stage2[Stage 2: Supabase, PostgreSQL & RLS]
-    Stage2 --> Stage3[Stage 3: Full Feature Parity & Business Logic Migration]
-    Stage3 --> Stage4[Stage 4: End-to-End Testing & Production Cutover]
+    Stage1 --> Stage2[Stage 2: Supabase Schema & Security Architecture]
+    Stage2 --> Stage3[Stage 3: Ordering Engine, Kitchen Operations, ETA & BREAK-FIT]
+    Stage3 --> Stage4[Stage 4: Inventory Batches, Prep Coach, E2E Testing & Production Cutover]
 ```
 
-### Stage 1: Frontend Foundation & Safe Migration (Current)
-- Establish React 18, TypeScript 5, Vite 5 in `web/`.
+### Stage 1: Frontend Foundation & Safe Migration (Complete)
+- Established React 18, TypeScript 5, Vite 5 in `web/`.
 - Strict typing, linting, Vitest suite, and accessible design tokens.
-- Maintain legacy tests and ensure 26/26 baseline passes.
+- Maintained legacy tests ensuring 26/26 baseline passes.
 - Dedicated CI workflow `.github/workflows/ci.yml`.
-- No cutover to GitHub Pages.
 
-### Stage 2: Supabase, PostgreSQL & Row Level Security (Next)
-- Deploy PostgreSQL schema (`supabase/migrations/`).
-- Enforce RLS policies for students and kitchen staff.
-- Implement atomic PostgreSQL functions for inventory deduction and LAST PLATE reservations.
-- Integrate `@supabase/supabase-js` with secure Auth workflows.
+### Stage 2 & Stage 3: Authoritative Ordering, Kitchen Operations & BREAK-FIT (Current)
+- Deployed PostgreSQL migrations (`supabase/migrations/`).
+- Enforced canonical state machine: `NEW` -> `ACCEPTED` -> `PREPARING` -> `READY` -> `COLLECTED`.
+- Atomic order creation and cancellation RPCs with idempotency keys.
+- Centralized ETA Engine with live queue congestion heuristics.
+- Student Cart, Checkout Verification Modal, and Live Order Tracking.
+- Kitchen Operations Kanban with dynamic ingredient and dish additions.
 
-### Stage 3: Feature Migration & Realtime Sync
-- Connect React features to live Supabase backend.
-- Replace development fixtures with live reactive queries.
-- Supabase Realtime for instant order status reflection on both Student and Kitchen dashboards.
+### Stage 4: Inventory Lifecycle, Prep Coach & Production Cutover (Next)
+- Connect preparation batch automation and stockout trend logging.
+- AI Prep Coach integration.
+- Staging validation and comprehensive Playwright cross-device test suite.
+- Explicit stakeholder release gate before GitHub Pages cutover.
 
 ### Stage 4: Staging Validation & Production Cutover
 - Comprehensive Playwright E2E testing against staging environment.

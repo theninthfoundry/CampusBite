@@ -1,6 +1,6 @@
 # CampusBite Testing & Verification Guide
 
-This guide details how to verify the new React + TypeScript + Vite frontend under `web/`, the legacy browser regression suite, and the JavaFX desktop application.
+This guide details how to verify the React + TypeScript + Vite frontend under `web/`, the PostgreSQL authoritative ordering engine, the legacy browser regression suite, and the JavaFX desktop application.
 
 ---
 
@@ -11,7 +11,7 @@ This guide details how to verify the new React + TypeScript + Vite frontend unde
 | **Install Dependencies** | `npm ci` or `npm install` | `web/` | Install frozen, verified npm packages |
 | **Type Check** | `npm run type-check` | `web/` | Execute strict TypeScript compiler verification (`tsc --noEmit`) |
 | **Lint** | `npm run lint` | `web/` | Run ESLint for React hooks and TypeScript conventions |
-| **Component & Unit Tests** | `npm run test` | `web/` | Run Vitest in single-run mode (`vitest run`) |
+| **Component & Unit Tests** | `npm run test` | `web/` | Run Vitest across domain engines, orderService, and app shell |
 | **Component Tests (Watch)** | `npm run test:watch` | `web/` | Run Vitest in interactive watch mode |
 | **Production Build** | `npm run build` | `web/` | Build production bundle to `web/dist/` (`tsc && vite build`) |
 | **Local Dev Server** | `npm run dev` | `web/` | Start local Vite hot-reloading development server |
@@ -41,8 +41,8 @@ npm run type-check
 Executes `tsc --noEmit` against `tsconfig.json`. Verifies:
 - No implicit any
 - Strict null checks
-- Exact optional property types
 - Consistent module resolution via `@/*` aliases
+- Type safety across `Order`, `OrderItem`, `FoodItemDTO`, `InventoryItem`, and `OrderStatus`.
 
 ### 2.3 Linting
 ```bash
@@ -54,76 +54,69 @@ Executes ESLint across `src/` validating React hooks rules, unused variables, an
 ```bash
 npm run test
 ```
-Executes Vitest tests in `web/src/test/`. Tests cover:
-- Application shell rendering
-- Brand header, typography, and responsive container layout
-- Portal switching between Student Canteen and Kitchen Operations
-- BREAK-FIT™ class-interval duration filtering
-- Cart addition and toast notification feedback
-- Error boundary and fallback UI
+Executes Vitest suites in `web/src/test/`:
+- `eta.test.ts`:
+  - Instant 3-min pickup calculation when all items are ready in warmers.
+  - Dominant cooking duration calculation for fresh preparation.
+  - Dynamic queue congestion buffers (+2 min per 2 active queued orders).
+  - BREAK-FIT evaluation across 5m, 10m, and 30m intervals.
+- `orderService.test.ts`:
+  - Idempotent order placement (identical key returns committed result without duplicate order creation).
+  - Authoritative price lookup and subtotal calculations.
+  - Rejection of paused items.
+  - Canonical state machine transitions (`NEW` -> `PREPARING` -> `READY` -> `COLLECTED`).
+  - Rejection of invalid/skipped state transitions.
+  - Cancellation allowed in `NEW` / `ACCEPTED`; rejected once in `PREPARING`.
+  - Adding raw inventory ingredients and stock adjustments.
+  - Adding new menu dishes and toggling pause status.
+- `app.test.tsx`:
+  - Shell rendering and portal switching.
+  - Tray population, checkout verification modal invocation.
+  - Live BREAK-FIT filtering against active queue counts.
 
 ### 2.5 Production Build
 ```bash
 npm run build
 ```
 Generates an optimized, tree-shaken static production bundle in `web/dist/`.
-*Note: As per Condition A, `web/dist/` is NOT deployed to GitHub Pages during Stage 1.*
+*Note: In accordance with Condition A, `web/dist/` is NOT deployed to GitHub Pages during Stage 3; root remains authoritative until Stage 4 cutover.*
 
 ---
 
-## 3. Legacy Browser Regression Test Suite (`tests.html`)
+## 3. Database & Concurrency Verification
+
+Versioned migrations are located under `supabase/migrations/`:
+- `20261017000001_initial_schema.sql`: Tables, views, and RLS policies.
+- `20261017000002_ordering_engine_rpcs.sql`:
+  - `create_order_atomic`: Locks idempotency keys, validates prices authoritatively, inserts order and line items atomically.
+  - `advance_order_status_atomic`: Concurrency-guarded state transitions with `SELECT ... FOR UPDATE`.
+  - `cancel_order_atomic`: State-guarded cancellation releasing allocated warmer stock.
+  - `calculate_queue_eta`: Server-side queue congestion calculation.
+- `20261017000003_seed_campus_data.sql`: Seed data for foods, inventory, and profiles.
+
+### Concurrency Test Scenarios:
+1. **Double Submission**: Two simultaneous requests with the same `idempotency_key` acquire a lock; exactly one order row is inserted; the second request returns the committed payload.
+2. **Conflicting Kitchen Advancement**: Two staff members attempting to advance the same order simultaneously; first transition commits; second transition detects state change and returns already-transitioned status gracefully without duplicate audit records.
+
+---
+
+## 4. Legacy Browser Regression Test Suite (`tests.html`)
 
 The original application includes 26 regression test assertions in `tests.html` covering the in-browser database engine, idempotency, batching, inventory, and LAST PLATE reservations.
 
 ### How to Run:
-1. Open `tests.html` directly in any modern browser (or serve via a local static HTTP server).
+1. Open `tests.html` directly in any modern browser.
 2. The automated runner executes on page load.
-3. Verification results:
-   - **Total Tests**: 26
-   - **Passed**: 26
-   - **Failed**: 0
-   - **Duration**: ~20ms
-
-### Automated Headless Execution:
-For headless CI environments:
-```bash
-npx playwright test tests/e2e/legacy-baseline.spec.ts
-```
-*(Or inspect DOM node `#summary` on `tests.html` for `text: "26 / 26 passed"`)*.
+3. Verification results: **26 / 26 passed** (0 failed, 26 assertions in ~30ms).
 
 ---
 
-## 4. JavaFX Desktop Application Verification
+## 5. JavaFX Desktop Application Verification
 
 The JavaFX desktop project is located at the root of the repository and governed by `pom.xml`.
 
-### Verification Command:
 ```bash
 mvn clean test-compile
-```
-Or to run JavaFX unit tests:
-```bash
 mvn test
 ```
-
-### Environment Prerequisites:
-- Java Development Kit (JDK) 17 or higher
-- Apache Maven 3.8+
-- JavaFX 17 runtime dependencies (configured in `pom.xml`)
-
-*Note: If Maven or Java is not installed in the local environment, the JavaFX source code (`src/main/java`) remains intact, clean, and isolated.*
-
----
-
-## 5. Continuous Integration (GitHub Actions)
-
-Frontend verification is codified in `.github/workflows/ci.yml`. It runs on every push and pull request targeting `main`:
-1. Checkout code
-2. Setup Node.js 20
-3. `npm ci` in `web/`
-4. `npm run type-check`
-5. `npm run lint`
-6. `npm run test`
-7. `npm run build`
-
-The CI pipeline strictly gates changes to `web/` while leaving `.github/workflows/deploy.yml` intact.
+All Java classes under `src/main/java/com/campusbite/` remain 100% untouched and isolated.
