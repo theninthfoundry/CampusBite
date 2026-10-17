@@ -2303,15 +2303,17 @@
         return;
       }
       show(vl, false); show(uc, true); show(na, false);
-      $('user-display-name').innerText = this.currentUser.name;
+      const uDisp = $('user-display-name'); if (uDisp) uDisp.innerText = this.currentUser.name;
       const b = $('user-display-role');
-      b.innerText = this.t(this.currentUser.role.toLowerCase() + 'Role');
-      b.className = `user-role-badge ${this.currentUser.role.toLowerCase()}`;
-      $('user-avatar').innerText = this.currentUser.name.charAt(0);
+      if (b) {
+        b.innerText = this.t(this.currentUser.role.toLowerCase() + 'Role');
+        b.className = `user-role-badge ${this.currentUser.role.toLowerCase()}`;
+      }
+      const uAv = $('user-avatar'); if (uAv) uAv.innerText = this.currentUser.name.charAt(0);
 
       const sw = $('btn-toggle-portal'), tr = $('btn-tray-toggle');
       const isAdminOrStaff = this.currentUser.role === 'ADMIN' || this.currentUser.role === 'STAFF';
-      sw.innerHTML = isAdminOrStaff ? `<span>&larr; ${this.t('customerMenu')}</span>` : `<span>${this.t('staffKitchen')} &rarr;</span>`;
+      if (sw) sw.innerHTML = isAdminOrStaff ? `<span>&larr; ${this.t('customerMenu')}</span>` : `<span>${this.t('staffKitchen')} &rarr;</span>`;
       if (tr) show(tr, !isAdminOrStaff);
       const lblTray = $('lbl-tray'); if (lblTray) lblTray.innerText = this.t('tray');
       const lblExit = $('lbl-exit'); if (lblExit) lblExit.innerText = this.t('exit');
@@ -3766,6 +3768,7 @@
     }
   }
 
+  window.Database = Database;
   window.CampusBiteApp = CampusBiteApp;
   window.app = new CampusBiteApp();
 })();

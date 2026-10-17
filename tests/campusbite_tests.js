@@ -32,7 +32,7 @@
   // Setup a clean isolated test database instance
   function createTestDb() {
     localStorage.removeItem('campusbite_db_v5');
-    const db = new CampusBiteApp().db;
+    const db = new Database();
     db.reset();
     return db;
   }
