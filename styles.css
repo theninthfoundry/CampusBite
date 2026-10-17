@@ -11,9 +11,9 @@
   --accent: #A33B2F; --accent-hover: #8B3026; --accent-subtle: #F6EDE8;
   --indigo: #26364A; --indigo-subtle: #E9EDF2;
   --success: #2E6A4F; --success-subtle: #EAF3EE; --warning: #B45309; --warning-subtle: #FEF3C7;
-  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', 'Noto Sans Telugu', 'Noto Sans Devanagari', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-serif: 'DM Serif Display', 'Cormorant Garamond', Georgia, serif;
-  --font-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-mono: 'JetBrains Mono', 'Noto Sans Telugu', 'Noto Sans Devanagari', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem; --space-5: 1.5rem; --space-6: 2rem; --space-7: 3rem; --space-8: 4rem;
   --radius-xs: 2px; --radius-sm: 4px; --radius-md: 6px; --radius-lg: 8px;
   --shadow-subtle: 0 1px 3px rgba(23, 23, 23, 0.04); --shadow-overlay: 0 12px 32px rgba(23, 23, 23, 0.08);
@@ -37,14 +37,15 @@ a { color: inherit; text-decoration: none; }
    GLOBAL APP HEADER (REFINED EDITORIAL NAVIGATION)
    ========================================================================== */
 .app-header { position: sticky; top: 0; z-index: 100; background: rgba(245, 242, 234, 0.94); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); transition: border-color var(--ease-fast); }
-.header-container { max-width: 1440px; margin: 0 auto; padding: 0.9rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
-.brand { display: flex; align-items: baseline; gap: 0.75rem; cursor: pointer; -webkit-user-select: none; user-select: none; }
+.header-container { max-width: 1440px; margin: 0 auto; padding: 0.85rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; }
+.brand { display: flex; align-items: baseline; gap: 0.75rem; cursor: pointer; -webkit-user-select: none; user-select: none; flex-shrink: 0; }
 .brand-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); line-height: 1; }
 .brand-tag { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.14em; color: var(--muted); text-transform: uppercase; }
-.lang-selector-group { display: inline-flex; align-items: center; background: var(--bg-surface); border: 1px solid var(--line); border-radius: var(--radius-xs); padding: 2px; gap: 2px; margin: 0 1rem; }
-.lang-btn { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; padding: 0.28rem 0.65rem; border-radius: calc(var(--radius-xs) - 2px); color: var(--muted); background: transparent; border: none; cursor: pointer; transition: all var(--ease-fast); }
-.lang-btn:hover { color: var(--ink); }
-.lang-btn.active { background: var(--ink); color: var(--bg-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.header-right-zone { display: flex; align-items: center; gap: 0.85rem; margin-left: auto; flex-shrink: 0; }
+.lang-selector-group { display: inline-flex; align-items: center; background: var(--bg-surface); border: 1px solid var(--line); border-radius: 9999px; padding: 2px; gap: 2px; margin: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+.lang-btn { font-family: var(--font-sans); font-size: 0.73rem; font-weight: 700; letter-spacing: 0.02em; padding: 0.3rem 0.75rem; border-radius: 9999px; color: var(--muted); background: transparent; border: none; cursor: pointer; transition: all var(--ease-fast); line-height: 1.2; }
+.lang-btn:hover { color: var(--ink); background: rgba(0,0,0,0.05); }
+.lang-btn.active { background: var(--ink); color: var(--bg-primary); box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
 .nav-actions { display: flex; align-items: center; gap: 2rem; }
 .nav-link { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 0.35rem 0; position: relative; transition: color var(--ease-fast); display: inline-flex; align-items: center; gap: 0.5rem; }
 .nav-link:hover, .nav-link.active { color: var(--ink); }

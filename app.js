@@ -119,7 +119,157 @@
       custSatisfaction: "Customer Satisfaction",
       feedbackFeedTitle: "Student Feedback Feed",
       noFeedback: "No feedback reviews submitted yet.",
-      verifiedReviews: "Verified Token Reviews"
+      verifiedReviews: "Verified Token Reviews",
+
+      // Prep Coach Operations
+      prepCoachEyebrow: "INTELLIGENT KITCHEN FORECASTING & IDEMPOTENT BATCHING",
+      prepCoachTitle: "Prep Coach Operations",
+      prepCoachDesc: "Suggestions predict dish demand based on rush hours, active queue, and warmer counts. <strong>Forecasts are strictly read-only</strong>: ingredients are deducted only when batch preparation is explicitly confirmed.",
+      warmerReadyLabel: "WARMER READY",
+      suggestedLabel: "SUGGESTED",
+      rawCapacityLabel: "RAW CAPACITY",
+      portionsLabel: "Portions:",
+      cookBatchBtn: "COOK BATCH →",
+      batchLedgerTitle: "Recent Batch Preparation Ledger",
+      batchLedgerMeta: "Authoritative Preparation Records",
+      batchColId: "BATCH ID",
+      batchColDish: "DISH",
+      batchColCooked: "COOKED",
+      batchColAvailable: "AVAILABLE",
+      batchColStatus: "STATUS",
+      batchColTimestamp: "TIMESTAMP",
+      noBatchesToday: "No batches recorded yet today",
+      activeStatus: "ACTIVE",
+      pausedStatus: "PAUSED",
+      availableStatus: "AVAILABLE",
+      orderCountSuffix: "orders",
+      noOrdersYet: "No orders fulfilled yet",
+      noOrdersToday: "No orders registered today",
+      prepTimePrefix: "Prep:",
+      forPickup: "FOR PICKUP",
+
+      // Menu & Recipes Tab
+      addNewDishTitle: "Add New Dish",
+      addNewDishDesc: "Publish freshly prepared meal to the campus menu",
+      dishNameLabel: "Dish Name",
+      dishPriceLabel: "Price (₹)",
+      dishPrepLabel: "Prep Time (min)",
+      dishCatLabel: "Category",
+      dishDescLabel: "Description",
+      publishMenuBtn: "+ PUBLISH TO MENU",
+      dishTableTitle: "Dish Availability, Costs & Multi-Ingredient Recipes",
+      instantKitchenSync: "Instant Kitchen Sync",
+      editRecipeBtn: "EDIT RECIPE",
+      pauseOrderingBtn: "PAUSE ORDERING",
+      resumeOrderingBtn: "RESUME ORDERING",
+      marginLabel: "Margin",
+      ingredientsLabel: "Ingredients",
+      costLabel: "Cost",
+
+      // Inventory Tab
+      invTitle: "Raw Ingredient Inventory",
+      invDesc: "Real physical stock balances. Dishes automatically sold-out when below minimum thresholds.",
+      viewLedgerBtn: "VIEW MOVEMENTS LEDGER →",
+      lowStockBadge: "LOW STOCK",
+      goodStockBadge: "GOOD",
+      minThresholdLabel: "Min Threshold",
+      auditReconcileBtn: "AUDIT RECONCILE",
+
+      // Analytics Tab
+      analyticsTotalOrders: "Total Completed Orders",
+      analyticsGrossRev: "Gross Canteen Revenue",
+      analyticsAvgTicket: "Average Order Value",
+      popularDishesTitle: "POPULAR DISHES",
+      topSellingHeading: "Top 5 Best-Selling Items",
+      fulfilledTokensCaption: "Calculated from fulfilled student tokens",
+      orderDistTitle: "ORDER DISTRIBUTION",
+      peakRushHeading: "Peak Rush Hours",
+      rushVolumeCaption: "Volume distribution across the day",
+      unclaimedSurplus: "Unclaimed Surplus Portions",
+      potentialWasteCost: "Potential Waste Cost",
+      stockoutIncidents: "Stockout Incidents Logged",
+
+      // Last Plate Tab
+      lastPlateEyebrow: "LAST PLATE • SURPLUS READY NOW",
+      lastPlateTitle: "GOOD FOOD. A LITTLE LESS WASTE.",
+      lastPlateDesc: "Prepared surplus portions ready for immediate counter pickup at discounted student pricing before collection closes.",
+      lpPublishTitle: "Publish Last Plate Listing",
+      lpPublishDesc: "Offer prepared surplus portions before the collection window closes",
+      lpSampleListingsBtn: "+ SAMPLE LISTINGS",
+      lpClearSamplesBtn: "CLEAR SAMPLES",
+      lpActiveClosedListings: "Active & Closed Listings",
+      lpStaffKitchenControl: "Staff Kitchen Control",
+      lpStudentResTitle: "Student Reservations & Collections",
+      lpImpactEyebrow: "MEASURED OUTCOMES",
+      lpImpactTitle: "Last Plate Kitchen Impact",
+      lpImpactDesc: "Calculated directly from real listing and reservation records. Reflects portions collected through Last Plate.",
+      reserveSurplusBtn: "RESERVE PORTION →",
+      collectByLabel: "COLLECT BY",
+      pickupLabel: "PICKUP",
+      priceLabel: "PRICE",
+      availableLabel: "AVAILABLE",
+
+      // Student Orders & Timeline
+      ordersRealtimePrep: "REAL-TIME PREPARATION",
+      ordersLiveTitle: "LIVE ORDERS",
+      syncingKitchenLive: "Syncing with kitchen queue live",
+      trayReadyBadge: "TRAY READY",
+      noOrdersTitle: "No Orders Placed Yet",
+      noOrdersDesc: "You have no active meals in the kitchen queue. Choose a fresh dish from today's menu to place your first token.",
+      discoverMenuBtn: "DISCOVER MENU →",
+      activeTokensEyebrow: "ACTIVE KITCHEN TOKENS",
+      tokenPrefix: "TOKEN #",
+      orderPlacedAt: "Placed at",
+      etaPrefix: "ETA ~",
+      cancelBtn: "Cancel",
+      stepOrdered: "ORDERED",
+      stepPreparing: "PREPARING",
+      stepReady: "READY",
+      stepCollected: "COLLECTED",
+      orderQueueAccepted: "Order accepted in kitchen queue",
+      orderCookingStove: "Cooking on stove & assembly",
+      orderReadyCounter: "Ready for pickup at Counter 01",
+      collectDishBtn: "COLLECT DISH ✓",
+      pastOrdersEyebrow: "PAST FULFILLED ORDERS",
+      rateMealBtn: "★ RATE",
+      reorderBtn: "REORDER →",
+
+      // Student Profile
+      profileStudentOverview: "STUDENT OVERVIEW",
+      profileFacultyOverview: "FACULTY OVERVIEW",
+      profileCampusAccount: "CAMPUS DINING ACCOUNT",
+      statTotalOrders: "Total Orders Placed",
+      statTotalSpent: "Total Canteen Spending",
+      statFavDish: "All-Time Favorite Dish",
+      rollIdLabel: "Roll / Student ID",
+      facultyIdLabel: "Faculty / Employee ID",
+      regEmailLabel: "Registered Email",
+      campusNodeLabel: "Campus Node",
+      campusNodeVal: "Main Academic Canteen (Counter 01 & 02)",
+      orderHistoryTitle: "Order History & Activity",
+      ordersPlacedSuffix: "Orders Placed",
+      noOrderHistoryDesc: "No order history yet. Discover dishes in the menu to place your first token.",
+
+      // Tray & Bill
+      estimatedPrepTime: "ESTIMATED PREPARATION TIME",
+      trayEtaFormula: "Portions ready in warmer + cooking batches",
+      techFee: "Canteen Tech Fee",
+      feeFree: "₹0 (Free)",
+      pickupNotice: "Pickup: Counter 01 & 02 · Cash / UPI on collection",
+      processingOrder: "PROCESSING ORDER...",
+      emptyTrayWarning: "Your tray is empty! Add dishes to place an order.",
+
+      // Modals
+      orderAcceptedEyebrow: "ORDER ACCEPTED BY KITCHEN",
+      orderConfirmedTitle: "ORDER CONFIRMED.",
+      estimatedReadyLabel: "ESTIMATED READY",
+      pickupCounterLabel: "PICKUP COUNTER",
+      pickupCounterVal: "Counter 01 · Main Canteen",
+      trackOrderBtn: "TRACK ORDER →",
+      lpReservedConfirmed: "RESERVATION CONFIRMED • READY FOR PICKUP",
+      lpPortionReserved: "PORTION RESERVED.",
+      lpModalNotice: "Show this token to canteen staff at the counter to collect your portion. Pay on collection.",
+      lpViewReservations: "VIEW RESERVATIONS →"
     },
     te: {
       brandTitle: "CAMPUSBITE",
@@ -212,7 +362,157 @@
       custSatisfaction: "కస్టమర్ సంతృప్తి",
       feedbackFeedTitle: "విద్యార్థి అభిప్రాయాల ఫీడ్",
       noFeedback: "ఇంకా ఎలాంటి అభిప్రాయాలు నమోదు కాలేదు.",
-      verifiedReviews: "ధృవీకరించబడిన సమీక్షలు"
+      verifiedReviews: "ధృవీకరించబడిన సమీక్షలు",
+
+      // Prep Coach Operations
+      prepCoachEyebrow: "ఇంటెలిజెంట్ కిచెన్ ఫోర్‌కాస్టింగ్ & బాచ్ ప్రిపరేషన్",
+      prepCoachTitle: "ప్రిప్ కోచ్ ఆపరేషన్స్",
+      prepCoachDesc: "రద్దీ సమయాలు, ప్రస్తుత ఆర్డర్ క్యూ మరియు వార్మర్ లెక్కల ఆధారంగా డిమాండ్ అంచనా వేయబడుతుంది. <strong>అంచనాలు కేవలం సమాచారం కొరకు మాత్రమే</strong>: బ్యాచ్ వండటం ప్రారంభించినప్పుడు మాత్రమే ఇన్వెంటరీ నుండి సరుకులు తీసివేయబడతాయి.",
+      warmerReadyLabel: "వార్మర్‌లో సిద్ధం",
+      suggestedLabel: "సూచించిన బ్యాచ్",
+      rawCapacityLabel: "ముడి సరుకు సామర్థ్యం",
+      portionsLabel: "పరిమాణం:",
+      cookBatchBtn: "బ్యాచ్ వండండి →",
+      batchLedgerTitle: "ఇటీవలి బ్యాచ్ తయారీ లెడ్జర్",
+      batchLedgerMeta: "అధికారిక తయారీ రికార్డులు",
+      batchColId: "బ్యాచ్ ఐడి",
+      batchColDish: "వంటకం",
+      batchColCooked: "వండినవి",
+      batchColAvailable: "అందుబాటులో",
+      batchColStatus: "స్థితి",
+      batchColTimestamp: "సమయం",
+      noBatchesToday: "నేడు ఇంకా ఎలాంటి బ్యాచ్‌లు నమోదు కాలేదు",
+      activeStatus: "సక్రియం",
+      pausedStatus: "నిలిపివేయబడింది",
+      availableStatus: "అందుబాటులో ఉంది",
+      orderCountSuffix: "ఆర్డర్లు",
+      noOrdersYet: "ఇంకా ఎలాంటి ఆర్డర్లు పూర్తి కాలేదు",
+      noOrdersToday: "నేడు ఇంకా ఆర్డర్లు నమోదు కాలేదు",
+      prepTimePrefix: "తయారీ:",
+      forPickup: "పికప్‌కు సిద్ధం",
+
+      // Menu & Recipes Tab
+      addNewDishTitle: "కొత్త వంటకాన్ని చేర్చండి",
+      addNewDishDesc: "క్యాంపస్ మెనూకు తాజా భోజనాన్ని జోడించండి",
+      dishNameLabel: "వంటకం పేరు",
+      dishPriceLabel: "ధర (₹)",
+      dishPrepLabel: "తయారీ సమయం (నిమి)",
+      dishCatLabel: "వర్గం",
+      dishDescLabel: "వివరణ",
+      publishMenuBtn: "+ మెనూలో ప్రచురించు",
+      dishTableTitle: "వంటకాల లభ్యత, ఖర్చులు & బహుళ-పదార్థాల వంటకాలు",
+      instantKitchenSync: "తక్షణ కిచెన్ సింక్",
+      editRecipeBtn: "రెసిపీ సవరించండి",
+      pauseOrderingBtn: "ఆర్డరింగ్ నిలిపివేయి",
+      resumeOrderingBtn: "పునఃప్రారంభించు",
+      marginLabel: "మార్జిన్",
+      ingredientsLabel: "పదార్థాలు",
+      costLabel: "ఖర్చు",
+
+      // Inventory Tab
+      invTitle: "ముడి పదార్థాల ఇన్వెంటరీ",
+      invDesc: "నిజమైన భౌతిక నిల్వలు. కనీస పరిమితి కంటే తక్కువగా ఉన్నప్పుడు వంటకాలు స్వయంచాలకంగా పూర్తయినట్లు చూపబడతాయి.",
+      viewLedgerBtn: "మూవ్‌మెంట్స్ లెడ్జర్ చూడండి →",
+      lowStockBadge: "తక్కువ స్టాక్",
+      goodStockBadge: "సరిపడా ఉంది",
+      minThresholdLabel: "కనీస పరిమితి",
+      auditReconcileBtn: "స్టాక్ సరిచూడండి",
+
+      // Analytics Tab
+      analyticsTotalOrders: "పూర్తయిన మొత్తం ఆర్డర్లు",
+      analyticsGrossRev: "మొత్తం క్యాంటీన్ ఆదాయం",
+      analyticsAvgTicket: "సగటు ఆర్డర్ విలువ",
+      popularDishesTitle: "ప్రజాదరణ పొందిన వంటకాలు",
+      topSellingHeading: "టాప్ 5 అత్యధికంగా అమ్ముడైన వంటకాలు",
+      fulfilledTokensCaption: "విద్యార్థుల ఆర్డర్ల ఆధారంగా లెక్కించబడింది",
+      orderDistTitle: "ఆర్డర్ల పంపిణీ",
+      peakRushHeading: "పీక్ రద్దీ వేళలు",
+      rushVolumeCaption: "రోజంతా ఆర్డర్ల పరిమాణ పంపిణీ",
+      unclaimedSurplus: "మిగిలిపోయిన అదనపు భాగాలు",
+      potentialWasteCost: "వృధా కాగల ఖర్చు",
+      stockoutIncidents: "స్టాక్ లేని సందర్భాలు",
+
+      // Last Plate Tab
+      lastPlateEyebrow: "లాస్ట్ ప్లేట్ • మిగిలిన ఆహారం సిద్ధంగా ఉంది",
+      lastPlateTitle: "మంచి ఆహారం. తక్కువ వృధా.",
+      lastPlateDesc: "సేకరణ సమయం ముగిసేలోపు విద్యార్థుల తగ్గింపు ధరతో వెంటనే పొందగలిగే అదనపు ఆహార భాగాలు.",
+      lpPublishTitle: "లాస్ట్ ప్లేట్ జాబితాను ప్రచురించండి",
+      lpPublishDesc: "సేకరణ సమయం ముగిసేలోపు అదనంగా మిగిలిన ఆహారాన్ని అందించండి",
+      lpSampleListingsBtn: "+ నమూనా జాబితాలు",
+      lpClearSamplesBtn: "నమూనాలను తొలగించండి",
+      lpActiveClosedListings: "సక్రియం & ముగిసిన జాబితాలు",
+      lpStaffKitchenControl: "స్టాఫ్ కిచెన్ కంట్రోల్",
+      lpStudentResTitle: "విద్యార్థి రిజర్వేషన్లు & సేకరణలు",
+      lpImpactEyebrow: "కొలిచిన ఫలితాలు",
+      lpImpactTitle: "లాస్ట్ ప్లేట్ కిచెన్ ప్రభావం",
+      lpImpactDesc: "రిజర్వేషన్ రికార్డుల నుండి నేరుగా లెక్కించబడింది. లాస్ట్ ప్లేట్ ద్వారా సేకరించిన భాగాలను సూచిస్తుంది.",
+      reserveSurplusBtn: "రిజర్వ్ చేయండి →",
+      collectByLabel: "ఈ సమయానికి తీసుకోండి",
+      pickupLabel: "పికప్",
+      priceLabel: "ధర",
+      availableLabel: "అందుబాటులో",
+
+      // Student Orders & Timeline
+      ordersRealtimePrep: "రియల్ టైమ్ ప్రిపరేషన్",
+      ordersLiveTitle: "లైవ్ ఆర్డర్లు",
+      syncingKitchenLive: "కిచెన్ క్యూతో లైవ్ సింక్ అవుతోంది",
+      trayReadyBadge: "ట్రే సిద్ధంగా ఉంది",
+      noOrdersTitle: "ఇంకా ఎలాంటి ఆర్డర్లు చేయలేదు",
+      noOrdersDesc: "కిచెన్ క్యూలో మీ ఆర్డర్లు ఏవీ లేవు. నేటి మెనూ నుండి తాజాగా ఆర్డర్ చేయండి.",
+      discoverMenuBtn: "మెనూ చూడండి →",
+      activeTokensEyebrow: "యాక్టివ్ కిచెన్ టోకెన్లు",
+      tokenPrefix: "టోకెన్ #",
+      orderPlacedAt: "ఆర్డర్ చేసిన సమయం",
+      etaPrefix: "అంచనా సమయం ~",
+      cancelBtn: "రద్దు చేయి",
+      stepOrdered: "ఆర్డర్ చేయబడింది",
+      stepPreparing: "తయారవుతోంది",
+      stepReady: "సిద్ధంగా ఉంది",
+      stepCollected: "స్వీకరించబడింది",
+      orderQueueAccepted: "కిచెన్ క్యూలో ఆర్డర్ స్వీకరించబడింది",
+      orderCookingStove: "స్టవ్‌పై వండటం & తయారీ జరుగుతోంది",
+      orderReadyCounter: "కౌంటర్ 01 వద్ద పికప్ చేసుకోవడానికి సిద్ధం",
+      collectDishBtn: "భోజనం స్వీకరించండి ✓",
+      pastOrdersEyebrow: "పూర్తయిన పాత ఆర్డర్లు",
+      rateMealBtn: "★ రేటింగ్",
+      reorderBtn: "మళ్లీ ఆర్డర్ చేయండి →",
+
+      // Student Profile
+      profileStudentOverview: "విద్యార్థి వివరాలు",
+      profileFacultyOverview: "అధ్యాపకుల వివరాలు",
+      profileCampusAccount: "క్యాంపస్ డైనింగ్ ఖాతా",
+      statTotalOrders: "చేసిన మొత్తం ఆర్డర్లు",
+      statTotalSpent: "మొత్తం క్యాంటీన్ ఖర్చు",
+      statFavDish: "ఎల్లప్పుడూ ఇష్టమైన వంటకం",
+      rollIdLabel: "రోల్ / విద్యార్థి ఐడి",
+      facultyIdLabel: "ఫ్యాకల్టీ / ఉద్యోగి ఐడి",
+      regEmailLabel: "నమోదిత ఇమెయిల్",
+      campusNodeLabel: "క్యాంపస్ స్థానం",
+      campusNodeVal: "ప్రధాన అకడమిక్ క్యాంటీన్ (కౌంటర్ 01 & 02)",
+      orderHistoryTitle: "ఆర్డర్ చరిత్ర & కార్యకలాపాలు",
+      ordersPlacedSuffix: "ఆర్డర్లు",
+      noOrderHistoryDesc: "ఇంకా ఎలాంటి ఆర్డర్ చరిత్ర లేదు. నేటి మెనూ నుండి వంటకాలను ఆర్డర్ చేయండి.",
+
+      // Tray & Bill
+      estimatedPrepTime: "అంచనా తయారీ సమయం",
+      trayEtaFormula: "వార్మర్ నిల్వలు + తాజాగా వండే బ్యాచ్‌ల ఆధారంగా",
+      techFee: "క్యాంటీన్ టెక్ ఫీజు",
+      feeFree: "₹0 (ఉచితం)",
+      pickupNotice: "పికప్: కౌంటర్ 01 & 02 · సేకరణ వద్ద నగదు / UPI",
+      processingOrder: "ఆర్డర్ ప్రాసెస్ అవుతోంది...",
+      emptyTrayWarning: "మీ ట్రే ఖాళీగా ఉంది! ఆర్డర్ చేయడానికి వంటకాలను జోడించండి.",
+
+      // Modals
+      orderAcceptedEyebrow: "కిచెన్ ఆర్డర్‌ను స్వీకరించింది",
+      orderConfirmedTitle: "ఆర్డర్ నిర్ధారించబడింది.",
+      estimatedReadyLabel: "అంచనా సమయం",
+      pickupCounterLabel: "పికప్ కౌంటర్",
+      pickupCounterVal: "కౌంటర్ 01 · ప్రధాన క్యాంటీన్",
+      trackOrderBtn: "ఆర్డర్ ట్రాక్ చేయండి →",
+      lpReservedConfirmed: "రిజర్వేషన్ నిర్ధారించబడింది • పికప్‌కు సిద్ధం",
+      lpPortionReserved: "భోజనం రిజర్వ్ చేయబడింది.",
+      lpModalNotice: "కౌంటర్ వద్ద సిబ్బందికి ఈ టోకెన్ చూపించి ఆహారాన్ని పొందండి. సేకరణ వద్ద చెల్లించండి.",
+      lpViewReservations: "రిజర్వేషన్లు చూడండి →"
     },
     hi: {
       brandTitle: "CAMPUSBITE",
@@ -305,7 +605,157 @@
       custSatisfaction: "ग्राहक संतुष्टि",
       feedbackFeedTitle: "छात्र प्रतिक्रिया फ़ीड",
       noFeedback: "अभी तक कोई समीक्षा प्रस्तुत नहीं की गई है।",
-      verifiedReviews: "सत्यापित समीक्षाएं"
+      verifiedReviews: "सत्यापित समीक्षाएं",
+
+      // Prep Coach Operations
+      prepCoachEyebrow: "इंटेलिजेंट किचन फोरकास्टिंग और बैच संचालन",
+      prepCoachTitle: "प्रेप कोच ऑपरेशंस",
+      prepCoachDesc: "रश आवर्स, एक्टिव कतार और वॉर्मर काउंट के आधार पर मांग का पूर्वानुमान। <strong>पूर्वानुमान केवल प्रदर्शन के लिए हैं</strong>: सामग्री केवल तभी काटी जाती है जब बैच पकाने की पुष्टि की जाती है।",
+      warmerReadyLabel: "वॉर्मर में तैयार",
+      suggestedLabel: "सुझाई गई मात्रा",
+      rawCapacityLabel: "कच्ची सामग्री क्षमता",
+      portionsLabel: "मात्रा:",
+      cookBatchBtn: "बैच पकाएं →",
+      batchLedgerTitle: "हालिया बैच तैयारी लेज़र",
+      batchLedgerMeta: "आधिकारिक तैयारी रिकॉर्ड",
+      batchColId: "बैच आईडी",
+      batchColDish: "व्यंजन",
+      batchColCooked: "पकाया गया",
+      batchColAvailable: "उपलब्ध",
+      batchColStatus: "स्थिति",
+      batchColTimestamp: "समय",
+      noBatchesToday: "आज अभी तक कोई बैच दर्ज नहीं किया गया",
+      activeStatus: "सक्रिय",
+      pausedStatus: "रुका हुआ",
+      availableStatus: "उपलब्ध",
+      orderCountSuffix: "ऑर्डर",
+      noOrdersYet: "अभी तक कोई ऑर्डर पूर्ण नहीं हुआ",
+      noOrdersToday: "आज कोई ऑर्डर दर्ज नहीं हुआ",
+      prepTimePrefix: "तैयारी:",
+      forPickup: "पिकअप के लिए",
+
+      // Menu & Recipes Tab
+      addNewDishTitle: "नया व्यंजन जोड़ें",
+      addNewDishDesc: "कैंपस मेनू में ताज़ा व्यंजन प्रकाशित करें",
+      dishNameLabel: "व्यंजन का नाम",
+      dishPriceLabel: "मूल्य (₹)",
+      dishPrepLabel: "तैयारी का समय (मिनट)",
+      dishCatLabel: "श्रेणी",
+      dishDescLabel: "विवरण",
+      publishMenuBtn: "+ मेनू में प्रकाशित करें",
+      dishTableTitle: "व्यंजन उपलब्धता, लागत और बहु-सामग्री रेसिपी",
+      instantKitchenSync: "त्वरित किचन सिंक",
+      editRecipeBtn: "रेसिपी बदलें",
+      pauseOrderingBtn: "ऑर्डर रोकें",
+      resumeOrderingBtn: "पुनः शुरू करें",
+      marginLabel: "मार्जिन",
+      ingredientsLabel: "सामग्री",
+      costLabel: "लागत",
+
+      // Inventory Tab
+      invTitle: "कच्ची सामग्री इन्वेंटरी",
+      invDesc: "वास्तविक भौतिक स्टॉक शेष। न्यूनतम सीमा से नीचे जाने पर व्यंजन स्वतः सोल्ड-आउट हो जाते हैं।",
+      viewLedgerBtn: "मूवमेंट लेज़र देखें →",
+      lowStockBadge: "कम स्टॉक",
+      goodStockBadge: "पर्याप्त",
+      minThresholdLabel: "न्यूनतम सीमा",
+      auditReconcileBtn: "स्टॉक ऑडिट",
+
+      // Analytics Tab
+      analyticsTotalOrders: "कुल पूर्ण ऑर्डर",
+      analyticsGrossRev: "कुल कैंटीन राजस्व",
+      analyticsAvgTicket: "औसत ऑर्डर मूल्य",
+      popularDishesTitle: "लोकप्रिय व्यंजन",
+      topSellingHeading: "शीर्ष 5 सबसे ज्यादा बिकने वाले व्यंजन",
+      fulfilledTokensCaption: "पूर्ण किए गए छात्र टोकन से गणना",
+      orderDistTitle: "ऑर्डर वितरण",
+      peakRushHeading: "पीक रश आवर्स",
+      rushVolumeCaption: "दिन भर में ऑर्डर का वितरण",
+      unclaimedSurplus: "अदावाकृत अधिशेष भोजन",
+      potentialWasteCost: "संभावित बर्बादी लागत",
+      stockoutIncidents: "स्टॉकआउट घटनाएं",
+
+      // Last Plate Tab
+      lastPlateEyebrow: "लास्ट प्लेट • अधिशेष भोजन तैयार",
+      lastPlateTitle: "स्वादिष्ट भोजन। न्यूनतम बर्बादी।",
+      lastPlateDesc: "समय सीमा समाप्त होने से पहले रियायती दरों पर तत्काल काउंटर पिकअप के लिए तैयार अधिशेष भोजन।",
+      lpPublishTitle: "लास्ट प्लेट लिस्टिंग प्रकाशित करें",
+      lpPublishDesc: "समय सीमा समाप्त होने से पहले अधिशेष भोजन उपलब्ध कराएं",
+      lpSampleListingsBtn: "+ नमूना लिस्टिंग",
+      lpClearSamplesBtn: "नमूने हटाएं",
+      lpActiveClosedListings: "सक्रिय और बंद लिस्टिंग",
+      lpStaffKitchenControl: "स्टाफ किचन नियंत्रण",
+      lpStudentResTitle: "छात्र आरक्षण और संग्रह",
+      lpImpactEyebrow: "मापे गए परिणाम",
+      lpImpactTitle: "लास्ट प्लेट किचन प्रभाव",
+      lpImpactDesc: "आरक्षण रिकॉर्ड से सीधे गणना। लास्ट प्लेट के माध्यम से बचाए गए भोजन को दर्शाता है।",
+      reserveSurplusBtn: "आरक्षित करें →",
+      collectByLabel: "इस समय तक लें",
+      pickupLabel: "पिकअप",
+      priceLabel: "मूल्य",
+      availableLabel: "उपलब्ध",
+
+      // Student Orders & Timeline
+      ordersRealtimePrep: "रीयल-टाइम तैयारी",
+      ordersLiveTitle: "लाइव ऑर्डर",
+      syncingKitchenLive: "किचन कतार के साथ लाइव सिंक",
+      trayReadyBadge: "ट्रे तैयार है",
+      noOrdersTitle: "अभी तक कोई ऑर्डर नहीं दिया गया",
+      noOrdersDesc: "किचन कतार में आपका कोई ऑर्डर नहीं है। आज के मेनू से ताज़ा भोजन चुनें।",
+      discoverMenuBtn: "मेनू देखें →",
+      activeTokensEyebrow: "सक्रिय किचन टोकन",
+      tokenPrefix: "टोकन #",
+      orderPlacedAt: "ऑर्डर का समय",
+      etaPrefix: "अनुमानित समय ~",
+      cancelBtn: "रद्द करें",
+      stepOrdered: "ऑर्डर दिया",
+      stepPreparing: "तैयारी जारी",
+      stepReady: "तैयार",
+      stepCollected: "प्राप्त हुआ",
+      orderQueueAccepted: "किचन कतार में ऑर्डर स्वीकार हुआ",
+      orderCookingStove: "स्टोव पर पकाया जा रहा है",
+      orderReadyCounter: "काउंटर 01 पर पिकअप के लिए तैयार",
+      collectDishBtn: "भोजन प्राप्त करें ✓",
+      pastOrdersEyebrow: "पिछले पूर्ण ऑर्डर",
+      rateMealBtn: "★ रेटिंग दें",
+      reorderBtn: "पुनः ऑर्डर करें →",
+
+      // Student Profile
+      profileStudentOverview: "छात्र अवलोकन",
+      profileFacultyOverview: "संकाय अवलोकन",
+      profileCampusAccount: "कैंपस डाइनिंग खाता",
+      statTotalOrders: "कुल ऑर्डर किए गए",
+      statTotalSpent: "कुल कैंटीन खर्च",
+      statFavDish: "सर्वकालिक पसंदीदा व्यंजन",
+      rollIdLabel: "रोल / छात्र आईडी",
+      facultyIdLabel: "संकाय / कर्मचारी आईडी",
+      regEmailLabel: "पंजीकृत ईमेल",
+      campusNodeLabel: "कैंपस स्थान",
+      campusNodeVal: "मुख्य कैंटीन (काउंटर 01 और 02)",
+      orderHistoryTitle: "ऑर्डर इतिहास और गतिविधि",
+      ordersPlacedSuffix: "ऑर्डर",
+      noOrderHistoryDesc: "अभी तक कोई ऑर्डर इतिहास नहीं है। आज के मेनू से भोजन चुनें।",
+
+      // Tray & Bill
+      estimatedPrepTime: "अनुमानित तैयारी समय",
+      trayEtaFormula: "वॉर्मर स्टॉक और ताज़ा बैच के आधार पर",
+      techFee: "कैंटीन शुल्क",
+      feeFree: "₹0 (मुफ्त)",
+      pickupNotice: "पिकअप: काउंटर 01 और 02 · डिलीवरी पर नकद / UPI",
+      processingOrder: "ऑर्डर प्रोसेस हो रहा है...",
+      emptyTrayWarning: "आपकी ट्रे खाली है! ऑर्डर करने के लिए व्यंजन जोड़ें।",
+
+      // Modals
+      orderAcceptedEyebrow: "किचन द्वारा ऑर्डर स्वीकार किया गया",
+      orderConfirmedTitle: "ऑर्डर कन्फर्म हुआ।",
+      estimatedReadyLabel: "अनुमानित समय",
+      pickupCounterLabel: "पिकअप काउंटर",
+      pickupCounterVal: "काउंटर 01 · मुख्य कैंटीन",
+      trackOrderBtn: "ऑर्डर ट्रैक करें →",
+      lpReservedConfirmed: "आरक्षण कन्फर्म हुआ • पिकअप के लिए तैयार",
+      lpPortionReserved: "भोजन आरक्षित हुआ।",
+      lpModalNotice: "काउंटर पर स्टाफ को यह टोकन दिखाकर अपना भोजन प्राप्त करें। डिलीवरी पर भुगतान करें।",
+      lpViewReservations: "आरक्षण देखें →"
     }
   };
 
@@ -313,33 +763,62 @@
     te: {
       1: { name: "చికెన్ బిర్యానీ", desc: "సువాసనగల బాస్మతి బియ్యం, మసాలా చికెన్, వేయించిన ఉల్లిపాయలు & పుదీనా పరిమళం", cat: "భోజనం" },
       2: { name: "వెజ్ బిర్యానీ", desc: "పొడవైన బాస్మతి బియ్యం, కుంకుమపువ్వు, తాజా కూరగాయలు & సుగంధ ద్రవ్యాలు", cat: "భోజనం" },
-      3: { name: "పన్నీర్ బటర్ మసాలా", desc: "క్రీమీ టొమాటో-వెన్న గ్రేవీలో మృదువైన పన్నీర్ ముక్కలు, 2 రోటీలతో", cat: "భోజనం" },
-      4: { name: "మసాలా దోశ", desc: "కరకరలాడే దోశ, బంగాళాదుంప మసాలా, సాంబార్ & కొబ్బరి చట్నీ", cat: "స్నాక్స్" },
-      5: { name: "సమోసా (2 ముక్కలు)", desc: "బంగాళాదుంప, బఠానీలతో నింపిన వేడివేడి సమోసాలు, పుదీనా చట్నీతో", cat: "స్నాక్స్" },
-      6: { name: "ఫిల్టర్ కాఫీ", desc: "సాంప్రదాయ దక్షిణ భారత డికాక్షన్ కాఫీ, తాజా నురుగు పాలు", cat: "పానీయాలు" },
-      7: { name: "మామిడి లస్సీ", desc: "అల్ఫోన్సో మామిడి పల్ప్, తాజా పెరుగు, యాలకుల సువాసన", cat: "పానీయాలు" },
-      8: { name: "మసాలా చాయ్", desc: "అల్లం, యాలకులు మరియు తాజా మసాలాలతో కాచిన వేడి టీ", cat: "పానీయాలు" },
-      9: { name: "గులాబ్ జామూన్ (2 ముక్కలు)", desc: "యాలకుల చక్కెర పాకంలో నానబెట్టిన వేడివేడి గులాబ్ జామూన్", cat: "మిఠాయిలు" },
-      10: { name: "వెజ్ బర్గర్", desc: "కరకరలాడే కూరగాయల ప్యాటీ, తాజా లెట్యూస్ & చీజ్ సాస్", cat: "స్నాక్స్" },
-      11: { name: "చికెన్ ఫ్రైడ్ రైస్", desc: "చికెన్ ముక్కలు, కోడిగుడ్డు, స్ప్రింగ్ ఆనియన్స్‌తో టాస్ చేసిన రైస్", cat: "భోజనం" },
-      12: { name: "కోల్డ్ కాఫీ", desc: "చల్లటి కాఫీ బ్లెండ్, వనిల్లా ఐస్‌క్రీమ్ మరియు చాక్లెట్ డ్రిజిల్", cat: "పానీయాలు" },
-      13: { name: "వెజ్ పఫ్", desc: "మసాలా కూరగాయలతో నింపిన కరకరలాడే బేకరీ పఫ్", cat: "స్నాక్స్" }
+      3: { name: "పన్నీర్ రైస్", desc: "తాజా పన్నీర్ ముక్కలు, మిరియాల మసాలాతో వేయించిన బాస్మతి రైస్", cat: "భోజనం" },
+      4: { name: "వెజ్ పిజ్జా", desc: "కరకరలాడే క్రస్ట్, కరిగిన మొజారెల్లా చీజ్, క్యాప్సికమ్ & ఒరేగానో", cat: "స్నాక్స్" },
+      5: { name: "చికెన్ బర్గర్", desc: "క్రిస్పీ చికెన్ ప్యాటీ, స్పెషల్ సాస్ మరియు తాజా లెట్యూస్", cat: "స్నాక్స్" },
+      6: { name: "మసాలా దోశ", desc: "బంగారు రంగు కరకరలాడే దోశ, బంగాళాదుంప మసాలా, సాంబార్ & కొబ్బరి చట్నీ", cat: "భోజనం" },
+      7: { name: "సమోసా (2 ముక్కలు)", desc: "బంగాళాదుంప, బఠానీలతో నింపిన వేడివేడి సమోసాలు, పుదీనా చట్నీతో", cat: "స్నాక్స్" },
+      8: { name: "ఫ్రెంచ్ ఫ్రైస్", desc: "బంగారు రంగులో వేయించిన కరకరలాడే పొటాటో ఫింగర్స్, ఉప్పుతో", cat: "స్నాక్స్" },
+      9: { name: "మసాలా కోక్", desc: "చల్లటి కోలా, జీలకర్ర పొడి, నల్ల ఉప్పు & తాజా నిమ్మరసంతో", cat: "పానీయాలు" },
+      10: { name: "కోల్డ్ కాఫీ", desc: "చల్లటి కాఫీ బ్లెండ్, వనిల్లా ఐస్‌క్రీమ్ మరియు చాక్లెట్ డ్రిజిల్", cat: "పానీయాలు" },
+      11: { name: "లెమన్ టీ", desc: "వేడివేడి అస్సాం బ్లాక్ టీ, తాజా నిమ్మరసం & తేనె స్పర్శ", cat: "పానీయాలు" },
+      12: { name: "గులాబ్ జామూన్ (2 ముక్కలు)", desc: "యాలకుల చక్కెర పాకంలో నానబెట్టిన వేడివేడి గులాబ్ జామూన్", cat: "మిఠాయిలు" }
     },
     hi: {
       1: { name: "चिकन बिरयानी", desc: "मसालेदार बासमती चावल, कोमल चिकन, कैरामेलाइज्ड प्याज और पुदीने की खुशबू", cat: "भोजन" },
       2: { name: "वेज बिरयानी", desc: "लंबा बासमती चावल, केसर, ताज़ी सब्ज़ियाँ और भुने हुए खड़े मसाले", cat: "भोजन" },
-      3: { name: "पनीर बटर मसाला", desc: "मखमली टमाटर-मक्खन ग्रेवी में ताज़ा पनीर, 2 तंदूरी रोटी के साथ", cat: "भोजन" },
-      4: { name: "मसाला डोसा", desc: "कुरकुरा डोसा, आलू मसाला, सांभर और नारियल की ताज़ा चटनी", cat: "नाश्ता" },
-      5: { name: "समोसा (2 नग)", desc: "मसालेदार आलू और मटर भरा कुरकुरा समोसा, हरी चटनी के साथ", cat: "नाश्ता" },
-      6: { name: "फ़िल्टर कॉफ़ी", desc: "पारंपरिक दक्षिण भारतीय डिकॉक्शन कॉफ़ी, झागदार दूध के साथ", cat: "पेय" },
-      7: { name: "मैंगो लस्सी", desc: "अल्फांसो आम का गूदा, ताज़ा दही और इलायची का स्वादिष्ट मिश्रण", cat: "पेय" },
-      8: { name: "मसाला चाय", desc: "अदरक, इलायची और ताज़े मसालों से बनी कड़क गर्म चाय", cat: "पेय" },
-      9: { name: "गुलाब जामुन (2 नग)", desc: "इलायची की चाशनी में डूबा गर्म और रसीला गुलाब जामुन", cat: "मिठाई" },
-      10: { name: "वेज बर्गर", desc: "कुरकुरी वेज टिक्की, ताज़ा लेट्यूस और स्पेशल सॉस के साथ", cat: "नाश्ता" },
-      11: { name: "चिकन फ्राइड राइस", desc: "चिकन, अंडा और हरी प्याज के साथ वोक में भुना स्वादिष्ट चावल", cat: "भोजन" },
-      12: { name: "कोल्ड कॉफ़ी", desc: "ठंडी क्रीमी कॉफ़ी, वैनिला आइसक्रीम और चॉकलेट सिरप के साथ", cat: "पेय" },
-      13: { name: "वेज पफ", desc: "मसालेदार सब्ज़ियों से भरा कुरकुरा बेकरी पफ", cat: "नाश्ता" }
+      3: { name: "पनीर राइस", desc: "ताज़े पनीर के टुकड़े और काली मिर्च के साथ वोक में भुना स्वादिष्ट चावल", cat: "भोजन" },
+      4: { name: "वेज पिज़्ज़ा", desc: "कुरकुरा क्रस्ट, मेल्टेड मोत्ज़ारेला चीज़, शिमला मिर्च और ऑरेगैनो", cat: "नाश्ता" },
+      5: { name: "चिकन बर्गर", desc: "क्रिस्पी चिकन पैटी, स्पेशल सेसमी सॉस और ताज़ा लेट्यूस", cat: "नाश्ता" },
+      6: { name: "मसाला डोसा", desc: "कुरकुरा डोसा, आलू मसाला, सांभर और नारियल की ताज़ा चटनी", cat: "भोजन" },
+      7: { name: "समोसा (2 नग)", desc: "मसालेदार आलू और मटर भरा कुरकुरा समोसा, हरी चटनी के साथ", cat: "नाश्ता" },
+      8: { name: "फ्रेंच फ्राइज", desc: "कुरकुरे सुनहरे आलू के फिंगर्स, हल्के समुद्री नमक के साथ", cat: "नाश्ता" },
+      9: { name: "मसाला कोक", desc: "ठंडी कोला, भुना जीरा, काला नमक और ताज़ा नींबू का रस", cat: "पेय" },
+      10: { name: "कोल्ड कॉफ़ी", desc: "ठंडी क्रीमी कॉफ़ी, वैनिला आइसक्रीम और चॉकलेट सिरप के साथ", cat: "पेय" },
+      11: { name: "लेमन टी", desc: "गर्मागर्म असम ब्लैक टी, ताज़ा नींबू का रस और शहद का स्पर्श", cat: "पेय" },
+      12: { name: "गुलाब जामुन (2 नग)", desc: "इलायची की चाशनी में डूबा गर्म और रसीला गुलाब जामुन", cat: "मिठाई" }
     }
+  };
+
+  const INGREDIENT_TRANSLATIONS = {
+    te: {
+      "Rice": "బియ్యం",
+      "Chicken": "చికెన్",
+      "Paneer": "పన్నీర్",
+      "Bread & Buns": "బ్రెడ్ & బన్స్",
+      "Cooking Oil": "వంట నూనె",
+      "Milk": "పాలు"
+    },
+    hi: {
+      "Rice": "चावल",
+      "Chicken": "चिकन",
+      "Paneer": "पनीर",
+      "Bread & Buns": "ब्रेड और बन",
+      "Cooking Oil": "खाना पकाने का तेल",
+      "Milk": "दूध"
+    }
+  };
+
+  const CATEGORY_NAMES = {
+    Meals: { te: "భోజనం", hi: "भोजन", en: "Meals" },
+    Snacks: { te: "స్నాక్స్", hi: "नाश्ता", en: "Snacks" },
+    Drinks: { te: "పానీయాలు", hi: "पेय", en: "Drinks" },
+    Desserts: { te: "మిఠాయిలు", hi: "मिठाई", en: "Desserts" }
+  };
+
+  const DIETARY_NAMES = {
+    Veg: { te: "వెజ్", hi: "शाकाहारी", en: "Veg" },
+    "Non-Veg": { te: "నాన్-వెజ్", hi: "मांसाहारी", en: "Non-Veg" }
   };
 
   const DEFAULT_DB = {
@@ -1399,6 +1878,69 @@
       return dict[key] || I18N.en[key] || key;
     }
 
+    getFoodDisplay(foodOrIdOrName) {
+      if (!foodOrIdOrName) return { name: '', desc: '', category: '', dietary: '' };
+      let foodObj = null;
+      let foodId = null;
+      let fallbackName = '';
+
+      if (typeof foodOrIdOrName === 'object') {
+        foodObj = foodOrIdOrName;
+        foodId = foodObj.id;
+        fallbackName = foodObj.name || '';
+      } else if (typeof foodOrIdOrName === 'number') {
+        foodId = foodOrIdOrName;
+        foodObj = this.db?.data?.foods?.find(f => f.id === foodId);
+        fallbackName = foodObj?.name || `Dish #${foodId}`;
+      } else if (typeof foodOrIdOrName === 'string') {
+        fallbackName = foodOrIdOrName;
+        foodObj = this.db?.data?.foods?.find(f => f.name.toLowerCase() === foodOrIdOrName.toLowerCase());
+        foodId = foodObj?.id;
+      }
+
+      let trans = foodId ? FOOD_TRANSLATIONS[this.currentLang]?.[foodId] : null;
+
+      if (!trans && fallbackName) {
+        const nameKey = fallbackName.trim().toLowerCase();
+        for (const [id, tObj] of Object.entries(FOOD_TRANSLATIONS[this.currentLang] || {})) {
+          const orig = DEFAULT_DB.foods.find(f => f.id === Number(id));
+          if (orig && orig.name.toLowerCase() === nameKey) {
+            trans = tObj;
+            break;
+          }
+        }
+      }
+
+      const rawCat = foodObj?.category || 'Meals';
+      const rawDietary = foodObj?.dietary || 'Veg';
+
+      return {
+        name: trans?.name || fallbackName,
+        desc: trans?.desc || foodObj?.desc || '',
+        category: CATEGORY_NAMES[rawCat]?.[this.currentLang] || rawCat,
+        rawCategory: rawCat,
+        dietary: DIETARY_NAMES[rawDietary]?.[this.currentLang] || rawDietary,
+        rawDietary: rawDietary
+      };
+    }
+
+    getIngredientDisplay(ingOrName) {
+      const name = typeof ingOrName === 'object' ? ingOrName.ingredient : ingOrName;
+      return INGREDIENT_TRANSLATIONS[this.currentLang]?.[name] || name;
+    }
+
+    getTranslatedSummary(summary) {
+      if (!summary || this.currentLang === 'en') return summary;
+      let result = summary;
+      DEFAULT_DB.foods.forEach(f => {
+        const trans = FOOD_TRANSLATIONS[this.currentLang]?.[f.id];
+        if (trans?.name) {
+          result = result.split(f.name).join(trans.name);
+        }
+      });
+      return result;
+    }
+
     setLanguage(lang) {
       if (!['en', 'te', 'hi'].includes(lang)) lang = 'en';
       this.currentLang = lang;
@@ -1470,13 +2012,56 @@
         catBtns[4].innerText = this.t('catDesserts');
       }
 
-      // Update Tray header
+      // Update Recommendations & Last Plate Student headers
+      const recEyebrow = document.querySelector('.rec-eyebrow');
+      if (recEyebrow) recEyebrow.innerText = this.t('recEyebrow');
+      const recSub = document.querySelector('.rec-subtext');
+      if (recSub) recSub.innerText = this.t('recSubtext');
+
+      const lpStudentEyebrow = document.querySelector('#last-plate-student .editorial-eyebrow');
+      if (lpStudentEyebrow) lpStudentEyebrow.innerText = this.t('lastPlateEyebrow');
+      const lpStudentTitle = document.querySelector('#last-plate-student .last-plate-title');
+      if (lpStudentTitle) lpStudentTitle.innerText = this.t('lastPlateTitle');
+      const lpStudentSub = document.querySelector('#last-plate-student .last-plate-subtext');
+      if (lpStudentSub) lpStudentSub.innerText = this.t('lastPlateDesc');
+
+      // Update Student Orders Section Header
+      const ordersSecEyebrow = document.querySelector('#section-orders .editorial-eyebrow');
+      if (ordersSecEyebrow) ordersSecEyebrow.innerText = this.t('ordersRealtimePrep');
+      const ordersSecTitle = document.querySelector('#section-orders .editorial-title');
+      if (ordersSecTitle) ordersSecTitle.innerText = this.t('ordersLiveTitle');
+
+      // Update Student Profile Section
+      const profMicro = $('profile-micro-label');
+      if (profMicro) profMicro.innerText = this.t('profileCampusAccount');
+      const profStatDescs = document.querySelectorAll('#section-profile .stat-desc');
+      if (profStatDescs.length >= 3) {
+        profStatDescs[0].innerText = this.t('statTotalOrders');
+        profStatDescs[1].innerText = this.t('statTotalSpent');
+        profStatDescs[2].innerText = this.t('statFavDish');
+      }
+      const profIdLbl = $('profile-id-label');
+      if (profIdLbl) profIdLbl.innerText = this.currentUser?.role === 'FACULTY' ? this.t('facultyIdLabel') : this.t('rollIdLabel');
+
+      // Update Tray header & footer
       const trayTitle = document.querySelector('.tray-slip-title span');
       if (trayTitle) trayTitle.innerText = this.t('yourTray');
       const trayClear = document.querySelector('.tray-slip-clear');
       if (trayClear) trayClear.innerText = this.t('clear');
+      const trayEtaLbl = document.querySelector('.tray-eta-label');
+      if (trayEtaLbl) trayEtaLbl.innerText = this.t('estimatedPrepTime');
+      const trayEtaCalc = $('cart-eta-calc');
+      if (trayEtaCalc) trayEtaCalc.innerText = this.t('trayEtaFormula');
+      const billRows = document.querySelectorAll('.tray-bill-row');
+      if (billRows.length >= 3) {
+        billRows[0].querySelector('span').innerText = this.t('subtotal');
+        billRows[1].querySelector('span').innerText = this.t('techFee');
+        billRows[2].querySelector('strong').innerText = this.t('totalPayable');
+      }
       const placeOrderBtn = document.querySelector('#btn-place-order span');
       if (placeOrderBtn) placeOrderBtn.innerHTML = `${this.t('placeOrderBtn')}`;
+      const trayNotice = document.querySelector('.tray-pickup-notice');
+      if (trayNotice) trayNotice.innerText = this.t('pickupNotice');
 
       // Update Admin Header
       const adminEyebrow = $('admin-eyebrow-text');
@@ -1495,8 +2080,74 @@
       const kPrep = $('lbl-kanban-prep'); if (kPrep) kPrep.innerText = this.t('colPrep');
       const kReady = $('lbl-kanban-ready'); if (kReady) kReady.innerText = this.t('colReady');
 
+      // Update Admin Tab 02: Menu & Recipes static texts
+      const mAddTitle = $('admin-menu-add-title'); if (mAddTitle) mAddTitle.innerText = this.t('addNewDishTitle');
+      const mAddDesc = $('admin-menu-add-desc'); if (mAddDesc) mAddDesc.innerText = this.t('addNewDishDesc');
+      const lFoodName = $('lbl-new-food-name'); if (lFoodName) lFoodName.innerText = this.t('dishNameLabel');
+      const lFoodPrice = $('lbl-new-food-price'); if (lFoodPrice) lFoodPrice.innerText = this.t('dishPriceLabel');
+      const lFoodPrep = $('lbl-new-food-prep'); if (lFoodPrep) lFoodPrep.innerText = this.t('dishPrepLabel');
+      const lFoodCat = $('lbl-new-food-cat'); if (lFoodCat) lFoodCat.innerText = this.t('dishCatLabel');
+      const lFoodDesc = $('lbl-new-food-desc'); if (lFoodDesc) lFoodDesc.innerText = this.t('dishDescLabel');
+      const bPubMenu = $('btn-publish-menu'); if (bPubMenu) bPubMenu.innerText = this.t('publishMenuBtn');
+      const mTableTitle = $('admin-menu-table-title'); if (mTableTitle) mTableTitle.innerText = this.t('dishTableTitle');
+      const mTableMeta = $('admin-menu-table-meta'); if (mTableMeta) mTableMeta.innerText = this.t('instantKitchenSync');
+
+      // Update Admin Tab 03: Inventory static texts
+      const invTitle = $('inv-title-text'); if (invTitle) invTitle.innerText = this.t('invTitle');
+      const invSub = $('inv-subtitle-text'); if (invSub) invSub.innerText = this.t('invDesc');
+      const btnLedger = $('lbl-btn-view-ledger'); if (btnLedger) btnLedger.innerHTML = `${this.t('viewLedgerBtn')}`;
+
+      // Update Admin Tab 05: Analytics static texts
+      const sOrders = $('stat-desc-total-orders'); if (sOrders) sOrders.innerText = this.t('analyticsTotalOrders');
+      const sRev = $('stat-desc-gross-rev'); if (sRev) sRev.innerText = this.t('analyticsGrossRev');
+      const sTicket = $('stat-desc-avg-ticket'); if (sTicket) sTicket.innerText = this.t('analyticsAvgTicket');
+      const cPopEye = $('chart-popular-eyebrow'); if (cPopEye) cPopEye.innerText = this.t('popularDishesTitle');
+      const cPopHead = $('chart-popular-heading'); if (cPopHead) cPopHead.innerText = this.t('topSellingHeading');
+      const cPopCap = $('chart-popular-caption'); if (cPopCap) cPopCap.innerText = this.t('fulfilledTokensCaption');
+      const cPeakEye = $('chart-peak-eyebrow'); if (cPeakEye) cPeakEye.innerText = this.t('orderDistTitle');
+      const cPeakHead = $('chart-peak-heading'); if (cPeakHead) cPeakHead.innerText = this.t('peakRushHeading');
+      const cPeakCap = $('chart-peak-caption'); if (cPeakCap) cPeakCap.innerText = this.t('rushVolumeCaption');
+
+      // Update Admin Tab 06: Last Plate static texts
+      const lpPubTitle = $('lp-admin-publish-title'); if (lpPubTitle) lpPubTitle.innerText = this.t('lpPublishTitle');
+      const lpPubDesc = $('lp-admin-publish-desc'); if (lpPubDesc) lpPubDesc.innerText = this.t('lpPublishDesc');
+      const lpPubBtn = $('lbl-lp-publish-btn'); if (lpPubBtn) lpPubBtn.innerText = this.t('publishMenuBtn');
+      const lpListTitle = $('lp-admin-listings-title'); if (lpListTitle) lpListTitle.innerText = this.t('lpActiveClosedListings');
+      const lpListMeta = $('lp-admin-listings-meta'); if (lpListMeta) lpListMeta.innerText = this.t('lpStaffKitchenControl');
+      const lpSampleBtn = $('lbl-lp-sample'); if (lpSampleBtn) lpSampleBtn.innerText = this.t('lpSampleListingsBtn');
+      const lpClearBtn = $('lbl-lp-clear'); if (lpClearBtn) lpClearBtn.innerText = this.t('lpClearSamplesBtn');
+      const lpResTitle = $('lp-admin-res-title'); if (lpResTitle) lpResTitle.innerText = this.t('lpStudentResTitle');
+      const lpImpEye = $('lp-impact-eyebrow'); if (lpImpEye) lpImpEye.innerText = this.t('lpImpactEyebrow');
+      const lpImpTitle = $('lp-impact-title-text'); if (lpImpTitle) lpImpTitle.innerText = this.t('lpImpactTitle');
+      const lpImpDesc = $('lp-impact-desc-text'); if (lpImpDesc) lpImpDesc.innerText = this.t('lpImpactDesc');
+
+      // Update Modals static texts
+      const modOrderEye = $('modal-eyebrow-accent'); if (modOrderEye) modOrderEye.innerText = this.t('orderAcceptedEyebrow');
+      const modOrderHead = $('modal-confirmed-heading'); if (modOrderHead) modOrderHead.innerText = this.t('orderConfirmedTitle');
+      const modLblEta = $('modal-label-eta'); if (modLblEta) modLblEta.innerText = this.t('estimatedReadyLabel');
+      const modLblCounter = $('modal-label-counter'); if (modLblCounter) modLblCounter.innerText = this.t('pickupCounterLabel');
+      const modLblTotal = $('modal-label-total'); if (modLblTotal) modLblTotal.innerText = this.t('totalPayable');
+      const modBtnTrack = $('btn-modal-track'); if (modBtnTrack) modBtnTrack.innerHTML = `${this.t('trackOrderBtn')}`;
+
+      const lpModEye = $('lp-modal-eyebrow'); if (lpModEye) lpModEye.innerText = this.t('lpReservedConfirmed');
+      const lpModHead = $('lp-modal-heading'); if (lpModHead) lpModHead.innerText = this.t('lpPortionReserved');
+      const lpModDish = $('lp-modal-lbl-dish'); if (lpModDish) lpModDish.innerText = this.t('batchColDish');
+      const lpModQty = $('lp-modal-lbl-qty'); if (lpModQty) lpModQty.innerText = this.t('portionsLabel');
+      const lpModTot = $('lp-modal-lbl-total'); if (lpModTot) lpModTot.innerText = this.t('totalPayable');
+      const lpModPick = $('lp-modal-lbl-pickup'); if (lpModPick) lpModPick.innerText = this.t('pickupLabel');
+      const lpModColl = $('lp-modal-lbl-collect'); if (lpModColl) lpModColl.innerText = this.t('collectByLabel');
+      const lpModNotice = $('lp-modal-notice-text'); if (lpModNotice) lpModNotice.innerText = this.t('lpModalNotice');
+      const lpModView = $('btn-lp-modal-view'); if (lpModView) lpModView.innerHTML = `${this.t('lpViewReservations')}`;
+
       this.updateAdminTabLabels();
       this.updateStudentTabLabels();
+      if (this.currentUser) {
+        if (this.currentUser.role === 'ADMIN' || this.currentUser.role === 'STAFF') {
+          this.renderAdminPortal();
+        } else {
+          this.refreshCurrentView();
+        }
+      }
     }
 
     updateAdminTabLabels() {
@@ -1783,10 +2434,10 @@
         if (isPaused) { badgeTxt = this.t('paused'); badgeClass = 'paused'; }
         else if (!f.available) { badgeTxt = this.t('soldOut'); badgeClass = 'out-of-stock'; }
 
-        const trans = FOOD_TRANSLATIONS[this.currentLang]?.[f.id];
-        const foodName = trans?.name || f.name;
-        const foodDesc = trans?.desc || f.desc;
-        const foodCat = trans?.cat || f.category;
+        const foodDisp = this.getFoodDisplay(f);
+        const foodName = foodDisp.name;
+        const foodDesc = foodDisp.desc;
+        const foodCat = foodDisp.category;
 
         return `
           <div class="menu-item-editorial ${f.available ? '' : 'unavailable'}" onclick="app.openFoodDetail(${f.id})">
@@ -1803,7 +2454,7 @@
               </div>
               <p class="menu-item-desc">${escHtml(foodDesc)}</p>
               <div class="menu-item-actions">
-                <span class="category-micro-tag">${escHtml(foodCat.toUpperCase())} · ${escHtml(f.dietary)}</span>
+                <span class="category-micro-tag">${escHtml(foodCat.toUpperCase())} · ${escHtml(foodDisp.dietary)}</span>
                 <button class="btn btn-arrow" ${f.available ? '' : 'disabled'} onclick="event.stopPropagation(); app.addToCart(${f.id})">
                   <span>${badgeTxt}</span>
                 </button>
@@ -1822,17 +2473,21 @@
       const recs = this.db.getRecommendations(this.currentUser.id);
       if (!recs.length) return show(box, false);
       show(box, true);
-      title.innerText = `BECAUSE YOU ORDERED ${fav.name.toUpperCase()}...`;
-      grid.innerHTML = recs.map(f => `
+      const favDisp = this.getFoodDisplay(fav);
+      title.innerText = this.currentLang === 'te' ? `మీకు ఇష్టమైన ${favDisp.name}తో పాటు...` : this.currentLang === 'hi' ? `क्योंकि आपको ${favDisp.name} पसंद है...` : `BECAUSE YOU ORDERED ${favDisp.name.toUpperCase()}...`;
+      grid.innerHTML = recs.map(f => {
+        const fDisp = this.getFoodDisplay(f);
+        return `
         <div class="rec-item-card" onclick="app.addToCart(${f.id})">
-          <img class="rec-item-img" src="${f.image || FOOD_IMAGES[f.id]}" alt="${escHtml(f.name)}">
+          <img class="rec-item-img" src="${f.image || FOOD_IMAGES[f.id]}" alt="${escHtml(fDisp.name)}">
           <div class="rec-item-info">
-            <strong class="rec-item-name">${escHtml(f.name)}</strong>
-            <div class="rec-item-meta">₹${f.price} · ${f.prepMin}m prep</div>
+            <strong class="rec-item-name">${escHtml(fDisp.name)}</strong>
+            <div class="rec-item-meta">₹${f.price} · ${f.prepMin} ${this.t('minPrep')}</div>
           </div>
-          <button class="btn btn-secondary btn-xs" onclick="event.stopPropagation(); app.addToCart(${f.id})">+ ADD</button>
+          <button class="btn btn-secondary btn-xs" onclick="event.stopPropagation(); app.addToCart(${f.id})">${this.t('addBtn')}</button>
         </div>
-      `).join('');
+      `;
+      }).join('');
     }
 
     openFoodDetail(foodId) {
@@ -1840,22 +2495,23 @@
       if (!f) return;
       this.selectedDetailFood = f;
       this.detailQty = 1;
+      const foodDisp = this.getFoodDisplay(f);
       $('detail-food-img').src = f.image || FOOD_IMAGES[f.id];
-      $('detail-food-category').innerText = `${f.category.toUpperCase()} · ${f.dietary.toUpperCase()}`;
-      $('detail-food-name').innerText = f.name;
+      $('detail-food-category').innerText = `${foodDisp.category.toUpperCase()} · ${foodDisp.dietary.toUpperCase()}`;
+      $('detail-food-name').innerText = foodDisp.name;
       $('detail-food-price').innerText = `₹${f.price}`;
-      $('detail-food-prep').innerText = `${f.prepMin} MIN PREP`;
-      $('detail-food-desc').innerText = f.desc;
+      $('detail-food-prep').innerText = `${f.prepMin} ${this.t('minPrep')}`;
+      $('detail-food-desc').innerText = foodDisp.desc;
       $('detail-food-qty').innerText = '1';
 
       const b = $('btn-detail-add');
       b.disabled = !f.available;
       if (f.isPausedByAdmin) {
-        b.innerHTML = `<span>PAUSED BY KITCHEN</span>`;
+        b.innerHTML = `<span>${this.t('paused')}</span>`;
       } else if (!f.available) {
-        b.innerHTML = `<span>CURRENTLY SOLD OUT</span>`;
+        b.innerHTML = `<span>${this.t('soldOut')}</span>`;
       } else {
-        b.innerHTML = `<span>ADD TO TRAY — ₹${f.price} &rarr;</span>`;
+        b.innerHTML = `<span>${this.t('addBtn')} — ₹${f.price} &rarr;</span>`;
       }
       show($('food-detail-modal'), true);
     }
@@ -1919,40 +2575,43 @@
       const totalQty = this.cart.reduce((s, i) => s + i.qty, 0);
       if (cp) cp.innerText = totalQty;
       if (!this.cart.length) {
-        cont.innerHTML = `<div class="tray-empty-editorial"><p>Your tray is empty.</p><small>Select dishes from today's menu to start ordering.</small></div>`;
+        cont.innerHTML = `<div class="tray-empty-editorial"><p>${this.t('emptyTrayTitle')}</p><small>${this.t('emptyTraySub')}</small></div>`;
         return show(foot, false);
       }
       show(foot, true);
-      cont.innerHTML = this.cart.map(i => `
+      cont.innerHTML = this.cart.map(i => {
+        const foodDisp = this.getFoodDisplay(i.food);
+        return `
         <div class="tray-item-row">
-          <div class="tray-item-info"><strong>${escHtml(i.food.name)}</strong><small>₹${i.food.price * i.qty} (₹${i.food.price} ea)</small></div>
+          <div class="tray-item-info"><strong>${escHtml(foodDisp.name)}</strong><small>₹${i.food.price * i.qty} (₹${i.food.price} ea)</small></div>
           <div class="tray-stepper">
             <button class="btn-step" onclick="app.changeCartQty(${i.food.id}, -1)">&minus;</button>
             <span class="tray-stepper-val">${i.qty}</span>
             <button class="btn-step" onclick="app.changeCartQty(${i.food.id}, 1)">+</button>
           </div>
         </div>
-      `).join('');
+        `;
+      }).join('');
 
       const subtotal = this.cart.reduce((s, i) => s + (i.food.price * i.qty), 0);
       // DEFECT 4 FIX: Quantity-aware ETA calculation
       const eta = this.db.calculateCartEta(this.cart);
       $('bill-subtotal').innerText = `₹${subtotal}`;
       $('bill-total').innerText = `₹${subtotal}`;
-      $('cart-eta-val').innerText = `~${eta} mins`;
-      $('cart-eta-calc').innerText = `Quantities allocated from prepared warmer + fresh stove batches + queue`;
+      $('cart-eta-val').innerText = `~${eta} ${this.t('minPrep')}`;
+      $('cart-eta-calc').innerText = this.t('trayEtaFormula');
     }
 
     // =========================================================================
     // DEFECT 3 FIX: CLIENT-SIDE IDEMPOTENCY KEY GENERATION & DOUBLE-CLICK LOCK
     // =========================================================================
     placeOrder() {
-      if (!this.cart.length) return this.showToast('Your tray is empty! Add dishes to place an order.', 'warning');
+      if (!this.cart.length) return this.showToast(this.t('emptyTrayWarning'), 'warning');
       if (this._isPlacingOrder) return;
       this._isPlacingOrder = true;
 
       const btn = $('btn-place-order');
-      if (btn) { btn.disabled = true; btn.innerHTML = `<span>PROCESSING ORDER...</span>`; }
+      if (btn) { btn.disabled = true; btn.innerHTML = `<span>${this.t('processingOrder')}</span>`; }
 
       const subtotal = this.cart.reduce((s, i) => s + (i.food.price * i.qty), 0);
       const eta = this.db.calculateCartEta(this.cart);
@@ -1976,14 +2635,14 @@
       } finally {
         setTimeout(() => {
           this._isPlacingOrder = false;
-          if (btn) { btn.disabled = false; btn.innerHTML = `<span>CONFIRM & PLACE ORDER &rarr;</span>`; }
+          if (btn) { btn.disabled = false; btn.innerHTML = `<span>${this.t('placeOrderBtn')}</span>`; }
         }, 600);
       }
     }
 
     showOrderModal(order) {
       $('modal-token-num').innerText = `#${order.id}`;
-      $('modal-eta-val').innerText = `~${order.etaMin} minutes`;
+      $('modal-eta-val').innerText = `~${order.etaMin} ${this.t('minPrep')}`;
       $('modal-total-val').innerText = `₹${order.total}`;
       show($('order-modal'), true);
     }
@@ -2004,32 +2663,37 @@
 
       if (this.cart.length) {
         const qty = this.cart.reduce((s, i) => s + i.qty, 0), tot = this.cart.reduce((s, i) => s + (i.food.price * i.qty), 0);
-        html += `<div class="pending-tray-banner"><div class="pending-tray-info"><span class="pending-tray-badge">TRAY READY</span><h4>You have ${qty} dish${qty > 1 ? 'es' : ''} in your tray waiting to order</h4><p style="font-size: 0.88rem; color: var(--muted);">${this.cart.map(i => `${i.food.name} (x${i.qty})`).join(', ')} · <strong>Total: ₹${tot}</strong></p></div><button class="btn btn-primary btn-md" onclick="app.placeOrder()"><span>CONFIRM ORDER (₹${tot}) &rarr;</span></button></div>`;
+        html += `<div class="pending-tray-banner"><div class="pending-tray-info"><span class="pending-tray-badge">${this.t('trayReadyBadge')}</span><h4>${(this.t('trayWaitingText') || '').replace('{qty}', qty)}</h4><p style="font-size: 0.88rem; color: var(--muted);">${this.cart.map(i => `${this.getFoodDisplay(i.food).name} (x${i.qty})`).join(', ')} · <strong>Total: ₹${tot}</strong></p></div><button class="btn btn-primary btn-md" onclick="app.placeOrder()"><span>${this.t('placeOrderBtn')} (₹${tot})</span></button></div>`;
       }
 
       if (!active.length && !past.length) {
         if (!this.cart.length) {
-          html += `<div style="background: var(--bg-surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 4rem 2rem; text-align: center;"><h3 style="font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 0.35rem;">No Orders Placed Yet</h3><p style="color: var(--muted); margin-bottom: 1.75rem; max-width: 440px; margin: 0 auto 1.75rem auto; font-size: 0.92rem;">You have no active meals in the kitchen queue. Choose a fresh dish from today's menu to place your first token.</p><button class="btn btn-primary btn-md" onclick="app.switchStudentTab('menu')"><span>DISCOVER MENU &rarr;</span></button></div>`;
+          html += `<div style="background: var(--bg-surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 4rem 2rem; text-align: center;"><h3 style="font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 0.35rem;">${this.t('noOrdersTitle')}</h3><p style="color: var(--muted); margin-bottom: 1.75rem; max-width: 440px; margin: 0 auto 1.75rem auto; font-size: 0.92rem;">${this.t('noOrdersDesc')}</p><button class="btn btn-primary btn-md" onclick="app.switchStudentTab('menu')"><span>${this.t('discoverMenuBtn')}</span></button></div>`;
         }
         cont.innerHTML = html;
         return;
       }
 
-      const steps = [{ k: "NEW", l: "ORDERED" }, { k: "PREPARING", l: "PREPARING" }, { k: "READY", l: "READY" }, { k: "COLLECTED", l: "COLLECTED" }];
+      const steps = [
+        { k: "NEW", l: this.t('stepOrdered') },
+        { k: "PREPARING", l: this.t('stepPreparing') },
+        { k: "READY", l: this.t('stepReady') },
+        { k: "COLLECTED", l: this.t('stepCollected') }
+      ];
 
       if (active.length) {
-        html += `<div style="margin-bottom: 2.5rem;"><span class="editorial-eyebrow" style="margin-bottom: 1rem;">ACTIVE KITCHEN TOKENS (${active.length})</span><div style="display: flex; flex-direction: column; gap: 1.5rem;">${active.map(o => {
+        html += `<div style="margin-bottom: 2.5rem;"><span class="editorial-eyebrow" style="margin-bottom: 1rem;">${this.t('activeTokensEyebrow')} (${active.length})</span><div style="display: flex; flex-direction: column; gap: 1.5rem;">${active.map(o => {
           const cur = steps.findIndex(s => s.k === o.status), tStr = new Date(o.created).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
           return `
             <div class="order-ticket-card">
               <div class="order-ticket-header">
                 <div>
-                  <span class="order-token-badge">TOKEN #${o.id}</span>
-                  <span class="order-meta-info">Placed at ${tStr} · ETA ~${o.etaMin}m</span>
+                  <span class="order-token-badge">${this.t('tokenPrefix')}${o.id}</span>
+                  <span class="order-meta-info">${this.t('orderPlacedAt')} ${tStr} · ${this.t('etaPrefix')}${o.etaMin}m</span>
                 </div>
                 <div style="display: flex; align-items: baseline; gap: 1.25rem;">
                   <span class="order-total-figure">₹${o.total}</span>
-                  ${(o.status === 'NEW' || o.status === 'ACCEPTED') ? `<button class="btn btn-secondary btn-xs" style="color: var(--accent); border-color: var(--accent);" onclick="app.handleCancelOrder(${o.id})">Cancel</button>` : ''}
+                  ${(o.status === 'NEW' || o.status === 'ACCEPTED') ? `<button class="btn btn-secondary btn-xs" style="color: var(--accent); border-color: var(--accent);" onclick="app.handleCancelOrder(${o.id})">${this.t('cancelBtn')}</button>` : ''}
                 </div>
               </div>
               <div class="order-timeline-stepper">
@@ -2039,12 +2703,12 @@
                   return `<div class="timeline-node ${cls}"><div class="timeline-bullet">${bChar}</div><span class="timeline-label">${s.l}</span></div>`;
                 }).join('')}
               </div>
-              <div class="order-summary-box"><strong>Items:</strong> ${escHtml(o.summary)}</div>
+              <div class="order-summary-box"><strong>${this.t('ingredientsLabel') || 'Items'}:</strong> ${escHtml(this.getTranslatedSummary(o.summary))}</div>
               <div class="order-actions-bar">
                 <span style="font-family: var(--font-mono); font-size: 0.74rem; font-weight: 600; color: ${o.status === 'READY' ? 'var(--success)' : 'var(--ink)'};">
-                  ${o.status === 'NEW' ? 'Order accepted in kitchen queue' : o.status === 'PREPARING' ? 'Cooking on stove & assembly' : 'Ready for pickup at Counter 01'}
+                  ${o.status === 'NEW' ? this.t('orderQueueAccepted') : o.status === 'PREPARING' ? this.t('orderCookingStove') : this.t('orderReadyCounter')}
                 </span>
-                ${o.status === 'READY' ? `<button class="btn btn-primary btn-xs" onclick="app.collectDish(${o.id})"><span>COLLECT DISH ✓</span></button>` : ''}
+                ${o.status === 'READY' ? `<button class="btn btn-primary btn-xs" onclick="app.collectDish(${o.id})"><span>${this.t('collectDishBtn')}</span></button>` : ''}
               </div>
             </div>
           `;
@@ -2052,7 +2716,7 @@
       }
 
       if (past.length) {
-        html += `<div><span class="editorial-eyebrow" style="margin-bottom: 1rem;">PAST FULFILLED ORDERS (${past.length})</span><div style="display: flex; flex-direction: column; gap: 0.85rem;">${past.map(o => `
+        html += `<div><span class="editorial-eyebrow" style="margin-bottom: 1rem;">${this.t('pastOrdersEyebrow')} (${past.length})</span><div style="display: flex; flex-direction: column; gap: 0.85rem;">${past.map(o => `
           <div class="history-item-row">
             <div>
               <div style="display: flex; align-items: center; gap: 0.75rem;">
@@ -2060,12 +2724,12 @@
                 <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);">${new Date(o.created).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
                 <span style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: ${o.status === 'COLLECTED' ? 'var(--success)' : 'var(--accent)'}; background: ${o.status === 'COLLECTED' ? 'var(--success-subtle)' : 'rgba(224,76,56,0.1)'}; padding: 0.1rem 0.4rem; border-radius: var(--radius-xs);">${o.status}</span>
               </div>
-              <small style="color: var(--muted); display: block; margin-top: 0.25rem;">${escHtml(o.summary)}</small>
+              <small style="color: var(--muted); display: block; margin-top: 0.25rem;">${escHtml(this.getTranslatedSummary(o.summary))}</small>
             </div>
             <div style="display: flex; align-items: center; gap: 1rem;">
               <span style="font-family: var(--font-mono); font-weight: 700; font-size: 1.05rem;">₹${o.total}</span>
-              ${o.status === 'COLLECTED' ? `<button class="btn btn-secondary btn-xs" onclick="app.openFeedbackModal(${o.id})">★ RATE</button>` : ''}
-              <button class="btn btn-arrow" onclick="app.reorderItem(${o.id})">REORDER &rarr;</button>
+              ${o.status === 'COLLECTED' ? `<button class="btn btn-secondary btn-xs" onclick="app.openFeedbackModal(${o.id})">${this.t('rateMealBtn')}</button>` : ''}
+              <button class="btn btn-arrow" onclick="app.reorderItem(${o.id})">${this.t('reorderBtn')}</button>
             </div>
           </div>
         `).join('')}</div></div>`;
@@ -2125,7 +2789,7 @@
       $('profile-name').innerText = (u.name || "SREESHANTH").toUpperCase();
       $('stat-total-orders').innerText = orders.length;
       $('stat-total-spent').innerText = `₹${spent}`;
-      $('stat-fav-dish').innerText = fav?.name || orders[0]?.items[0]?.name || '—';
+      $('stat-fav-dish').innerText = fav ? this.getFoodDisplay(fav).name : (orders[0]?.items[0]?.name ? this.getFoodDisplay(orders[0].items[0].name).name : '—');
       $('profile-roll').innerText = u.facultyId || u.studentId || 'N/A';
       $('profile-id-label').innerText = u.role === 'FACULTY' ? 'Faculty / Employee ID' : 'Roll / Student ID';
       $('profile-email').innerText = u.email || 'demo@campus.edu';
@@ -2144,11 +2808,11 @@
                 <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);">${new Date(o.created).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
                 <span style="font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; color: ${o.status === 'COLLECTED' ? 'var(--success)' : 'var(--accent)'};">${o.status}</span>
               </div>
-              <small style="color: var(--muted); display: block; margin-top: 0.25rem;">${escHtml(o.summary)}</small>
+              <small style="color: var(--muted); display: block; margin-top: 0.25rem;">${escHtml(this.getTranslatedSummary(o.summary))}</small>
             </div>
             <div style="display: flex; align-items: center; gap: 1.25rem;">
               <strong style="font-family: var(--font-mono); font-size: 1.05rem;">₹${o.total}</strong>
-              <button class="btn btn-arrow" onclick="app.reorderItem(${o.id})">REORDER &rarr;</button>
+              <button class="btn btn-arrow" onclick="app.reorderItem(${o.id})">${this.t('reorderBtn') || 'REORDER →'}</button>
             </div>
           </div>
         `).join('');
@@ -2196,7 +2860,7 @@
       cn.innerHTML = n.map(o => `
         <div class="kanban-ticket">
           <div class="ticket-top"><span class="ticket-token">#${o.id}</span><span class="ticket-cust">${escHtml(o.customerName)}</span></div>
-          <div class="ticket-summary">${escHtml(o.summary)}</div>
+          <div class="ticket-summary">${escHtml(this.getTranslatedSummary(o.summary))}</div>
           <div class="ticket-footer">
             <span class="ticket-price">₹${o.total}</span>
             <button class="btn btn-primary btn-xs" onclick="app.advanceKanbanOrder(${o.id}, '${o.status}', 'PREPARING')">
@@ -2209,7 +2873,7 @@
       cp.innerHTML = p.map(o => `
         <div class="kanban-ticket">
           <div class="ticket-top"><span class="ticket-token">#${o.id}</span><span class="ticket-cust">${escHtml(o.customerName)}</span></div>
-          <div class="ticket-summary">${escHtml(o.summary)}</div>
+          <div class="ticket-summary">${escHtml(this.getTranslatedSummary(o.summary))}</div>
           <div class="ticket-footer">
             <span class="ticket-price">₹${o.total}</span>
             <button class="btn btn-primary btn-xs" onclick="app.advanceKanbanOrder(${o.id}, 'PREPARING', 'READY')">
@@ -2222,7 +2886,7 @@
       cr.innerHTML = r.map(o => `
         <div class="kanban-ticket">
           <div class="ticket-top"><span class="ticket-token">#${o.id}</span><span class="ticket-cust">${escHtml(o.customerName)}</span></div>
-          <div class="ticket-summary">${escHtml(o.summary)}</div>
+          <div class="ticket-summary">${escHtml(this.getTranslatedSummary(o.summary))}</div>
           <div class="ticket-footer">
             <span class="ticket-price">₹${o.total}</span>
             <div style="display:flex;gap:0.4rem;">
@@ -2272,24 +2936,26 @@
       cont.innerHTML = this.db.getAdminFoods().map(f => {
         const isPaused = Boolean(f.is_paused_by_admin);
         const marginPct = f.costPrice ? Math.round(((f.price - f.costPrice) / f.price) * 100) : 0;
+        const foodDisp = this.getFoodDisplay(f);
+        const warmerLabel = this.t('warmerReadyLabel') || 'Warmer';
         return `
           <div class="food-editor-row" style="display:flex;justify-content:space-between;align-items:center;padding:1rem 0;border-bottom:1px solid var(--line);">
             <div>
               <div style="display:flex;align-items:center;gap:0.5rem;">
-                <strong style="font-size: 0.95rem;">${escHtml(f.name)}</strong>
+                <strong style="font-size: 0.95rem;">${escHtml(foodDisp.name)}</strong>
                 <span class="status-pill ${isPaused ? 'paused' : f.is_out_of_stock ? 'out-of-stock' : 'available'}">
-                  ${isPaused ? '⏸ PAUSED' : f.is_out_of_stock ? '✕ OUT OF STOCK' : '● AVAILABLE'}
+                  ${isPaused ? '⏸ ' + this.t('pausedStatus') : f.is_out_of_stock ? '✕ ' + this.t('soldOut') : '● ' + this.t('availableStatus')}
                 </span>
-                ${f.preparedPortions > 0 ? `<span style="font-family:var(--font-mono);font-size:0.68rem;background:var(--bg-surface);border:1px solid var(--line);padding:0.15rem 0.45rem;border-radius:2px;">Warmer: ${f.preparedPortions}</span>` : ''}
+                ${f.preparedPortions > 0 ? `<span style="font-family:var(--font-mono);font-size:0.68rem;background:var(--bg-surface);border:1px solid var(--line);padding:0.15rem 0.45rem;border-radius:2px;">${warmerLabel}: ${f.preparedPortions}</span>` : ''}
               </div>
               <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); margin-top: 0.25rem;">
-                Sell: ₹${f.price} · Cost: ₹${f.costPrice || 0} (${marginPct}% margin) · Prep: ${f.prepMin}m · ${f.category}
+                ${this.t('priceLabel')}: ₹${f.price} · ${this.t('costLabel')}: ₹${f.costPrice || 0} (${marginPct}% ${this.t('marginLabel')}) · ${this.t('prepTimePrefix')} ${f.prepMin}m · ${foodDisp.category}
               </div>
             </div>
             <div style="display:flex;align-items:center;gap:0.5rem;">
-              <button class="btn btn-secondary btn-xs" onclick="app.openRecipeEditor(${f.id})">RECIPE</button>
+              <button class="btn btn-secondary btn-xs" onclick="app.openRecipeEditor(${f.id})">${this.t('editRecipeBtn') || 'RECIPE'}</button>
               <button class="btn ${isPaused ? 'btn-primary' : 'btn-ghost'} btn-xs" onclick="app.toggleMenuPause(${f.id})">
-                ${isPaused ? '▶ RESUME' : '⏸ PAUSE'}
+                ${isPaused ? '▶ ' + (this.t('resumeOrderingBtn') || 'RESUME') : '⏸ ' + (this.t('pauseOrderingBtn') || 'PAUSE')}
               </button>
             </div>
           </div>
@@ -2354,80 +3020,81 @@
       cont.innerHTML = `
         <div class="canteen-editorial-header" style="margin-bottom:1.5rem;">
           <div>
-            <span class="editorial-eyebrow">INTELLIGENT KITCHEN FORECASTING & IDEMPOTENT BATCHING</span>
-            <h3 class="editorial-title" style="font-size:1.6rem;">Prep Coach Operations</h3>
+            <span class="editorial-eyebrow">${this.t('prepCoachEyebrow')}</span>
+            <h3 class="editorial-title" style="font-size:1.6rem;">${this.t('prepCoachTitle')}</h3>
             <p style="font-size:0.88rem;color:var(--muted);margin-top:0.25rem;">
-              Suggestions predict dish demand based on rush hours, active queue, and warmer counts. 
-              <strong>Forecasts are strictly read-only</strong>: ingredients are deducted only when batch preparation is explicitly confirmed.
+              ${this.t('prepCoachDesc')}
             </p>
           </div>
         </div>
 
         <div class="prep-coach-grid">
-          ${forecast.map(item => `
+          ${forecast.map(item => {
+            const foodDisp = this.getFoodDisplay(item.foodId);
+            return `
             <div class="prep-coach-card">
               <div class="prep-coach-header">
                 <div>
-                  <strong style="font-size:1.05rem;">${escHtml(item.foodName)}</strong>
-                  <div style="font-family:var(--font-mono);font-size:0.72rem;color:var(--muted);">${item.category}</div>
+                  <strong style="font-size:1.05rem;">${escHtml(foodDisp.name)}</strong>
+                  <div style="font-family:var(--font-mono);font-size:0.72rem;color:var(--muted);">${foodDisp.category}</div>
                 </div>
                 <span class="status-pill ${item.isPausedByAdmin ? 'paused' : 'available'}">
-                  ${item.isPausedByAdmin ? 'PAUSED' : 'ACTIVE'}
+                  ${item.isPausedByAdmin ? this.t('pausedStatus') : this.t('activeStatus')}
                 </span>
               </div>
               <div class="prep-coach-metrics">
                 <div class="prep-coach-metric">
-                  <span>WARMER READY</span>
+                  <span>${this.t('warmerReadyLabel')}</span>
                   <strong style="color:var(--success);">${item.preparedReady}</strong>
                 </div>
                 <div class="prep-coach-metric">
-                  <span>SUGGESTED</span>
+                  <span>${this.t('suggestedLabel')}</span>
                   <strong style="color:var(--accent);">${item.suggestedBatch}</strong>
                 </div>
                 <div class="prep-coach-metric">
-                  <span>RAW CAPACITY</span>
+                  <span>${this.t('rawCapacityLabel')}</span>
                   <strong>${item.maxPossibleFromRawStock}</strong>
                 </div>
               </div>
               <div class="prep-coach-action-box">
-                <label style="font-family:var(--font-mono);font-size:0.75rem;">Portions:</label>
+                <label style="font-family:var(--font-mono);font-size:0.75rem;">${this.t('portionsLabel')}</label>
                 <input type="number" id="batch-qty-${item.foodId}" class="prep-coach-qty-input" min="1" max="50" value="${item.suggestedBatch || 4}">
                 <button class="btn btn-primary btn-sm" onclick="app.commitPrepBatch(${item.foodId})">
-                  <span>COOK BATCH &rarr;</span>
+                  <span>${this.t('cookBatchBtn')}</span>
                 </button>
               </div>
             </div>
-          `).join('')}
+          `;}).join('')}
         </div>
 
         <div class="editorial-data-card" style="margin-top:2.5rem;">
           <div class="editorial-table-head">
-            <h3>Recent Batch Preparation Ledger</h3>
-            <span class="table-head-meta">Authoritative Preparation Records</span>
+            <h3>${this.t('batchLedgerTitle')}</h3>
+            <span class="table-head-meta">${this.t('batchLedgerMeta')}</span>
           </div>
           <div class="ledger-table-wrap">
             <table class="ledger-table">
               <thead>
                 <tr>
-                  <th>BATCH ID</th>
-                  <th>DISH</th>
-                  <th>COOKED</th>
-                  <th>AVAILABLE</th>
-                  <th>STATUS</th>
-                  <th>TIMESTAMP</th>
+                  <th>${this.t('batchColId')}</th>
+                  <th>${this.t('batchColDish')}</th>
+                  <th>${this.t('batchColCooked')}</th>
+                  <th>${this.t('batchColAvailable')}</th>
+                  <th>${this.t('batchColStatus')}</th>
+                  <th>${this.t('batchColTimestamp')}</th>
                 </tr>
               </thead>
               <tbody>
                 ${this.db.data.batches.slice(0, 10).map(b => `
                   <tr>
                     <td><strong>${b.id}</strong></td>
-                    <td>${escHtml(b.foodName)}</td>
+                    <td>${escHtml(this.getFoodDisplay(b.foodName).name)}</td>
                     <td>${b.portions}</td>
                     <td>${b.portionsAvailable}</td>
                     <td><span class="status-pill available">${b.status}</span></td>
                     <td>${new Date(b.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
                   </tr>
-                `).join('') || '<tr><td colspan="6" style="text-align:center;padding:2rem;">No batches recorded yet today</td></tr>'}
+                `).join('') || `<tr><td colspan="6" style="text-align:center;padding:2rem;">${this.t('noBatchesToday')}</td></tr>`}
               </tbody>
             </table>
           </div>
@@ -2465,18 +3132,19 @@
       if (!cont) return;
       cont.innerHTML = this.db.getInventory().map(i => {
         const isLow = i.qty <= i.minQty;
+        const ingDisp = this.getIngredientDisplay(i.ingredient);
         return `
           <div class="inv-stat-box ${isLow ? 'low-stock' : ''}">
             <div style="display: flex; justify-content: space-between; align-items: baseline;">
-              <span class="inv-name">${escHtml(i.ingredient)}</span>
+              <span class="inv-name">${escHtml(ingDisp)}</span>
               <span style="font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; color: ${isLow ? 'var(--warning)' : 'var(--success)'};">
-                ${isLow ? 'LOW STOCK' : 'GOOD'}
+                ${isLow ? this.t('lowStockBadge') : this.t('goodStockBadge')}
               </span>
             </div>
             <div class="inv-qty">${i.qty} <small style="font-size: 0.85rem; font-weight: 500;">${i.unit}</small></div>
-            <div class="inv-meta">Min Threshold: ${i.minQty} ${i.unit} · ₹${i.unitCost || 0}/${i.unit}</div>
+            <div class="inv-meta">${this.t('minThresholdLabel')}: ${i.minQty} ${i.unit} · ₹${i.unitCost || 0}/${i.unit}</div>
             <div style="margin-top:0.75rem;">
-              <button class="btn btn-secondary btn-xs" onclick="app.openReconciliationModal(${i.id})">AUDIT RECONCILE</button>
+              <button class="btn btn-secondary btn-xs" onclick="app.openReconciliationModal(${i.id})">${this.t('auditReconcileBtn')}</button>
             </div>
           </div>
         `;
@@ -2708,30 +3376,32 @@
       const pc = $('chart-popular'), pk = $('chart-peak');
       if (pc) {
         const mx = an.topDishes.length ? Math.max(...an.topDishes.map(d => d[1])) : 1;
-        pc.innerHTML = an.topDishes.map(d => `
+        pc.innerHTML = an.topDishes.map(d => {
+          const dishName = this.getFoodDisplay(d[0]).name;
+          return `
           <div class="chart-bar-row">
-            <div class="chart-bar-info"><span>${escHtml(d[0])}</span><span>${d[1]} orders</span></div>
+            <div class="chart-bar-info"><span>${escHtml(dishName)}</span><span>${d[1]} ${this.t('orderCountSuffix') || 'orders'}</span></div>
             <div class="chart-track"><div class="chart-fill" style="width: ${(d[1] / mx) * 100}%;"></div></div>
           </div>
-        `).join('') || '<p style="color:var(--muted);font-size:0.82rem;">No orders fulfilled yet</p>';
+        `;}).join('') || `<p style="color:var(--muted);font-size:0.82rem;">${this.t('noOrdersYet') || 'No orders fulfilled yet'}</p>`;
       }
 
       if (pk) {
         const hrs = Object.entries(an.hourCounts), mx = hrs.length ? Math.max(...hrs.map(h => h[1])) : 1;
         pk.innerHTML = hrs.map(h => `
           <div class="chart-bar-row">
-            <div class="chart-bar-info"><span>${h[0]}</span><span>${h[1]} orders</span></div>
+            <div class="chart-bar-info"><span>${h[0]}</span><span>${h[1]} ${this.t('orderCountSuffix') || 'orders'}</span></div>
             <div class="chart-track"><div class="chart-fill" style="width: ${(h[1] / mx) * 100}%;"></div></div>
           </div>
-        `).join('') || '<p style="color:var(--muted);font-size:0.82rem;">No orders registered today</p>';
+        `).join('') || `<p style="color:var(--muted);font-size:0.82rem;">${this.t('noOrdersToday') || 'No orders registered today'}</p>`;
       }
 
       const wasteEl = $('analytics-waste-card');
       if (wasteEl) {
         wasteEl.innerHTML = `
-          <div class="editorial-stat-card"><span class="stat-desc">Unclaimed Surplus Portions</span><span class="stat-num">${an.wasteMetrics.wastedPortions}</span></div>
-          <div class="editorial-stat-card"><span class="stat-desc">Potential Waste Cost</span><span class="stat-num">₹${an.wasteMetrics.estWasteCost}</span></div>
-          <div class="editorial-stat-card"><span class="stat-desc">Stockout Incidents Logged</span><span class="stat-num">${this.db.data.stockoutHistory.length}</span></div>
+          <div class="editorial-stat-card"><span class="stat-desc">${this.t('unclaimedSurplus')}</span><span class="stat-num">${an.wasteMetrics.wastedPortions}</span></div>
+          <div class="editorial-stat-card"><span class="stat-desc">${this.t('potentialWasteCost')}</span><span class="stat-num">₹${an.wasteMetrics.estWasteCost}</span></div>
+          <div class="editorial-stat-card"><span class="stat-desc">${this.t('stockoutIncidents')}</span><span class="stat-num">${this.db.data.stockoutHistory.length}</span></div>
         `;
       }
     }
@@ -2783,29 +3453,30 @@
         const timeStr = deadline.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         const isActive = l.status === 'ACTIVE';
         const curQty = this.lpQty[l.id] || 1;
+        const dishDisp = this.getFoodDisplay(l.dishName);
         return `
           <div class="lp-listing-card ${isActive ? '' : 'lp-listing-inactive'}">
             <div class="lp-card-header">
-              <h4 class="lp-card-name">${escHtml(l.dishName)}</h4>
+              <h4 class="lp-card-name">${escHtml(dishDisp.name)}</h4>
               <span class="lp-status-badge lp-status-${l.status.toLowerCase()}">${l.status.replace('_', ' ')}</span>
             </div>
             ${l.description ? `<p class="lp-card-desc">${escHtml(l.description)}</p>` : ''}
             <div class="lp-card-details">
-              <div class="lp-card-detail"><span class="lp-detail-label">PRICE</span><strong>₹${l.price}/portion</strong></div>
-              <div class="lp-card-detail"><span class="lp-detail-label">AVAILABLE</span><strong>${l.portionsRemaining} of ${l.portions}</strong></div>
-              <div class="lp-card-detail"><span class="lp-detail-label">COLLECT BY</span><strong>${timeStr}</strong></div>
-              <div class="lp-card-detail"><span class="lp-detail-label">PICKUP</span><strong>${escHtml(l.location)}</strong></div>
+              <div class="lp-card-detail"><span class="lp-detail-label">${this.t('priceLabel')}</span><strong>₹${l.price}/portion</strong></div>
+              <div class="lp-card-detail"><span class="lp-detail-label">${this.t('availableLabel')}</span><strong>${l.portionsRemaining} of ${l.portions}</strong></div>
+              <div class="lp-card-detail"><span class="lp-detail-label">${this.t('collectByLabel')}</span><strong>${timeStr}</strong></div>
+              <div class="lp-card-detail"><span class="lp-detail-label">${this.t('pickupLabel')}</span><strong>${escHtml(l.location)}</strong></div>
             </div>
             ${isActive ? `
               <div class="lp-card-footer">
-                <div class="lp-card-ready-badge">✓ READY FOR PICKUP${minsLeft > 0 ? ` · ${minsLeft} min left` : ''}</div>
+                <div class="lp-card-ready-badge">✓ ${this.t('forPickup')}${minsLeft > 0 ? ` · ${minsLeft} min left` : ''}</div>
                 <div class="lp-card-actions">
                   <div class="tray-stepper">
                     <button class="btn-step" onclick="event.stopPropagation(); app.changeLpQty(${l.id}, -1)">−</button>
                     <span id="lp-qty-${l.id}" class="tray-stepper-val">${curQty}</span>
                     <button class="btn-step" onclick="event.stopPropagation(); app.changeLpQty(${l.id}, 1)">+</button>
                   </div>
-                  <button class="btn btn-primary btn-sm" onclick="app.handleReserveLastPlate(${l.id})"><span>RESERVE →</span></button>
+                  <button class="btn btn-primary btn-sm" onclick="app.handleReserveLastPlate(${l.id})"><span>${this.t('reserveSurplusBtn')}</span></button>
                 </div>
               </div>
             ` : `<div class="lp-card-closed-notice">${l.status === 'SOLD_OUT' ? 'All portions have been reserved' : 'Collection window has closed'}</div>`}
@@ -2912,7 +3583,7 @@
           return `
             <div class="food-editor-row">
               <div>
-                <strong style="font-size: 0.92rem;">${escHtml(l.dishName)}${l.isDemo ? ' <span class="lp-demo-tag">SAMPLE</span>' : ''}</strong>
+                <strong style="font-size: 0.92rem;">${escHtml(this.getFoodDisplay(l.dishName).name)}${l.isDemo ? ' <span class="lp-demo-tag">SAMPLE</span>' : ''}</strong>
                 <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem;">₹${l.price} · ${l.portionsRemaining}/${l.portions} left · By ${dlStr} · ${escHtml(l.location)}</div>
                 <div style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); margin-top: 0.1rem;">Reserved: ${pending + collected} · Collected: ${collected} · Pending pickup: ${pending}</div>
               </div>
