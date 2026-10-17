@@ -772,7 +772,8 @@
       9: { name: "మసాలా కోక్", desc: "చల్లటి కోలా, జీలకర్ర పొడి, నల్ల ఉప్పు & తాజా నిమ్మరసంతో", cat: "పానీయాలు" },
       10: { name: "కోల్డ్ కాఫీ", desc: "చల్లటి కాఫీ బ్లెండ్, వనిల్లా ఐస్‌క్రీమ్ మరియు చాక్లెట్ డ్రిజిల్", cat: "పానీయాలు" },
       11: { name: "లెమన్ టీ", desc: "వేడివేడి అస్సాం బ్లాక్ టీ, తాజా నిమ్మరసం & తేనె స్పర్శ", cat: "పానీయాలు" },
-      12: { name: "గులాబ్ జామూన్ (2 ముక్కలు)", desc: "యాలకుల చక్కెర పాకంలో నానబెట్టిన వేడివేడి గులాబ్ జామూన్", cat: "మిఠాయిలు" }
+      12: { name: "గులాబ్ జామూన్ (2 ముక్కలు)", desc: "యాలకుల చక్కెర పాకంలో నానబెట్టిన వేడివేడి గులాబ్ జామూన్", cat: "మిఠాయిలు" },
+      13: { name: "ఐస్ క్రీమ్ స్కూప్", desc: "చల్లటి గిన్నెలో వడ్డించే వెల్వెటీ మడగాస్కర్ వనిల్లా ఐస్ క్రీమ్ స్కూప్", cat: "మిఠాయిలు" }
     },
     hi: {
       1: { name: "चिकन बिरयानी", desc: "मसालेदार बासमती चावल, कोमल चिकन, कैरामेलाइज्ड प्याज और पुदीने की खुशबू", cat: "भोजन" },
@@ -786,7 +787,8 @@
       9: { name: "मसाला कोक", desc: "ठंडी कोला, भुना जीरा, काला नमक और ताज़ा नींबू का रस", cat: "पेय" },
       10: { name: "कोल्ड कॉफ़ी", desc: "ठंडी क्रीमी कॉफ़ी, वैनिला आइसक्रीम और चॉकलेट सिरप के साथ", cat: "पेय" },
       11: { name: "लेमन टी", desc: "गर्मागर्म असम ब्लैक टी, ताज़ा नींबू का रस और शहद का स्पर्श", cat: "पेय" },
-      12: { name: "गुलाब जामुन (2 नग)", desc: "इलायची की चाशनी में डूबा गर्म और रसीला गुलाब जामुन", cat: "मिठाई" }
+      12: { name: "गुलाब जामुन (2 नग)", desc: "इलायची की चाशनी में डूबा गर्म और रसीला गुलाब जामुन", cat: "मिठाई" },
+      13: { name: "आइसक्रीम स्कूप", desc: "ठंडी कटोरी में मखमली मेडागास्कर वेनिला बीन आइसक्रीम स्कूप", cat: "मिठाई" }
     }
   };
 
@@ -2030,6 +2032,8 @@
       if (ordersSecEyebrow) ordersSecEyebrow.innerText = this.t('ordersRealtimePrep');
       const ordersSecTitle = document.querySelector('#section-orders .editorial-title');
       if (ordersSecTitle) ordersSecTitle.innerText = this.t('ordersLiveTitle');
+      const ordersSync = document.querySelector('#section-orders .kitchen-live-status span:last-child');
+      if (ordersSync) ordersSync.innerText = this.t('syncingKitchenLive');
 
       // Update Student Profile Section
       const profMicro = $('profile-micro-label');
@@ -2042,6 +2046,8 @@
       }
       const profIdLbl = $('profile-id-label');
       if (profIdLbl) profIdLbl.innerText = this.currentUser?.role === 'FACULTY' ? this.t('facultyIdLabel') : this.t('rollIdLabel');
+      const profHistTitle = document.querySelector('.editorial-table-head h3');
+      if (profHistTitle) profHistTitle.innerText = this.t('orderHistoryTitle');
 
       // Update Tray header & footer
       const trayTitle = document.querySelector('.tray-slip-title span');
